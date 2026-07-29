@@ -1,45 +1,6 @@
 <p align="center">
-  <img src="./assets/header.svg" alt="kalaab Alex profile header" width="100%" />
+  <img src="./assets/profile-portrait.png" alt="kalaab Alex portrait card" width="630" />
 </p>
-
-<table>
-  <tr>
-    <td valign="top" width="56%">
-      <p align="center">
-        <img src="./assets/profile-portrait.png" alt="Portrait of kalaab Alex" width="100%" />
-      </p>
-    </td>
-    <td valign="top" width="44%">
-      <h3>Identity Card</h3>
-
-      <p><b>kalaab Alex</b><br />
-      Frontend &amp; Backend Developer<br />
-      Ethiopia</p>
-
-      <p>
-        Calm interfaces. Clean systems. Practical shipping.
-      </p>
-
-      <table>
-        <tr>
-          <td><b>Hair</b><br />Low taper fade with natural texture on top</td>
-        </tr>
-        <tr>
-          <td><b>Glasses</b><br />Slightly narrower frames to define the features</td>
-        </tr>
-        <tr>
-          <td><b>Facial Hair</b><br />Light, well-groomed beard for a stronger jawline</td>
-        </tr>
-        <tr>
-          <td><b>Skin</b><br />Clear, healthy skin with a natural glow</td>
-        </tr>
-        <tr>
-          <td><b>Expression</b><br />Confident, relaxed, and approachable</td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
 
 <p align="center">
   <a href="mailto:alebachewkalaab99@gmail.com">alebachewkalaab99@gmail.com</a> |
@@ -49,75 +10,57 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Focus-Frontend%20%26%20Backend-d39a52?style=for-the-badge&labelColor=102426" alt="Focus badge" />
-  <img src="https://img.shields.io/badge/Stack-Flutter%20%7C%20React%20%7C%20Node.js-54b7b2?style=for-the-badge&labelColor=102426" alt="Stack badge" />
-  <img src="https://img.shields.io/badge/Location-Ethiopia-e8e2da?style=for-the-badge&labelColor=102426" alt="Location badge" />
+  <img src="https://img.shields.io/badge/Frontend-React%20%2B%20Flutter-d39a52?style=for-the-badge&labelColor=102426" alt="Frontend badge" />
+  <img src="https://img.shields.io/badge/Backend-Node.js%20%2B%20Firebase-54b7b2?style=for-the-badge&labelColor=102426" alt="Backend badge" />
+  <img src="https://img.shields.io/badge/Based%20in-Ethiopia-e8e2da?style=for-the-badge&labelColor=102426" alt="Location badge" />
 </p>
+
+## About
+
+Frontend and backend developer building clean web, mobile, and platform experiences.
+
+- Flutter and Dart for mobile apps
+- React for frontend work
+- Node.js APIs with SQL and NoSQL data layers
+- Firebase, Linux, Git, Bash, and Docker in the workflow
+
+## Featured Projects
 
 <table>
   <tr>
-    <td valign="top" width="50%">
-      <h3>About</h3>
-
-      <p>I build clean product experiences across web, mobile, and backend systems.</p>
-
-      <ul>
-        <li>Frontend work with HTML, CSS, JavaScript, and React</li>
-        <li>Flutter and Dart apps for mobile delivery</li>
-        <li>Node.js APIs with SQL and NoSQL data layers</li>
-        <li>Firebase for auth, storage, and app services</li>
-      </ul>
+    <td width="50%" valign="top">
+      <a href="https://github.com/kalaabalb/familyacademy.et"><b>familyacademy.et</b></a><br />
+      Cinematic public landing page and download hub.<br />
+      <sub>Brand, SEO, downloads</sub>
     </td>
-    <td valign="top" width="50%">
-      <h3>Featured Projects</h3>
-
-      <table>
-        <tr>
-          <td>
-            <a href="https://github.com/kalaabalb/familyacademy.et"><b>familyacademy.et</b></a><br />
-            Cinematic public landing page and download hub.<br />
-            <sub>Brand, SEO, downloads</sub>
-          </td>
-          <td>
-            <a href="https://github.com/kalaabalb/family-academy-client"><b>family-academy-client</b></a><br />
-            Client app for the Family Academy ecosystem.<br />
-            <sub>Product app, user flow</sub>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <a href="https://github.com/kalaabalb/ecommerce-backend-api"><b>ecommerce-backend-api</b></a><br />
-            Backend API for the e-commerce system.<br />
-            <sub>JavaScript, APIs, data flow</sub>
-          </td>
-          <td>
-            <a href="https://github.com/kalaabalb/e-commerce-app"><b>e-commerce-app</b></a><br />
-            Flutter commerce app with a public footprint.<br />
-            <sub>Flutter, mobile UI, product flow</sub>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <a href="https://github.com/kalaabalb/force"><b>force</b></a><br />
-            School management system for grading workflows.<br />
-            <sub>Java, student and teacher views</sub>
-          </td>
-          <td>
-            <a href="https://github.com/kalaabalb/yomoblies"><b>yomoblies</b></a><br />
-            Dart project with active recent development.<br />
-            <sub>Dart, mobile work</sub>
-          </td>
-        </tr>
-      </table>
-
-      <h3>Quick facts</h3>
-
-      <ul>
-        <li>Role: Frontend &amp; Backend Developer</li>
-        <li>Stack: Flutter, Dart, React, Node.js, Firebase</li>
-        <li>Languages: Java, C++, JavaScript, SQL</li>
-        <li>Location: Ethiopia</li>
-      </ul>
+    <td width="50%" valign="top">
+      <a href="https://github.com/kalaabalb/family-academy-client"><b>family-academy-client</b></a><br />
+      Client app for the Family Academy ecosystem.<br />
+      <sub>Product app, user flow</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <a href="https://github.com/kalaabalb/ecommerce-backend-api"><b>ecommerce-backend-api</b></a><br />
+      Backend API for the e-commerce system.<br />
+      <sub>JavaScript, APIs, data flow</sub>
+    </td>
+    <td width="50%" valign="top">
+      <a href="https://github.com/kalaabalb/e-commerce-app"><b>e-commerce-app</b></a><br />
+      Flutter commerce app with a public footprint.<br />
+      <sub>Flutter, mobile UI, product flow</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <a href="https://github.com/kalaabalb/force"><b>force</b></a><br />
+      School management system for grading workflows.<br />
+      <sub>Java, student and teacher views</sub>
+    </td>
+    <td width="50%" valign="top">
+      <a href="https://github.com/kalaabalb/yomoblies"><b>yomoblies</b></a><br />
+      Dart project with active recent development.<br />
+      <sub>Dart, mobile work</sub>
     </td>
   </tr>
 </table>
