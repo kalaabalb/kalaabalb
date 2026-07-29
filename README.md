@@ -1,60 +1,155 @@
-<h1 align="center">Hi 👋, I'm kalaab Alex</h1>
-<h3 align="center">Frontend & Backend Developer • Flutter/Dart • Node.js • Firebase</h3>
-
-<p align="left"> 
-  <img src="https://komarev.com/ghpvc/?username=kalaabalb&label=Profile%20views&color=0e75b6&style=flat" alt="kalaabalb" /> 
+<p align="center">
+  <img src="./assets/header.svg" alt="kalaab Alex profile header" width="100%" />
 </p>
 
-- 🔭 I’m currently working on **Flutter apps and backend services**  
-- 🌱 I’m currently learning **React**  
-- 📫 How to reach me **alebachewkalaab99@gmail.com**  
-- 📄 [View my Resume](https://drive.google.com/file/d/1FERJp1rDrOfLZB6k7w06ezcif2H9GhWb/view?usp=drive_link)  
+<table>
+  <tr>
+    <td valign="top" width="56%">
+      <p align="center">
+        <img src="./assets/profile-portrait.png" alt="Portrait of kalaab Alex" width="100%" />
+      </p>
+    </td>
+    <td valign="top" width="44%">
+      <h3>Identity Card</h3>
 
----
+      <p><b>kalaab Alex</b><br />
+      Frontend &amp; Backend Developer<br />
+      Ethiopia</p>
 
-## 🚀 About me  
+      <p>
+        Calm interfaces. Clean systems. Practical shipping.
+      </p>
 
-🧑‍💻 **Frontend:** HTML, CSS, JavaScript, currently learning React.  
-⚙️ **Backend:** Node.js with SQL, MongoDB, PostgreSQL.  
-📱 **Mobile:** Building with Flutter + Dart.  
-🔐 **Backend as a Service:** Experienced with Firebase (Auth, Firestore, Storage).  
-🐧 **DevOps / Tools:** Linux, Git, Bash scripting, Docker.  
-📚 **Languages I know:** Java, C++, SQL.  
-📖 **Currently sharpening:** React and Flutter ecosystem skills.  
+      <table>
+        <tr>
+          <td><b>Hair</b><br />Low taper fade with natural texture on top</td>
+        </tr>
+        <tr>
+          <td><b>Glasses</b><br />Slightly narrower frames to define the features</td>
+        </tr>
+        <tr>
+          <td><b>Facial Hair</b><br />Light, well-groomed beard for a stronger jawline</td>
+        </tr>
+        <tr>
+          <td><b>Skin</b><br />Clear, healthy skin with a natural glow</td>
+        </tr>
+        <tr>
+          <td><b>Expression</b><br />Confident, relaxed, and approachable</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
 
----
-
-<h3 align="left">Connect with me:</h3>
-<p align="left">
-<a href="https://linkedin.com/in/kalaab alb" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="kalaab alb" height="30" width="40" /></a>
-<a href="https://instagram.com/kalaabalb" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="kalaabalb" height="30" width="40" /></a>
-<a href="https://www.youtube.com/c/@trendstormyt" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg" alt="@trendstormyt" height="30" width="40" /></a>
-<a href="https://www.leetcode.com/kalaabalex" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/leet-code.svg" alt="kalaabalex" height="30" width="40" /></a>
+<p align="center">
+  <a href="mailto:alebachewkalaab99@gmail.com">alebachewkalaab99@gmail.com</a> |
+  <a href="https://drive.google.com/file/d/1FERJp1rDrOfLZB6k7w06ezcif2H9GhWb/view?usp=drive_link">Resume</a> |
+  <a href="https://instagram.com/kalaabalb">Instagram</a> |
+  <a href="https://et.linkedin.com/in/kalaab-alb">LinkedIn</a>
 </p>
 
-<h3 align="left">Languages and Tools:</h3>
-<p align="left"> 
-<a href="https://www.gnu.org/software/bash/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/gnu_bash/gnu_bash-icon.svg" alt="bash" width="40" height="40"/> </a> 
-<a href="https://www.w3schools.com/cpp/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg" alt="cplusplus" width="40" height="40"/> </a> 
-<a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40"/> </a> 
-<a href="https://dart.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/dartlang/dartlang-icon.svg" alt="dart" width="40" height="40"/> </a> 
-<a href="https://expressjs.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="express" width="40" height="40"/> </a> 
-<a href="https://firebase.google.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="firebase" width="40" height="40"/> </a> 
-<a href="https://flutter.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" alt="flutter" width="40" height="40"/> </a> 
-<a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> </a> 
-<a href="https://www.w3.org/html/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="40" height="40"/> </a> 
-<a href="https://www.java.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/> </a> 
-<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> </a> 
-<a href="https://www.linux.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="linux" width="40" height="40"/> </a> 
-<a href="https://www.mongodb.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="mongodb" width="40" height="40"/> </a> 
-<a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="40" height="40"/> </a> 
-<a href="https://nodejs.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40"/> </a> 
-<a href="https://www.postgresql.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original-wordmark.svg" alt="postgresql" width="40" height="40"/> </a> 
-<a href="https://reactjs.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40"/> </a> 
+<p align="center">
+  <img src="https://img.shields.io/badge/Focus-Frontend%20%26%20Backend-d39a52?style=for-the-badge&labelColor=102426" alt="Focus badge" />
+  <img src="https://img.shields.io/badge/Stack-Flutter%20%7C%20React%20%7C%20Node.js-54b7b2?style=for-the-badge&labelColor=102426" alt="Stack badge" />
+  <img src="https://img.shields.io/badge/Location-Ethiopia-e8e2da?style=for-the-badge&labelColor=102426" alt="Location badge" />
 </p>
 
-<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=kalaabalb&show_icons=true&locale=en&layout=compact" alt="kalaabalb" /></p>
+<table>
+  <tr>
+    <td valign="top" width="50%">
+      <h3>About</h3>
 
-<p>&nbsp;<img align="center" src="https://github-readme-stats.vercel.app/api?username=kalaabalb&show_icons=true&locale=en" alt="kalaabalb" /></p>
+      <p>I build clean product experiences across web, mobile, and backend systems.</p>
 
-<p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=kalaabalb&" alt="kalaabalb" /></p>
+      <ul>
+        <li>Frontend work with HTML, CSS, JavaScript, and React</li>
+        <li>Flutter and Dart apps for mobile delivery</li>
+        <li>Node.js APIs with SQL and NoSQL data layers</li>
+        <li>Firebase for auth, storage, and app services</li>
+      </ul>
+    </td>
+    <td valign="top" width="50%">
+      <h3>Featured Projects</h3>
+
+      <table>
+        <tr>
+          <td>
+            <a href="https://github.com/kalaabalb/familyacademy.et"><b>familyacademy.et</b></a><br />
+            Cinematic public landing page and download hub.<br />
+            <sub>Brand, SEO, downloads</sub>
+          </td>
+          <td>
+            <a href="https://github.com/kalaabalb/family-academy-client"><b>family-academy-client</b></a><br />
+            Client app for the Family Academy ecosystem.<br />
+            <sub>Product app, user flow</sub>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a href="https://github.com/kalaabalb/ecommerce-backend-api"><b>ecommerce-backend-api</b></a><br />
+            Backend API for the e-commerce system.<br />
+            <sub>JavaScript, APIs, data flow</sub>
+          </td>
+          <td>
+            <a href="https://github.com/kalaabalb/e-commerce-app"><b>e-commerce-app</b></a><br />
+            Flutter commerce app with a public footprint.<br />
+            <sub>Flutter, mobile UI, product flow</sub>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a href="https://github.com/kalaabalb/force"><b>force</b></a><br />
+            School management system for grading workflows.<br />
+            <sub>Java, student and teacher views</sub>
+          </td>
+          <td>
+            <a href="https://github.com/kalaabalb/yomoblies"><b>yomoblies</b></a><br />
+            Dart project with active recent development.<br />
+            <sub>Dart, mobile work</sub>
+          </td>
+        </tr>
+      </table>
+
+      <h3>Quick facts</h3>
+
+      <ul>
+        <li>Role: Frontend &amp; Backend Developer</li>
+        <li>Stack: Flutter, Dart, React, Node.js, Firebase</li>
+        <li>Languages: Java, C++, JavaScript, SQL</li>
+        <li>Location: Ethiopia</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+## Stack
+
+`React` `Flutter` `Dart` `Node.js` `Express` `Firebase` `MongoDB` `MySQL` `PostgreSQL` `Git` `Linux` `Docker`
+
+## Current Work
+
+- Shipping Flutter apps and backend services
+- Keeping designs clean, direct, and usable
+- Building products that work across web and mobile
+
+## Connect
+
+- GitHub: `@kalaabalb`
+- Instagram: [kalaabalb](https://instagram.com/kalaabalb)
+- LinkedIn: [kalaab-alb](https://et.linkedin.com/in/kalaab-alb)
+- LeetCode: [kalaabalex](https://www.leetcode.com/kalaabalex)
+
+## Stats
+
+<p align="center">
+  <img
+    src="https://github-readme-stats.vercel.app/api?username=kalaabalb&show_icons=true&hide_border=true&title_color=d39a52&text_color=e8e2da&icon_color=d39a52&bg_color=102426"
+    alt="kalaabalb GitHub stats"
+    height="165"
+  />
+  <img
+    src="https://github-readme-stats.vercel.app/api/top-langs/?username=kalaabalb&layout=compact&hide_border=true&title_color=d39a52&text_color=e8e2da&bg_color=102426"
+    alt="kalaabalb top languages"
+    height="165"
+  />
+</p>
