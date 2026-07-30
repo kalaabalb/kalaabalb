@@ -1,53 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="330" viewBox="0 0 1180 330" role="img" aria-labelledby="title desc">
-  <title id="title">kalaab Alex hero banner</title>
-  <desc id="desc">Dark mode hero banner for the GitHub profile README.</desc>
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#050816" />
-      <stop offset="55%" stop-color="#0A101F" />
-      <stop offset="100%" stop-color="#111827" />
-    </linearGradient>
-    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#22D3EE" />
-      <stop offset="50%" stop-color="#A78BFA" />
-      <stop offset="100%" stop-color="#10B981" />
-    </linearGradient>
-    <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="24" />
-    </filter>
-  </defs>
-
-  <rect width="1180" height="330" rx="28" fill="url(#bg)" />
-  <circle cx="955" cy="86" r="160" fill="#22D3EE" opacity="0.14" filter="url(#blur)" />
-  <circle cx="225" cy="244" r="100" fill="#A78BFA" opacity="0.10" filter="url(#blur)" />
-  <circle cx="1050" cy="250" r="130" fill="#10B981" opacity="0.08" filter="url(#blur)" />
-
-  <rect x="54" y="48" width="650" height="234" rx="24" fill="#0B1222" stroke="#23314A" />
-  <text x="84" y="110" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="52" font-weight="800">
-    kalaab Alex
-  </text>
-  <text x="84" y="148" fill="#22D3EE" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="1.2">
-    FRONTEND &amp; BACKEND DEVELOPER
-  </text>
-  <text x="84" y="184" fill="#CBD5E1" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="400">
-    Flutter / React / Node.js / Firebase
-  </text>
-  <text x="84" y="216" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="400">
-    Clean builds, calm interfaces, reliable systems.
-  </text>
-
-  <rect x="748" y="54" width="376" height="222" rx="24" fill="#08101D" opacity="0.98" stroke="#23314A" />
-  <text x="780" y="100" fill="#A78BFA" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="1.4">
-    CURRENT FOCUS
-  </text>
-  <text x="780" y="144" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="27" font-weight="700">
-    Flutter apps
-  </text>
-  <text x="780" y="178" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="27" font-weight="700">
-    and backend services
-  </text>
-  <text x="780" y="218" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="400">
-    Building products that feel intentional.
-  </text>
-  <rect x="780" y="236" width="290" height="1.5" fill="url(#accent)" opacity="0.9" />
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="610" viewBox="0 0 1180 610" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" role="img" aria-labelledby="title desc">
+<title id="title">kalaab Alex profile.sh</title>
+<desc id="desc">Dark mode hero banner for the GitHub profile README.</desc>
+<defs>
+<linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0" stop-color="#22D3EE"/>
+  <stop offset="0.5" stop-color="#A78BFA"/>
+  <stop offset="1" stop-color="#10B981"/>
+</linearGradient>
+<linearGradient id="frame" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#22D3EE"/>
+  <stop offset="1" stop-color="#7C3AED"/>
+</linearGradient>
+<filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+  <feGaussianBlur stdDeviation="14"/>
+</filter>
+</defs>
+<rect x="2" y="2" width="1176" height="606" rx="18" fill="#070B16"/>
+<g>
+  <rect x="20" y="20" width="1140" height="570" rx="18" fill="#0A101F" stroke="#243149"/>
+  <rect x="20" y="20" width="1140" height="46" rx="18" fill="#0E1629"/>
+  <circle cx="48" cy="43" r="5.5" fill="#ff5f56"/>
+  <circle cx="68" cy="43" r="5.5" fill="#ffbd2e"/>
+  <circle cx="88" cy="43" r="5.5" fill="#27c93f"/>
+  <text x="590" y="48" text-anchor="middle" font-size="12" fill="#94A3B8">kalaabalb.connect@gmail.com - % ./profile.sh --live</text>
+  <text x="52" y="94" font-size="10" letter-spacing="3" fill="#475569">VISUAL.MAP</text>
+  <rect x="52" y="104" width="378" height="440" rx="10" fill="#0A101F" stroke="#22D3EE" stroke-width="2"/>
+  <image href="./assets/hero-portrait-dark.png" x="62" y="114" width="358" height="420" preserveAspectRatio="xMidYMid slice"/>
+  <rect x="52" y="104" width="378" height="440" rx="10" fill="none" stroke="url(#frame)" stroke-width="2"/>
+  <rect x="457" y="104" width="661" height="440" rx="10" fill="#0B1222" stroke="#243149"/>
+  <text x="486" y="140" font-size="18" fill="#22D3EE" font-weight="700" letter-spacing="1.1">SYSTEM.INFO</text>
+  <text x="1049" y="140" font-size="16" fill="#C97A7A" font-weight="700">● LIVE</text>
+  <rect x="486" y="154" width="180" height="24" rx="6" fill="#7C3AED"/>
+  <text x="496" y="171" font-size="14" fill="#FFFFFF" font-weight="700">kalaabalb.connect@gmail.com</text>
+  <g font-size="15" fill="#F8FAFC">
+    <text x="486" y="204" fill="#22D3EE">Subject</text><text x="1102" y="204" text-anchor="end" font-weight="700">kalaab Alex</text>
+    <text x="486" y="230" fill="#22D3EE">Role</text><text x="1102" y="230" text-anchor="end" font-weight="700">Frontend &amp; Backend Developer</text>
+    <text x="486" y="256" fill="#22D3EE">Origin</text><text x="1102" y="256" text-anchor="end" font-weight="700">Ethiopia</text>
+    <text x="486" y="282" fill="#22D3EE">Education</text><text x="1102" y="282" text-anchor="end" font-weight="700">Building products and shipping</text>
+    <text x="486" y="308" fill="#22D3EE">Status</text><text x="1102" y="308" text-anchor="end" font-weight="700">Building + Learning + Shipping</text>
+    <text x="486" y="334" fill="#22D3EE">ToolChain</text><text x="1102" y="334" text-anchor="end" font-weight="700">VS Code, Git, Android Studio, Figma</text>
+    <text x="486" y="368" fill="#22D3EE">Core.Lang</text><text x="1102" y="368" text-anchor="end" font-weight="700">Flutter, Dart, React, Node.js</text>
+    <text x="486" y="394" fill="#22D3EE">Core.Frontend</text><text x="1102" y="394" text-anchor="end" font-weight="700">Flutter, React</text>
+    <text x="486" y="420" fill="#22D3EE">Core.Backend</text><text x="1102" y="420" text-anchor="end" font-weight="700">Node.js, Express</text>
+    <text x="486" y="446" fill="#22D3EE">Core.Database</text><text x="1102" y="446" text-anchor="end" font-weight="700">Firebase, MongoDB, MySQL</text>
+    <text x="486" y="472" fill="#22D3EE">Core.Infra</text><text x="1102" y="472" text-anchor="end" font-weight="700">Git, Linux, Docker</text>
+  </g>
+  <text x="486" y="508" font-size="14" fill="#94A3B8">▸ More about me &amp; projects below in README ↓</text>
+  <rect x="1104" y="500" width="8" height="16" fill="#22D3EE"/>
+</g>
 </svg>
