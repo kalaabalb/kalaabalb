@@ -1,19 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="1180" height="610" viewBox="0 0 1180 610" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" role="img" aria-labelledby="title desc">
 <title id="title">kalaab Alex profile.sh</title>
 <desc id="desc">Light mode hero banner for the GitHub profile README.</desc>
 <defs>
-<linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
-  <stop offset="0" stop-color="#0891B2"/>
-  <stop offset="0.5" stop-color="#7C3AED"/>
-  <stop offset="1" stop-color="#10B981"/>
-</linearGradient>
-<linearGradient id="frame" x1="0" y1="0" x2="1" y2="1">
-  <stop offset="0" stop-color="#22D3EE"/>
-  <stop offset="1" stop-color="#7C3AED"/>
-</linearGradient>
-<filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
-  <feGaussianBlur stdDeviation="14"/>
-</filter>
+<linearGradient id="accent" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22D3EE"/><stop offset="0.5" stop-color="#A78BFA"/><stop offset="1" stop-color="#10B981"/></linearGradient>
+<linearGradient id="frame" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22D3EE"/><stop offset="1" stop-color="#A78BFA"/></linearGradient>
 </defs>
 <rect x="2" y="2" width="1176" height="606" rx="18" fill="#F8FAFC"/>
 <g>
@@ -25,27 +16,80 @@
   <text x="590" y="48" text-anchor="middle" font-size="12" fill="#64748B">kalaabalb.connect@gmail.com - % ./profile.sh --live</text>
   <text x="52" y="94" font-size="10" letter-spacing="3" fill="#94A3B8">VISUAL.MAP</text>
   <rect x="52" y="104" width="378" height="440" rx="10" fill="#FFFFFF" stroke="#22D3EE" stroke-width="2"/>
-  <image href="./assets/hero-portrait.png" x="62" y="114" width="358" height="420" preserveAspectRatio="xMidYMid slice"/>
   <rect x="52" y="104" width="378" height="440" rx="10" fill="none" stroke="url(#frame)" stroke-width="2"/>
+  <text x="70" y="122" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;</text>
+<text x="70" y="130" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;</text>
+<text x="70" y="138" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;#SSSSSSSSSGGGGGGS9B9999###SGGGGSSSSSSSS###&amp;&amp;&amp;</text>
+<text x="70" y="146" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;Hhhhhhhhh35555553HSGHGGGGGMAA22553hhhhhhhHB&amp;&amp;</text>
+<text x="70" y="154" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;Hhhhhhhh33555555hSSSSSS#GGH5555553hhhhhhhHB&amp;&amp;</text>
+<text x="70" y="162" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;Hhhhh33335255555GGH##99B999#SGM25533hhhhhHB&amp;&amp;</text>
+<text x="70" y="170" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;Hhhh333335225555G##99BB9BBBBB9G225333hhhhMB&amp;&amp;</text>
+<text x="70" y="178" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;Hhh333333522555Ah#9BBBBBBB&amp;&amp;&amp;&amp;BS3233333h3MB&amp;&amp;</text>
+<text x="70" y="186" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;H333333335AX5h22S9BBBB9##9BB&amp;&amp;&amp;&amp;G55333333MB&amp;&amp;</text>
+<text x="70" y="194" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;H333333335AXXAAMBB9SHh523hMHS9&amp;&amp;BH5333333MB&amp;&amp;</text>
+<text x="70" y="202" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;H333333355AAXX2#BSM5AXssA55hHGS9&amp;93533333MB&amp;&amp;</text>
+<text x="70" y="210" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;M3333335552222M9#h32XrirsA5hHGGSBBh533333MB&amp;&amp;</text>
+<text x="70" y="218" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;M3333555555552H9Gh35Xrrrs25hHGGS9&amp;M555555hB&amp;&amp;</text>
+<text x="70" y="226" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;BM3333555555552H#Hh32XsrrsX23MHG#9BM555555hB&amp;&amp;</text>
+<text x="70" y="234" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;BM3335555555552MSM35AsrirrsA3hHGS#93555555hB&amp;&amp;</text>
+<text x="70" y="242" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;M33355555552223Ghhhh352XA3MS##99#S5555555hB&amp;&amp;</text>
+<text x="70" y="250" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;M33355555522222HHHhMS#SHG#99SS#99Gh555555hB&amp;&amp;</text>
+<text x="70" y="258" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;M33355555522225HSHHG#SGSH99S##9###S555555hB&amp;&amp;</text>
+<text x="70" y="266" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;M3335555552222hhGHHHH3h3ASShMGGS#9G225552hB&amp;&amp;</text>
+<text x="70" y="274" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;M33355555522225hHh5AXs3AXHGh33hHS9h222552hB&amp;&amp;</text>
+<text x="70" y="282" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;M333555555222222hh2ss23XXhGHMhMGS#52222523B&amp;&amp;</text>
+<text x="70" y="290" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;M335555555522222335AA2Ass3MM3hHS#H22222523B&amp;&amp;</text>
+<text x="70" y="298" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;M335555552222222332AXA555GGHhhH#S322222223B&amp;&amp;</text>
+<text x="70" y="306" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;M33555555222222A5M32XX3MH##HhHS9G222222223B&amp;&amp;</text>
+<text x="70" y="314" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;BM3355555522222222MM322555MGHHG#9H222222223B&amp;&amp;</text>
+<text x="70" y="322" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;BM335555555222222AhHhMHh3hHG#SS#93222222223B&amp;&amp;</text>
+<text x="70" y="330" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;M335555555222222A5HMMh5AA2MGG#9#5222222223B&amp;&amp;</text>
+<text x="70" y="338" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;M3335555552222222A3HH33MHG#S#9B93222222223B&amp;&amp;</text>
+<text x="70" y="346" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;M333355555522222225HGM3hhMHG#BB93A22222223B&amp;&amp;</text>
+<text x="70" y="354" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;H333355555552222222hSG3253MS9&amp;B9S352222223B&amp;&amp;</text>
+<text x="70" y="362" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;H3333333555555222A5hM##S##9B&amp;BB99GH352255hB&amp;&amp;</text>
+<text x="70" y="370" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;H333333335555552sAMMhM#B&amp;&amp;&amp;BBBB99GM522225hB&amp;&amp;</text>
+<text x="70" y="378" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;Hhhh3333333552Xri2hMh3MG9BBBB999#M5AsXAsA39&amp;&amp;</text>
+<text x="70" y="386" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;Hhhhhh333335Xri;iAhMh33MS9999999H2XXrsXrsA#&amp;&amp;</text>
+<text x="70" y="394" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;Hhhhhhhh35Arii;iiX3hhhhhHGS#999S5sssrrXrrX#&amp;&amp;</text>
+<text x="70" y="402" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;HMMhhhh3Arriii;iis533hhMHGGG#SG5ssrrrrXrrs#&amp;&amp;</text>
+<text x="70" y="410" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;GMMMMh2sriiiri;iir25253hMMhHHh2XrsrrrrXrrs#&amp;&amp;</text>
+<text x="70" y="418" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;GMMMhAriiiiiriiiiiA32A2552233AXrrrrsriXsrsS&amp;&amp;</text>
+<text x="70" y="426" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;GHHM2riiiiirr;;iiir22A222A22XXsrrrrsrissrrS&amp;&amp;</text>
+<text x="70" y="434" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;GHH5riiiiiisr;iiiiiXXA222AAAsXsrsrrrrrrsrrS&amp;&amp;</text>
+<text x="70" y="442" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;SHMsiiiiirisiiiiiiirsX22AA2AsXrrsrrrrrrsrrS&amp;&amp;</text>
+<text x="70" y="450" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;SH5rriiirrrsiiiiiiirsrsXXA2XXsrrsirrrrrrrrS&amp;&amp;</text>
+<text x="70" y="458" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;SHXrrrirsirsiiiiiiirssrsXA2sXrrrsrrrrrirrsS&amp;&amp;</text>
+<text x="70" y="466" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;ShrrrrisrisiiiiiiiirrXrss2AssrrssrrrrrirrsS&amp;&amp;</text>
+<text x="70" y="474" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;#MAA22A52A2XXAAAAAAAA52A5h2522A22A2AA2A225#&amp;&amp;</text>
+<text x="70" y="482" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;&amp;&amp;BBBBBBBBBBBBBBBBBBBBBB&amp;BBBBBBBBBBBBBBBBB&amp;&amp;&amp;</text>
+<text x="70" y="490" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;</text>
+<text x="70" y="498" fill="#7C3AED" font-size="8.2" letter-spacing="0" xml:space="preserve">&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;</text>
+  <text x="64" y="520" font-size="11" fill="#64748B">terminal render: photo -> ascii map</text>
   <rect x="457" y="104" width="661" height="440" rx="10" fill="#FFFFFF" stroke="#CBD5E1"/>
-  <text x="486" y="140" font-size="18" fill="#0891B2" font-weight="700" letter-spacing="1.1">SYSTEM.INFO</text>
+  <text x="486" y="140" font-size="18" fill="#22D3EE" font-weight="700" letter-spacing="1.1">SYSTEM.INFO</text>
   <text x="1049" y="140" font-size="16" fill="#B06D6D" font-weight="700">● LIVE</text>
   <rect x="486" y="154" width="180" height="24" rx="6" fill="#7C3AED"/>
   <text x="496" y="171" font-size="14" fill="#FFFFFF" font-weight="700">kalaabalb.connect@gmail.com</text>
   <g font-size="15" fill="#0F172A">
-    <text x="486" y="204" fill="#0891B2">Subject</text><text x="1102" y="204" text-anchor="end" font-weight="700">kalaab Alex</text>
-    <text x="486" y="230" fill="#0891B2">Role</text><text x="1102" y="230" text-anchor="end" font-weight="700">Frontend &amp; Backend Developer</text>
-    <text x="486" y="256" fill="#0891B2">Origin</text><text x="1102" y="256" text-anchor="end" font-weight="700">Ethiopia</text>
-    <text x="486" y="282" fill="#0891B2">Education</text><text x="1102" y="282" text-anchor="end" font-weight="700">Building products and shipping</text>
-    <text x="486" y="308" fill="#0891B2">Status</text><text x="1102" y="308" text-anchor="end" font-weight="700">Building + Learning + Shipping</text>
-    <text x="486" y="334" fill="#0891B2">ToolChain</text><text x="1102" y="334" text-anchor="end" font-weight="700">VS Code, Git, Android Studio, Figma</text>
-    <text x="486" y="368" fill="#0891B2">Core.Lang</text><text x="1102" y="368" text-anchor="end" font-weight="700">Flutter, Dart, React, Node.js</text>
-    <text x="486" y="394" fill="#0891B2">Core.Frontend</text><text x="1102" y="394" text-anchor="end" font-weight="700">Flutter, React</text>
-    <text x="486" y="420" fill="#0891B2">Core.Backend</text><text x="1102" y="420" text-anchor="end" font-weight="700">Node.js, Express</text>
-    <text x="486" y="446" fill="#0891B2">Core.Database</text><text x="1102" y="446" text-anchor="end" font-weight="700">Firebase, MongoDB, MySQL</text>
-    <text x="486" y="472" fill="#0891B2">Core.Infra</text><text x="1102" y="472" text-anchor="end" font-weight="700">Git, Linux, Docker</text>
+    <text x="486" y="204" fill="#22D3EE">Subject</text><text x="1102" y="204" text-anchor="end" font-weight="700">kalaab Alex</text>
+    <text x="486" y="230" fill="#22D3EE">Role</text><text x="1102" y="230" text-anchor="end" font-weight="700">Frontend &amp; Backend Developer</text>
+    <text x="486" y="256" fill="#22D3EE">Origin</text><text x="1102" y="256" text-anchor="end" font-weight="700">Ethiopia</text>
+    <text x="486" y="282" fill="#22D3EE">Education</text><text x="1102" y="282" text-anchor="end" font-weight="700">Building products and shipping</text>
+    <text x="486" y="308" fill="#22D3EE">Status</text><text x="1102" y="308" text-anchor="end" font-weight="700">Building + Learning + Shipping</text>
+    <text x="486" y="334" fill="#22D3EE">ToolChain</text><text x="1102" y="334" text-anchor="end" font-weight="700">VS Code, Git, Android Studio, Figma</text>
+    <text x="486" y="368" fill="#22D3EE">Core.Lang</text><text x="1102" y="368" text-anchor="end" font-weight="700">Flutter, Dart, React, Node.js</text>
+    <text x="486" y="394" fill="#22D3EE">Core.Frontend</text><text x="1102" y="394" text-anchor="end" font-weight="700">Flutter, React</text>
+    <text x="486" y="420" fill="#22D3EE">Core.Backend</text><text x="1102" y="420" text-anchor="end" font-weight="700">Node.js, Express</text>
+    <text x="486" y="446" fill="#22D3EE">Core.Database</text><text x="1102" y="446" text-anchor="end" font-weight="700">Firebase, MongoDB, MySQL</text>
+    <text x="486" y="472" fill="#22D3EE">Core.Infra</text><text x="1102" y="472" text-anchor="end" font-weight="700">Git, Linux, Docker</text>
   </g>
-  <text x="486" y="508" font-size="14" fill="#64748B">▸ More about me &amp; projects below in README ↓</text>
-  <rect x="1104" y="500" width="8" height="16" fill="#22D3EE"/>
+  <rect x="486" y="488" width="80" height="22" rx="11" fill="#10283A" stroke="#22D3EE"/><text x="526" y="503" text-anchor="middle" font-size="12" fill="#22D3EE">Flutter</text>
+  <rect x="574" y="488" width="60" height="22" rx="11" fill="#25153A" stroke="#A78BFA"/><text x="604" y="503" text-anchor="middle" font-size="12" fill="#A78BFA">Dart</text>
+  <rect x="642" y="488" width="70" height="22" rx="11" fill="#10283A" stroke="#22D3EE"/><text x="677" y="503" text-anchor="middle" font-size="12" fill="#22D3EE">React</text>
+  <rect x="720" y="488" width="88" height="22" rx="11" fill="#25153A" stroke="#A78BFA"/><text x="764" y="503" text-anchor="middle" font-size="12" fill="#A78BFA">Node.js</text>
+  <rect x="816" y="488" width="90" height="22" rx="11" fill="#10283A" stroke="#22D3EE"/><text x="861" y="503" text-anchor="middle" font-size="12" fill="#22D3EE">Firebase</text>
+  <text x="486" y="540" font-size="14" fill="#64748B">▸ More about me &amp; projects below in README ↓</text>
+  <rect x="1104" y="532" width="8" height="16" fill="#22D3EE"/>
 </g>
 </svg>
