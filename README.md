@@ -1,98 +1,77 @@
-<p align="center">
-  <img src="./assets/profile-portrait.png" alt="kalaab Alex portrait card" width="630" />
-</p>
+<!-- ===== THEME-AWARE HERO BANNER ===== -->
+<!-- GitHub automatically shows dark.svg in dark mode and light.svg in light mode -->
 
-<p align="center">
-  <a href="mailto:alebachewkalaab99@gmail.com">alebachewkalaab99@gmail.com</a> |
-  <a href="https://drive.google.com/file/d/1FERJp1rDrOfLZB6k7w06ezcif2H9GhWb/view?usp=drive_link">Resume</a> |
-  <a href="https://instagram.com/kalaabalb">Instagram</a> |
-  <a href="https://et.linkedin.com/in/kalaab-alb">LinkedIn</a>
-</p>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./light.svg">
+  <img alt="kalaab Alex" src="./light.svg">
+</picture>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Frontend-React%20%2B%20Flutter-d39a52?style=for-the-badge&labelColor=102426" alt="Frontend badge" />
-  <img src="https://img.shields.io/badge/Backend-Node.js%20%2B%20Firebase-54b7b2?style=for-the-badge&labelColor=102426" alt="Backend badge" />
-  <img src="https://img.shields.io/badge/Based%20in-Ethiopia-e8e2da?style=for-the-badge&labelColor=102426" alt="Location badge" />
-</p>
+<!-- ===== GITHUB STATS ===== -->
 
-## About
+<div align="center">
 
-Frontend and backend developer building clean web, mobile, and platform experiences.
+<!-- Streak — full width -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com/?user=kalaabalb&hide_border=true&background=0A101F&stroke=22D3EE&ring=A78BFA&fire=10B981&currStreakLabel=22D3EE&sideLabels=94A3B8&currStreakNum=F8FAFC&sideNums=F8FAFC&dates=64748B&titleColor=22D3EE&card_width=1180" />
+  <img width="100%" src="https://streak-stats.demolab.com/?user=kalaabalb&hide_border=true&background=FFFFFF&stroke=0891B2&ring=7C3AED&fire=059669&currStreakLabel=0891B2&sideLabels=475569&currStreakNum=0F172A&sideNums=0F172A&dates=94A3B8&titleColor=0891B2&card_width=1180" alt="kalaab's streak" />
+</picture>
 
-- Flutter and Dart for mobile apps
-- React for frontend work
-- Node.js APIs with SQL and NoSQL data layers
-- Firebase, Linux, Git, Bash, and Docker in the workflow
+<br/>
 
-## Featured Projects
+<!-- Stats + Top languages — side by side -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api?username=kalaabalb&show_icons=true&count_private=true&include_all_commits=true&hide_rank=true&hide_border=true&title_color=22D3EE&icon_color=A78BFA&text_color=94A3B8&bg_color=0A101F&card_width=500" />
+  <img width="49%" src="https://github-readme-stats.vercel.app/api?username=kalaabalb&show_icons=true&count_private=true&include_all_commits=true&hide_rank=true&hide_border=true&title_color=0891B2&icon_color=7C3AED&text_color=0F172A&bg_color=FFFFFF&card_width=500" alt="kalaab's GitHub stats" />
+</picture>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=kalaabalb&layout=compact&langs_count=8&hide_border=true&title_color=22D3EE&text_color=94A3B8&bg_color=0A101F&card_width=500" />
+  <img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=kalaabalb&layout=compact&langs_count=8&hide_border=true&title_color=0891B2&text_color=0F172A&bg_color=FFFFFF&card_width=500" alt="Top languages" />
+</picture>
 
-<table>
-  <tr>
-    <td width="50%" valign="top">
-      <a href="https://github.com/kalaabalb/familyacademy.et"><b>familyacademy.et</b></a><br />
-      Cinematic public landing page and download hub.<br />
-      <sub>Brand, SEO, downloads</sub>
-    </td>
-    <td width="50%" valign="top">
-      <a href="https://github.com/kalaabalb/family-academy-client"><b>family-academy-client</b></a><br />
-      Client app for the Family Academy ecosystem.<br />
-      <sub>Product app, user flow</sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" valign="top">
-      <a href="https://github.com/kalaabalb/ecommerce-backend-api"><b>ecommerce-backend-api</b></a><br />
-      Backend API for the e-commerce system.<br />
-      <sub>JavaScript, APIs, data flow</sub>
-    </td>
-    <td width="50%" valign="top">
-      <a href="https://github.com/kalaabalb/e-commerce-app"><b>e-commerce-app</b></a><br />
-      Flutter commerce app with a public footprint.<br />
-      <sub>Flutter, mobile UI, product flow</sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" valign="top">
-      <a href="https://github.com/kalaabalb/force"><b>force</b></a><br />
-      School management system for grading workflows.<br />
-      <sub>Java, student and teacher views</sub>
-    </td>
-    <td width="50%" valign="top">
-      <a href="https://github.com/kalaabalb/yomoblies"><b>yomoblies</b></a><br />
-      Dart project with active recent development.<br />
-      <sub>Dart, mobile work</sub>
-    </td>
-  </tr>
-</table>
+</div>
 
-## Stack
+<!-- ===== CONTRIBUTION SNAKE ===== -->
 
-`React` `Flutter` `Dart` `Node.js` `Express` `Firebase` `MongoDB` `MySQL` `PostgreSQL` `Git` `Linux` `Docker`
+<div align="center">
 
-## Current Work
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./output/snake-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="./output/snake-light.svg" />
+  <img alt="Snake eating my contributions" src="./output/snake-light.svg" />
+</picture>
 
-- Shipping Flutter apps and backend services
-- Keeping designs clean, direct, and usable
-- Building products that work across web and mobile
+</div>
 
-## Connect
+<!-- ===== END SNAKE ===== -->
+<br/>
+<br/>
+<div align="center">
+<img width="100%" src="./projects/projects.svg" alt="Projects" />
+</div>
 
-- GitHub: `@kalaabalb`
-- Instagram: [kalaabalb](https://instagram.com/kalaabalb)
-- LinkedIn: [kalaab-alb](https://et.linkedin.com/in/kalaab-alb)
-- LeetCode: [kalaabalex](https://www.leetcode.com/kalaabalex)
+<!-- ===== SOCIAL BADGES ===== -->
+<br/>
+<div align="center">
 
-## Stats
+<a href="https://www.linkedin.com/in/kalaab-alb/">
+  <img src="https://img.shields.io/badge/LinkedIn-0A101F?style=for-the-badge&logoColor=white&labelColor=0A101F&logo=data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBmaWxsPSJ3aGl0ZSI+PHBhdGggZD0iTTIwLjQ0NyAyMC40NTJoLTMuNTU0di01LjU2OWMwLTEuMzI4LS4wMjctMy4wMzctMS44NTItMy4wMzctMS44NTMgMC0yLjEzNiAxLjQ0NS0yLjEzNiAyLjkzOXY1LjY2N0g5LjM1MVY5aDMuNDE0djEuNTYxaC4wNDZjLjQ3Ny0uOSAxLjYzNy0xLjg1IDMuMzctMS44NSAzLjYwMSAwIDQuMjY3IDIuMzcgNC4yNjcgNS40NTV2Ni4yODZ6TTUuMzM3IDcuNDMzYy0xLjE0NCAwLTIuMDYzLS45MjYtMi4wNjMtMi4wNjUgMC0xLjEzOC45Mi0yLjA2MyAyLjA2My0yLjA2MyAxLjE0IDAgMi4wNjQuOTI1IDIuMDY0IDIuMDYzIDAgMS4xMzktLjkyNSAyLjA2NS0yLjA2NCAyLjA2NXptMS43ODIgMTMuMDE5SDMuNTU1VjloMy41NjR2MTEuNDUyek0yMi4yMjUgMEgxLjc3MUMuNzkyIDAgMCAuNzc0IDAgMS43Mjl2MjAuNTQyQzAgMjMuMjI3Ljc5MiAyNCAxLjc3MSAyNGgyMC40NTFDMjMuMiAyNCAyNCAyMy4yMjcgMjQgMjIuMjcxVjEuNzI5QzI0IC43NzQgMjMuMiAwIDIyLjIyNSAweiIvPjwvc3ZnPg==" alt="LinkedIn" />
+</a>
+&nbsp;&nbsp;
+<a href="https://www.instagram.com/kalaabalb/">
+  <img src="https://img.shields.io/badge/Instagram-0A101F?style=for-the-badge&logo=instagram&logoColor=A78BFA&labelColor=0A101F" alt="Instagram" />
+</a>
+&nbsp;&nbsp;
+<a href="mailto:alebachewkalaab99@gmail.com">
+  <img src="https://img.shields.io/badge/Email-0A101F?style=for-the-badge&logo=gmail&logoColor=10B981&labelColor=0A101F" alt="Email" />
+</a>
+&nbsp;&nbsp;
+<a href="https://github.com/kalaabalb">
+  <img src="https://img.shields.io/badge/GitHub-0A101F?style=for-the-badge&logo=github&logoColor=ffffff&labelColor=0A101F" alt="GitHub" />
+</a>
+&nbsp;&nbsp;
+</div>
 
-<p align="center">
-  <img
-    src="https://github-readme-stats.vercel.app/api?username=kalaabalb&show_icons=true&hide_border=true&title_color=d39a52&text_color=e8e2da&icon_color=d39a52&bg_color=102426"
-    alt="kalaabalb GitHub stats"
-    height="165"
-  />
-  <img
-    src="https://github-readme-stats.vercel.app/api/top-langs/?username=kalaabalb&layout=compact&hide_border=true&title_color=d39a52&text_color=e8e2da&bg_color=102426"
-    alt="kalaabalb top languages"
-    height="165"
-  />
-</p>
+<!-- ===== END SOCIAL BADGES ===== -->
+
+<!-- =================================== -->
