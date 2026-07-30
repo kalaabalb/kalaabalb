@@ -1,0 +1,42 @@
+name: Generate projects cards
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "projects.json"
+      - "scripts/build_projects.py"
+      - ".github/workflows/projects.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Render projects SVGs
+        run: python scripts/build_projects.py --input projects.json --out dist-projects
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish projects branch
+        uses: crazy-max/ghaction-github-pages@v5
+        with:
+          target_branch: projects
+          build_dir: dist-projects
+          keep_history: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
