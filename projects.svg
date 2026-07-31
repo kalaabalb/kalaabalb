@@ -2,6 +2,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1140" height="754" viewBox="0 0 1140 754" role="img" aria-labelledby="title desc">
 <title id="title">Featured projects</title>
 <desc id="desc">Clickable project cards generated from live GitHub repository data.</desc>
+<!-- build:2f7d9d8dd7ce143cf12b5678b3d5bfd199ccc358 -->
 <rect width="1140" height="754" rx="24" fill="#070f0e"/>
 <rect x="0" y="0" width="1140" height="754" rx="24" fill="none" stroke="#233c39"/>
 <rect x="58" y="58" width="1024" height="696" rx="24" fill="#0a1817" stroke="#173330"/>
