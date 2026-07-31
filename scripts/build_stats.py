@@ -199,8 +199,8 @@ def build_theme(mode: str) -> dict:
 def metric_box(x: int, y: int, w: int, h: int, title: str, value: str, theme: dict) -> str:
     return (
         f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12" fill="{theme["bg"]}" stroke="{theme["border"]}" stroke-opacity="0.35"/>'
-        f'<text x="{x + 16}" y="{y + 28}" font-size="11" fill="{theme["muted"]}">{escape_text(title)}</text>'
-        f'<text x="{x + 16}" y="{y + 60}" font-size="22" font-weight="700" fill="{theme["text"]}">{escape_text(value)}</text>'
+        f'<text x="{x + 16}" y="{y + 18}" font-size="10" fill="{theme["muted"]}">{escape_text(title)}</text>'
+        f'<text x="{x + 16}" y="{y + 42}" font-size="19" font-weight="700" fill="{theme["text"]}">{escape_text(value)}</text>'
     )
 
 
@@ -231,8 +231,8 @@ def stat_card(user: UserInfo, repos: List[RepoInfo], theme: dict, build_id: str)
         col = idx % 2
         row = idx // 2
         x = 18 + col * 226
-        y = 70 + row * 66
-        parts.append(metric_box(x, y, 210, 52, label, value, theme))
+        y = 70 + row * 62
+        parts.append(metric_box(x, y, 210, 56, label, value, theme))
 
     parts.append(
         f'<text x="20" y="216" font-family="Liberation Sans, sans-serif" font-size="10" fill="{theme["muted"]}">Issues in public repos: {total_issues}</text>'

@@ -252,8 +252,8 @@ def legend_rows(stats: RepoStats, theme: dict, donut_cx: float, donut_r: float, 
 
 def render_card(stats: RepoStats, theme: dict, x: int, y: int, width: int, height: int) -> str:
     monogram = acronym(stats.name)
-    title_width = 160
-    desc_width = 168
+    title_width = max(160, width - 220)
+    desc_width = max(168, width - 212)
     display_title = truncate_text(stats.name, title_width, 22, bold=True)
     title = escape_text(display_title)
     description_lines = wrap_text(stats.description, desc_width, 14, max_lines=2)
@@ -298,7 +298,7 @@ def render_card(stats: RepoStats, theme: dict, x: int, y: int, width: int, heigh
     html.append(legend_rows(stats, theme, donut_cx, donut_r, 42))
     html.append(
         f'<text x="{width - 62}" y="{height - 16}" text-anchor="middle" font-size="11" fill="{theme["muted"]}">'
-        f'← click to open'
+        f'click to open'
         "</text>"
     )
     html.append("</g>")
@@ -308,11 +308,11 @@ def render_card(stats: RepoStats, theme: dict, x: int, y: int, width: int, heigh
 
 def render_svg(projects: List[RepoStats], theme: dict, build_id: str) -> str:
     width = 1140
-    card_w = 340
+    card_w = 486
     card_h = 176
-    gap_x = 22
+    gap_x = 16
     gap_y = 16
-    start_x = 58
+    start_x = 76
     start_y = 154
     bottom_padding = 40
     rows = max(1, (len(projects) + 1) // 2)

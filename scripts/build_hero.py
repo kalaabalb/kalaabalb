@@ -19,7 +19,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageStat
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "assets" / "profile-portrait.png"
+SOURCE = ROOT / "assets" / "hero-portrait.png"
 OUT_DARK = ROOT / "dark.svg"
 OUT_LIGHT = ROOT / "light.svg"
 
@@ -156,6 +156,79 @@ def resize_to_working_canvas(image: Image.Image, mask: Image.Image, target_w: in
     scale = target_w / float(w)
     target_h = max(1, int(round(h * scale)))
     return image.resize((target_w, target_h), Image.LANCZOS), mask.resize((target_w, target_h), Image.NEAREST)
+
+
+def build_subject_mask(image: Image.Image) -> Image.Image:
+    rgba = image.convert("RGBA")
+    ycbcr = image.convert("YCbCr")
+    gray = image.convert("L")
+    edges = gray.filter(ImageFilter.FIND_EDGES)
+    w, h = image.size
+    gray_px = list(gray.getdata())
+    edge_px = list(edges.getdata())
+    ycbcr_px = list(ycbcr.getdata())
+
+    mask = Image.new("L", (w, h), 0)
+    mask_px = mask.load()
+    cx = (w - 1) / 2.0
+    cy = (h - 1) / 2.0
+    rx = w * 0.44
+    ry = h * 0.46
+
+    for y in range(h):
+        for x in range(w):
+            dx = (x - cx) / max(1.0, rx)
+            dy = (y - cy) / max(1.0, ry)
+            if dx * dx + dy * dy > 1.0:
+                continue
+            yy, cb, cr = ycbcr_px[y * w + x]
+            dark = gray_px[y * w + x] < 145
+            edge = edge_px[y * w + x] > 18
+            skin = 77 <= cb <= 135 and 133 <= cr <= 180 and yy > 35
+            if skin or (dark and edge) or edge:
+                mask_px[x, y] = 255
+
+    visited = bytearray(w * h)
+    start = (int(round(cx)), int(round(cy)))
+    if not mask_px[start[0], start[1]]:
+        best = None
+        best_dist = float("inf")
+        for y in range(h):
+            base = y * w
+            for x in range(w):
+                if not mask.getpixel((x, y)):
+                    continue
+                dist = (x - cx) ** 2 + (y - cy) ** 2
+                if dist < best_dist:
+                    best = (x, y)
+                    best_dist = dist
+        if best is None:
+            return mask
+        start = best
+
+    queue = deque([start])
+    visited[start[1] * w + start[0]] = 1
+    component: List[Tuple[int, int]] = []
+    while queue:
+        x, y = queue.popleft()
+        component.append((x, y))
+        for nx, ny in ((x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)):
+            if not (0 <= nx < w and 0 <= ny < h):
+                continue
+            idx = ny * w + nx
+            if visited[idx] or not mask_px[nx, ny]:
+                continue
+            visited[idx] = 1
+            queue.append((nx, ny))
+
+    if not component:
+        return mask
+
+    component_mask = Image.new("L", (w, h), 0)
+    comp_px = component_mask.load()
+    for x, y in component:
+        comp_px[x, y] = 255
+    return component_mask
 
 
 def weighted_sample_points(image: Image.Image, mask: Image.Image, count: int) -> List[Tuple[float, float]]:
@@ -399,14 +472,15 @@ def sample_node_shape(center: Tuple[float, float], radius: float, count: int) ->
 def make_state_points() -> Tuple[List[Tuple[float, float]], ...]:
     raw = Image.open(SOURCE)
     cropped, mask = detect_foreground(raw)
-    resized, resized_mask = resize_to_working_canvas(cropped, mask, target_w=384)
-    portrait_raw = weighted_sample_points(resized, resized_mask, POINT_COUNT)
+    resized, resized_mask = resize_to_working_canvas(cropped, mask, target_w=420)
+    subject_mask = build_subject_mask(resized)
+    portrait_raw = weighted_sample_points(resized, subject_mask, POINT_COUNT)
     portrait_raw = sort_points(portrait_raw)
 
     panel_cx = LEFT_X + LEFT_W / 2
     panel_cy = LEFT_Y + LEFT_H / 2
-    portrait_w = 214
-    portrait_h = 174
+    portrait_w = 300
+    portrait_h = 360
     portrait_box = (panel_cx - portrait_w / 2, panel_cy - portrait_h / 2, portrait_w, portrait_h)
 
     portrait = scale_points(portrait_raw, resized.size, portrait_box)
