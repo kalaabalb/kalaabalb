@@ -12,11 +12,16 @@ import urllib.parse
 import urllib.request
 from dataclasses import dataclass
 from datetime import datetime, timezone
+from functools import lru_cache
 from pathlib import Path
 from typing import Dict, Iterable, List, Tuple
 
+from PIL import ImageFont
+
 
 ROOT = Path(__file__).resolve().parents[1]
+FONT_BOLD = "/usr/share/fonts/liberation-sans-fonts/LiberationSans-Bold.ttf"
+FONT_REGULAR = "/usr/share/fonts/liberation-sans-fonts/LiberationSans-Regular.ttf"
 
 
 @dataclass
@@ -43,34 +48,33 @@ def escape_text(value: str) -> str:
     )
 
 
-def text_units(text: str) -> float:
-    total = 0.0
-    for ch in text:
-        if ch == " ":
-            total += 0.45
-        elif ch in "-_./":
-            total += 0.6
-        elif ch.isdigit():
-            total += 0.72
-        elif ch.isupper():
-            total += 1.0
-        else:
-            total += 0.82
-    return total
+@lru_cache(maxsize=None)
+def load_font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
+    path = FONT_BOLD if bold else FONT_REGULAR
+    return ImageFont.truetype(path, size=size)
 
 
-def truncate_text(text: str, max_width: float, avg_unit_px: float, suffix: str = "…") -> str:
+def text_width(text: str, size: int, bold: bool = False) -> float:
+    font = load_font(size, bold=bold)
+    left, top, right, bottom = font.getbbox(text)
+    return float(right - left)
+
+
+def truncate_text(text: str, max_width: float, size: int, bold: bool = False, suffix: str = "…") -> str:
     if not text:
         return text
-    if text_units(text) * avg_unit_px <= max_width:
+    if text_width(text, size, bold=bold) <= max_width:
         return text
-    limit = max(1, int(max_width / avg_unit_px) - len(suffix))
-    while limit > 1 and text_units(text[:limit] + suffix) * avg_unit_px > max_width:
-        limit -= 1
-    return text[:limit].rstrip() + suffix
+    chars = len(text)
+    while chars > 1:
+        candidate = text[:chars].rstrip() + suffix
+        if text_width(candidate, size, bold=bold) <= max_width:
+            return candidate
+        chars -= 1
+    return suffix
 
 
-def wrap_text(text: str, max_width: float, avg_unit_px: float, max_lines: int = 2) -> List[str]:
+def wrap_text(text: str, max_width: float, size: int, bold: bool = False, max_lines: int = 2) -> List[str]:
     words = [word for word in text.split() if word]
     if not words:
         return []
@@ -79,31 +83,28 @@ def wrap_text(text: str, max_width: float, avg_unit_px: float, max_lines: int = 
     current = ""
     for word in words:
         candidate = word if not current else f"{current} {word}"
-        if text_units(candidate) * avg_unit_px <= max_width:
+        if text_width(candidate, size, bold=bold) <= max_width:
             current = candidate
             continue
         if current:
             lines.append(current)
-        elif text_units(word) * avg_unit_px <= max_width:
-            lines.append(word)
         else:
-            lines.append(truncate_text(word, max_width, avg_unit_px))
-        current = word if text_units(word) * avg_unit_px <= max_width else ""
+            lines.append(truncate_text(word, max_width, size, bold=bold))
+        current = word
         if len(lines) >= max_lines:
             break
 
     if len(lines) < max_lines and current:
-        lines.append(current)
+        if text_width(current, size, bold=bold) <= max_width:
+            lines.append(current)
+        else:
+            lines.append(truncate_text(current, max_width, size, bold=bold))
 
     if len(lines) > max_lines:
         lines = lines[:max_lines]
 
-    if lines and len(lines) == max_lines:
-        last = lines[-1]
-        if text_units(last) * avg_unit_px > max_width:
-            lines[-1] = truncate_text(last, max_width, avg_unit_px)
-        elif len(lines) == max_lines and len(words) > len(" ".join(lines).split()):
-            lines[-1] = truncate_text(lines[-1], max_width, avg_unit_px)
+    if len(lines) == max_lines and len(" ".join(lines)) < len(text):
+        lines[-1] = truncate_text(lines[-1], max_width, size, bold=bold)
     return lines
 
 
@@ -230,11 +231,11 @@ def legend_rows(stats: RepoStats, theme: dict, x: float, y: float) -> str:
 
 def render_card(stats: RepoStats, theme: dict, x: int, y: int, width: int, height: int) -> str:
     monogram = acronym(stats.name)
-    title_width = 154
+    title_width = 160
     desc_width = 168
-    display_title = truncate_text(stats.name, title_width, 9.2)
+    display_title = truncate_text(stats.name, title_width, 22, bold=True)
     title = escape_text(display_title)
-    description_lines = wrap_text(stats.description, desc_width, 6.1, max_lines=2)
+    description_lines = wrap_text(stats.description, desc_width, 14, max_lines=2)
     tags = stats.tags[:3]
     stars = stats.stars
     updated = relative_time(stats.updated_at)
@@ -290,15 +291,20 @@ def render_svg(projects: List[RepoStats], theme: dict) -> str:
     gap_y = 16
     start_x = 58
     start_y = 154
+    bottom_padding = 40
+    rows = max(1, (len(projects) + 1) // 2)
+    content_bottom = start_y + rows * card_h + (rows - 1) * gap_y
+    height = content_bottom + bottom_padding
+    panel_height = height - 58
 
     parts = [
         '<?xml version="1.0" encoding="UTF-8"?>',
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="648" viewBox="0 0 {width} 648" role="img" aria-labelledby="title desc">',
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">',
         f'<title id="title">Featured projects</title>',
         f'<desc id="desc">Clickable project cards generated from live GitHub repository data.</desc>',
-        f'<rect width="{width}" height="648" rx="24" fill="{theme["bg"]}"/>',
-        f'<rect x="0" y="0" width="{width}" height="648" rx="24" fill="none" stroke="{theme["outer_stroke"]}"/>',
-        f'<rect x="58" y="58" width="1024" height="532" rx="24" fill="{theme["panel"]}" stroke="{theme["stroke"]}"/>',
+        f'<rect width="{width}" height="{height}" rx="24" fill="{theme["bg"]}"/>',
+        f'<rect x="0" y="0" width="{width}" height="{height}" rx="24" fill="none" stroke="{theme["outer_stroke"]}"/>',
+        f'<rect x="58" y="58" width="1024" height="{panel_height}" rx="24" fill="{theme["panel"]}" stroke="{theme["stroke"]}"/>',
         f'<text x="116" y="114" fill="{theme["text"]}" font-size="24" font-weight="800">Featured Projects</text>',
         f'<text x="116" y="134" fill="{theme["muted"]}" font-size="13">Selected public work across web, mobile, backend, and product systems.</text>',
         f'<rect x="116" y="144" width="872" height="2" fill="url(#accent-line)" />',

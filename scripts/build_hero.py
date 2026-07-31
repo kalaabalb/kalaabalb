@@ -11,10 +11,11 @@ import math
 import os
 import random
 from collections import deque
+from functools import lru_cache
 from pathlib import Path
 from typing import Iterable, List, Sequence, Tuple
 
-from PIL import Image, ImageFilter, ImageStat
+from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageStat
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -34,6 +35,8 @@ RIGHT_W = 661
 RIGHT_H = 440
 POINT_COUNT = 624
 RNG = random.Random(97)
+FONT_REGULAR = "/usr/share/fonts/dejavu-sans-fonts/DejaVuSans.ttf"
+FONT_BOLD = "/usr/share/fonts/dejavu-sans-fonts/DejaVuSans-Bold.ttf"
 
 HOLD = 3.0
 MOVE = 2.0
@@ -132,7 +135,7 @@ def detect_foreground(image: Image.Image) -> Tuple[Image.Image, Image.Image]:
     min_y = min(y for _, y in best)
     max_y = max(y for _, y in best)
 
-    pad = 10
+    pad = 4
     left = max(0, min_x - pad)
     top = max(0, min_y - pad)
     right = min(w, max_x + pad + 1)
@@ -163,7 +166,7 @@ def weighted_sample_points(image: Image.Image, mask: Image.Image, count: int) ->
     mask_px = list(mask.getdata())
     w, h = image.size
 
-    heap: List[Tuple[float, Tuple[int, int]]] = []
+    candidates: List[Tuple[float, int, int]] = []
     for y in range(h):
         row = y * w
         for x in range(w):
@@ -171,21 +174,40 @@ def weighted_sample_points(image: Image.Image, mask: Image.Image, count: int) ->
                 continue
             dark = 1.0 - (gray_px[row + x] / 255.0)
             edge = edge_px[row + x] / 255.0
-            weight = max(0.01, 0.68 * edge + 0.32 * dark)
-            key = RNG.random() ** (1.0 / weight)
-            item = (key, (x, y))
-            if len(heap) < count:
-                heapq.heappush(heap, item)
-            elif key > heap[0][0]:
-                heapq.heapreplace(heap, item)
+            weight = max(0.01, 0.88 * edge + 0.12 * dark)
+            candidates.append((weight, x, y))
+
+    if not candidates:
+        return [(0.0, 0.0)] * count
+
+    candidates.sort(key=lambda item: item[0], reverse=True)
+    trim = max(count * 4, int(len(candidates) * 0.62))
+    candidates = candidates[:trim]
+
+    heap: List[Tuple[float, Tuple[int, int]]] = []
+    for weight, x, y in candidates:
+        key = RNG.random() ** (1.0 / weight)
+        item = (key, (x, y))
+        if len(heap) < count:
+            heapq.heappush(heap, item)
+        elif key > heap[0][0]:
+            heapq.heapreplace(heap, item)
 
     points = [point for _, point in heap]
     points.sort(key=lambda p: (p[1], p[0]))
     if len(points) < count:
-        fallback = [(x, y) for y in range(h) for x in range(w) if mask_px[y * w + x]]
+        fallback = [(x, y) for _, x, y in candidates]
         fallback.sort(key=lambda p: (p[1], p[0]))
         while len(points) < count and fallback:
-            points.append(fallback[len(points) % len(fallback)])
+            base = fallback[len(points) % len(fallback)]
+            angle = RNG.random() * math.tau
+            radius = 2.0 + RNG.random() * 4.0
+            nx = clamp(base[0] + math.cos(angle) * radius, 0, w - 1)
+            ny = clamp(base[1] + math.sin(angle) * radius, 0, h - 1)
+            if mask_px[int(ny) * w + int(nx)]:
+                points.append((int(nx), int(ny)))
+            else:
+                points.append(base)
     return [(float(x), float(y)) for x, y in points[:count]]
 
 
@@ -242,8 +264,26 @@ def sample_polygon(points: Sequence[Tuple[float, float]], count: int, jitter: fl
             x += step
         y += step
     if len(candidates) < count:
-        while len(candidates) < count:
-            candidates.append((RNG.uniform(min_x, max_x), RNG.uniform(min_y, max_y)))
+        valid = list(candidates)
+        attempts = 0
+        max_attempts = max(200, count * 50)
+        while len(candidates) < count and attempts < max_attempts:
+            attempts += 1
+            x = RNG.uniform(min_x, max_x)
+            y = RNG.uniform(min_y, max_y)
+            if point_in_polygon(x, y, points):
+                candidates.append((x, y))
+        if len(candidates) < count and valid:
+            while len(candidates) < count:
+                base = valid[len(candidates) % len(valid)]
+                angle = RNG.random() * math.tau
+                radius = step * (0.18 + 0.12 * RNG.random())
+                x = clamp(base[0] + math.cos(angle) * radius, min_x, max_x)
+                y = clamp(base[1] + math.sin(angle) * radius, min_y, max_y)
+                if point_in_polygon(x, y, points):
+                    candidates.append((x, y))
+                else:
+                    candidates.append(base)
     return sort_points(candidates)[:count]
 
 
@@ -359,7 +399,7 @@ def sample_node_shape(center: Tuple[float, float], radius: float, count: int) ->
 def make_state_points() -> Tuple[List[Tuple[float, float]], ...]:
     raw = Image.open(SOURCE)
     cropped, mask = detect_foreground(raw)
-    resized, resized_mask = resize_to_working_canvas(cropped, mask, target_w=250)
+    resized, resized_mask = resize_to_working_canvas(cropped, mask, target_w=384)
     portrait_raw = weighted_sample_points(resized, resized_mask, POINT_COUNT)
     portrait_raw = sort_points(portrait_raw)
 
@@ -378,6 +418,18 @@ def escape_text(value: str) -> str:
         .replace(">", "&gt;")
         .replace('"', "&quot;")
     )
+
+
+@lru_cache(maxsize=None)
+def measure_font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
+    path = FONT_BOLD if bold else FONT_REGULAR
+    return ImageFont.truetype(path, size=size)
+
+
+def text_width(text: str, size: int, bold: bool = False) -> float:
+    font = measure_font(size, bold=bold)
+    bbox = font.getbbox(text)
+    return float(bbox[2] - bbox[0])
 
 
 def animate_values(values: Sequence[Tuple[float, float]]) -> Tuple[str, str]:
@@ -435,8 +487,6 @@ def build_svg(theme: dict, out_path: Path) -> None:
     lines.append(f'<text x="52" y="94" font-size="10" letter-spacing="3" fill="{theme["muted_dim"]}">VISUAL.MAP</text>')
     lines.append(f'<rect x="52" y="104" width="378" height="440" rx="10" fill="{theme["canvas"]}" stroke="{theme["teal"]}" stroke-width="2"/>')
     lines.append(f'<rect x="52" y="104" width="378" height="440" rx="10" fill="none" stroke="url(#frame)" stroke-width="2"/>')
-    lines.append(f'<circle cx="371" cy="150" r="2.8" fill="{theme["amber"]}"/>')
-    lines.append(f'<circle cx="382" cy="162" r="1.8" fill="{theme["sage"]}" opacity="0.7"/>')
 
     for i in range(POINT_COUNT):
         x_anim = xs[i]
@@ -449,14 +499,13 @@ def build_svg(theme: dict, out_path: Path) -> None:
             "</circle>"
         )
 
-    lines.append(
-        f'<text x="64" y="520" font-size="11" fill="{theme["muted"]}">terminal render: portrait → point cloud</text>'
-    )
+    lines.append(f'<text x="64" y="520" font-size="11" fill="{theme["muted"]}">terminal render: identity ↔ stack</text>')
 
     lines.append(f'<rect x="{RIGHT_X}" y="{RIGHT_Y}" width="{RIGHT_W}" height="{RIGHT_H}" rx="10" fill="{theme["panel_right"]}" stroke="{theme["panel_stroke"]}"/>')
     lines.append(f'<text x="486" y="140" font-size="18" fill="{theme["teal"]}" font-weight="700" letter-spacing="1.1">SYSTEM.INFO</text>')
     lines.append(f'<text x="1049" y="140" font-size="16" fill="{theme["accent_live"]}" font-weight="700">● LIVE</text>')
-    lines.append(f'<rect x="486" y="154" width="180" height="24" rx="6" fill="{theme["accent_bar"]}"/>')
+    pill_width = max(180, int(math.ceil(text_width(theme["mail"], 14, bold=True) + 24)))
+    lines.append(f'<rect x="486" y="154" width="{pill_width}" height="24" rx="6" fill="{theme["accent_bar"]}"/>')
     lines.append(f'<text x="496" y="171" font-size="14" fill="{theme["accent_text"]}" font-weight="700">{escape_text(theme["mail"])}</text>')
 
     info_rows = [
@@ -470,11 +519,26 @@ def build_svg(theme: dict, out_path: Path) -> None:
         ("Core.Database", "MongoDB, MySQL, PostgreSQL"),
         ("Core.Infra", "Firebase, Docker, Git, Linux"),
     ]
-    row_y = 204
+    row_y = 200
     for label, value in info_rows:
-        lines.append(f'<text x="486" y="{row_y}" fill="{theme["teal"]}">{escape_text(label)}</text>')
-        lines.append(f'<text x="1102" y="{row_y}" text-anchor="end" font-weight="700" fill="{theme["text"]}">{escape_text(value)}</text>')
-        row_y += 26 if label not in {"Core.Database", "Core.Infra"} else 24
+        lines.append(f'<text x="486" y="{row_y}" font-size="13" fill="{theme["teal"]}">{escape_text(label)}</text>')
+        lines.append(f'<text x="1102" y="{row_y}" text-anchor="end" font-size="13" font-weight="700" fill="{theme["text"]}">{escape_text(value)}</text>')
+        row_y += 21 if label not in {"Core.Database", "Core.Infra"} else 19
+
+    lines.append(f'<text x="486" y="{row_y + 6}" font-size="12" fill="{theme["muted_dim"]}">- Contact -</text>')
+    lines.append(f'<line x1="560" y1="{row_y + 2}" x2="1100" y2="{row_y + 2}" stroke="{theme["muted_dim"]}" stroke-width="1" stroke-dasharray="4 6" opacity="0.45"/>')
+    row_y += 26
+
+    contact_rows = [
+        ("Grid.Mail", "alebachewkalaab99@gmail.com"),
+        ("Grid.LinkedIn", "kalaab-alb"),
+        ("Grid.Instagram", "kalaabalb"),
+        ("Grid.GitHub", "@kalaabalb"),
+    ]
+    for label, value in contact_rows:
+        lines.append(f'<text x="486" y="{row_y}" font-size="13" fill="{theme["teal"]}">{escape_text(label)}</text>')
+        lines.append(f'<text x="1102" y="{row_y}" text-anchor="end" font-size="13" font-weight="700" fill="{theme["text"]}">{escape_text(value)}</text>')
+        row_y += 21
 
     chip_specs = [
         ("Flutter", 80, theme["chip_fill_teal"], theme["chip_stroke_teal"]),
@@ -521,8 +585,8 @@ def main() -> None:
         "chip_stroke_teal": "#54b7b2",
         "chip_fill_amber": "#241a12",
         "chip_stroke_amber": "#d39a52",
-        "mail": "kalaabalb.connect@gmail.com",
-        "terminal": "kalaabalb.connect@gmail.com - % ./profile.sh --live",
+        "mail": "alebachewkalaab99@gmail.com",
+        "terminal": "alebachewkalaab99@gmail.com - % ./profile.sh --live",
         "dot_r": "1.55",
     }
     light = {
@@ -547,8 +611,8 @@ def main() -> None:
         "chip_stroke_teal": "#0f6e56",
         "chip_fill_amber": "#f4ecdf",
         "chip_stroke_amber": "#95611f",
-        "mail": "kalaabalb.connect@gmail.com",
-        "terminal": "kalaabalb.connect@gmail.com - % ./profile.sh --live",
+        "mail": "alebachewkalaab99@gmail.com",
+        "terminal": "alebachewkalaab99@gmail.com - % ./profile.sh --live",
         "dot_r": "1.55",
     }
     build_svg(dark, OUT_DARK)
