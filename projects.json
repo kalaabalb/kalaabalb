@@ -2,36 +2,48 @@
   {
     "name": "familyacademy.et",
     "repo": "kalaabalb/familyacademy.et",
+    "logo": "FA",
+    "accent": "#54b7b2",
     "description": "Cinematic public landing page and download hub.",
     "tags": ["Brand", "SEO", "Downloads"]
   },
   {
     "name": "family-academy-client",
     "repo": "kalaabalb/family-academy-client",
+    "logo": "FAC",
+    "accent": "#a78bfa",
     "description": "Client app for the Family Academy ecosystem.",
     "tags": ["Product App", "User Flow"]
   },
   {
     "name": "ecommerce-backend-api",
     "repo": "kalaabalb/ecommerce-backend-api",
+    "logo": "EBA",
+    "accent": "#22c55e",
     "description": "Backend API for the e-commerce system.",
     "tags": ["API", "Data Flow", "Node"]
   },
   {
     "name": "e-commerce-app",
     "repo": "kalaabalb/e-commerce-app",
+    "logo": "ECA",
+    "accent": "#fb7185",
     "description": "Flutter commerce app with a public footprint.",
     "tags": ["Flutter", "Mobile UI", "Storefront"]
   },
   {
     "name": "force",
     "repo": "kalaabalb/force",
+    "logo": "FO",
+    "accent": "#f59e0b",
     "description": "School management system for grading workflows.",
     "tags": ["Java", "Students", "Teachers"]
   },
   {
     "name": "yomoblies",
     "repo": "kalaabalb/yomoblies",
+    "logo": "YO",
+    "accent": "#60a5fa",
     "description": "Dart project with active recent development.",
     "tags": ["Dart", "Mobile", "Active"]
   }

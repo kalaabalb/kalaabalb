@@ -28,6 +28,8 @@ FONT_REGULAR = ROOT / "fonts" / "LiberationSans-Regular.ttf"
 class RepoStats:
     full_name: str
     name: str
+    logo: str
+    accent: str
     description: str
     tags: List[str]
     stars: int
@@ -190,6 +192,8 @@ def collect_repo_stats(project: dict, token: str | None) -> RepoStats:
     return RepoStats(
         full_name=full_name,
         name=project["name"],
+        logo=str(project.get("logo") or acronym(project["name"])),
+        accent=str(project.get("accent") or ""),
         description=project["description"],
         tags=list(project.get("tags", [])),
         stars=stars,
@@ -250,10 +254,27 @@ def legend_rows(stats: RepoStats, theme: dict, donut_cx: float, donut_r: float, 
     return "".join(parts)
 
 
-def render_card(stats: RepoStats, theme: dict, x: int, y: int, width: int, height: int) -> str:
-    monogram = acronym(stats.name)
-    title_width = max(160, width - 220)
-    desc_width = max(168, width - 212)
+def card_accent(stats: RepoStats, theme: dict, index: int) -> str:
+    if stats.accent:
+        return stats.accent
+    palette = [theme["teal"], theme["amber"], theme["sage"]]
+    return palette[index % len(palette)]
+
+
+def render_logo_badge(stats: RepoStats, theme: dict, accent: str, x: float, y: float) -> str:
+    fill = theme["badge_bg"]
+    return (
+        f'<rect x="{x}" y="{y}" width="46" height="46" rx="13" fill="{fill}" stroke="{accent}" stroke-width="1.6"/>'
+        f'<rect x="{x + 4}" y="{y + 4}" width="38" height="38" rx="11" fill="{accent}" fill-opacity="0.10"/>'
+        f'<text x="{x + 23}" y="{y + 29}" text-anchor="middle" fill="{accent}" font-size="16" font-weight="800">'
+        f'{escape_text(stats.logo)}</text>'
+    )
+
+
+def render_card(stats: RepoStats, theme: dict, x: int, y: int, width: int, height: int, index: int) -> str:
+    accent = card_accent(stats, theme, index)
+    title_width = max(150, width - 220)
+    desc_width = max(170, width - 214)
     display_title = truncate_text(stats.name, title_width, 22, bold=True)
     title = escape_text(display_title)
     description_lines = wrap_text(stats.description, desc_width, 14, max_lines=2)
@@ -264,26 +285,21 @@ def render_card(stats: RepoStats, theme: dict, x: int, y: int, width: int, heigh
     html.append(f'<a href="{escape_text(stats.repo_url)}">')
     html.append(f'<g transform="translate({x} {y})">')
     html.append(f'<rect width="{width}" height="{height}" rx="18" fill="{theme["card"]}" stroke="{theme["stroke"]}"/>')
-    html.append(f'<rect x="18" y="16" width="42" height="5" rx="2.5" fill="{theme["teal"]}"/>')
-    html.append(f'<circle cx="32" cy="54" r="18" fill="{theme["badge_bg"]}" stroke="{theme["badge_stroke"]}"/>')
-    html.append(f'<text x="32" y="60" text-anchor="middle" fill="{theme["badge_text"]}" font-size="15" font-weight="800">{escape_text(monogram)}</text>')
-    html.append(f'<text x="60" y="50" fill="{theme["text"]}" font-size="22" font-weight="800">{title}</text>')
-    html.append(
-        f'<text x="60" y="50" dx="{len(display_title) * 11 + 8}" fill="{theme["text"]}" font-size="22" font-weight="800" opacity="0.9">_'
-        f'<animate attributeName="opacity" values="0;1;1;0" dur="1.1s" repeatCount="indefinite"/>'
-        "</text>"
-    )
-    desc_y = 76
+    html.append(f'<rect x="18" y="16" width="42" height="5" rx="2.5" fill="{accent}"/>')
+    html.append(f'<text x="18" y="39" font-size="10" fill="{theme["muted"]}">• {escape_text(stats.full_name)}</text>')
+    html.append(render_logo_badge(stats, theme, accent, 18, 50))
+    html.append(f'<text x="78" y="55" fill="{theme["text"]}" font-size="21" font-weight="800">{title}</text>')
+    desc_y = 79
     if description_lines:
-        desc_parts = [f'<text x="60" y="{desc_y}" fill="{theme["muted"]}" font-size="14">']
+        desc_parts = [f'<text x="78" y="{desc_y}" fill="{theme["muted"]}" font-size="14">']
         for idx, line in enumerate(description_lines):
             dy = 0 if idx == 0 else 17
-            desc_parts.append(f'<tspan x="60" dy="{dy}">{escape_text(line)}</tspan>')
+            desc_parts.append(f'<tspan x="78" dy="{dy}">{escape_text(line)}</tspan>')
         desc_parts.append("</text>")
         html.append("".join(desc_parts))
 
     tag_x = 18
-    tag_y = 122 if len(description_lines) > 1 else 118
+    tag_y = 120 if len(description_lines) > 1 else 116
     for tag in tags:
         label = escape_text(tag)
         box_w = max(54, 10 + len(tag) * 7)
@@ -296,6 +312,7 @@ def render_card(stats: RepoStats, theme: dict, x: int, y: int, width: int, heigh
     donut_r = 28
     html.append(build_donut(donut_cx, 84, stats, theme))
     html.append(legend_rows(stats, theme, donut_cx, donut_r, 42))
+    html.append(f'<circle cx="{width - 18}" cy="18" r="4" fill="{accent}" fill-opacity="0.9"/>')
     html.append(
         f'<text x="{width - 62}" y="{height - 16}" text-anchor="middle" font-size="11" fill="{theme["muted"]}">'
         f'click to open'
@@ -342,7 +359,7 @@ def render_svg(projects: List[RepoStats], theme: dict, build_id: str) -> str:
         row = index // 2
         x = start_x + col * (card_w + gap_x)
         y = start_y + row * (card_h + gap_y)
-        parts.append(render_card(stats, theme, x, y, card_w, card_h))
+        parts.append(render_card(stats, theme, x, y, card_w, card_h, index))
 
     parts.append("</svg>")
     return "\n".join(parts)

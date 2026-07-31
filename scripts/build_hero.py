@@ -160,52 +160,68 @@ def resize_to_working_canvas(image: Image.Image, mask: Image.Image, target_w: in
 
 def crop_portrait_focus(image: Image.Image) -> Image.Image:
     w, h = image.size
-    left = int(round(w * 0.12))
-    top = int(round(h * 0.03))
-    right = int(round(w * 0.90))
-    bottom = int(round(h * 0.88))
+    left = int(round(w * 0.10))
+    top = int(round(h * 0.00))
+    right = int(round(w * 0.88))
+    bottom = int(round(h * 0.84))
     return image.crop((left, top, right, bottom))
 
 
-def sample_portrait_grid(image: Image.Image, count: int) -> List[Tuple[float, float]]:
+def sample_portrait_grid(image: Image.Image, mask: Image.Image, count: int) -> List[Tuple[float, float]]:
     gray = image.convert("L")
     edges = gray.filter(ImageFilter.FIND_EDGES)
     w, h = image.size
     gray_px = list(gray.getdata())
     edge_px = list(edges.getdata())
+    mask_px = list(mask.getdata())
     px = image.load()
 
-    sample = []
-    edge = 8
-    for y in range(edge):
-        for x in range(w):
-            sample.append(px[x, y])
-            sample.append(px[x, h - 1 - y])
-    for x in range(edge):
-        for y in range(h):
-            sample.append(px[x, y])
-            sample.append(px[w - 1 - x, y])
-    bg = average_rgb(sample)
+    def background_color() -> Tuple[int, int, int]:
+        sample = []
+        edge = 8
+        for y in range(edge):
+            for x in range(w):
+                sample.append(px[x, y])
+                sample.append(px[x, h - 1 - y])
+        for x in range(edge):
+            for y in range(h):
+                sample.append(px[x, y])
+                sample.append(px[w - 1 - x, y])
+        return average_rgb(sample)
+
+    bg = background_color()
 
     cols = 32
     rows = 24
     step_x = w / float(cols)
     step_y = h / float(rows)
-    cells: List[Tuple[float, float, float]] = []
-    for row in range(rows):
-        for col in range(cols):
-            cx = (col + 0.5) * step_x
-            cy = (row + 0.5) * step_y
-            ix = min(w - 1, max(0, int(round(cx))))
-            iy = min(h - 1, max(0, int(round(cy))))
-            r, g, b, a = px[ix, iy]
-            if a < 16:
-                continue
-            dist = rgb_distance((r, g, b), bg)
-            edge_value = edge_px[iy * w + ix] / 255.0
-            lum = gray_px[iy * w + ix] / 255.0
-            score = dist * 0.55 + edge_value * 120.0 + (1.0 - lum) * 30.0
-            cells.append((score, cx, cy))
+
+    def scan(require_mask: bool) -> List[Tuple[float, float, float]]:
+        cells: List[Tuple[float, float, float]] = []
+        for row in range(rows):
+            for col in range(cols):
+                cx = (col + 0.5) * step_x
+                cy = (row + 0.5) * step_y
+                ix = min(w - 1, max(0, int(round(cx))))
+                iy = min(h - 1, max(0, int(round(cy))))
+                if require_mask and not mask_px[iy * w + ix]:
+                    continue
+                r, g, b, a = px[ix, iy]
+                if a < 16:
+                    continue
+                dist = rgb_distance((r, g, b), bg)
+                edge_value = edge_px[iy * w + ix] / 255.0
+                lum = gray_px[iy * w + ix] / 255.0
+                fx = (cx - w * 0.5) / max(1.0, w * 0.24)
+                fy = (cy - h * 0.42) / max(1.0, h * 0.30)
+                face_focus = math.exp(-(fx * fx + fy * fy))
+                score = dist * 0.38 + edge_value * 130.0 + (1.0 - lum) * 28.0 + face_focus * 110.0
+                cells.append((score, cx, cy))
+        return cells
+
+    cells = scan(require_mask=True)
+    if len(cells) < max(80, count // 2):
+        cells = scan(require_mask=False)
 
     cells.sort(key=lambda item: item[0], reverse=True)
     selected = cells[:count]
@@ -535,7 +551,8 @@ def make_state_points() -> Tuple[List[Tuple[float, float]], ...]:
         (420, max(1, int(round(portrait_focus.size[1] * 420.0 / portrait_focus.size[0])))),
         Image.LANCZOS,
     )
-    portrait_raw = sample_portrait_grid(portrait_resized, POINT_COUNT)
+    portrait_mask = build_subject_mask(portrait_resized)
+    portrait_raw = sample_portrait_grid(portrait_resized, portrait_mask, POINT_COUNT)
 
     panel_cx = LEFT_X + LEFT_W / 2
     panel_cy = LEFT_Y + LEFT_H / 2
