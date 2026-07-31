@@ -313,9 +313,11 @@ def render_card(stats: RepoStats, theme: dict, x: int, y: int, width: int, heigh
     html.append(build_donut(donut_cx, 84, stats, theme))
     html.append(legend_rows(stats, theme, donut_cx, donut_r, 42))
     html.append(f'<circle cx="{width - 18}" cy="18" r="4" fill="{accent}" fill-opacity="0.9"/>')
+    repo_label = escape_text(stats.full_name)
+    repo_label = truncate_text(repo_label, 150, 11)
     html.append(
-        f'<text x="{width - 62}" y="{height - 16}" text-anchor="middle" font-size="11" fill="{theme["muted"]}">'
-        f'click to open'
+        f'<text x="{width - 18}" y="{height - 16}" text-anchor="end" font-size="11" fill="{theme["muted"]}">'
+        f'github.com/{repo_label}'
         "</text>"
     )
     html.append("</g>")

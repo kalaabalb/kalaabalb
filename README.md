@@ -47,11 +47,13 @@
 <br/>
 <br/>
 <div align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kalaabalb/kalaabalb/projects/projects.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kalaabalb/kalaabalb/projects/projects-light.svg" />
-  <img width="100%" src="https://raw.githubusercontent.com/kalaabalb/kalaabalb/projects/projects-light.svg" alt="Projects" />
-</picture>
+<a href="https://github.com/kalaabalb?tab=repositories">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kalaabalb/kalaabalb/projects/projects.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kalaabalb/kalaabalb/projects/projects-light.svg" />
+    <img width="100%" src="https://raw.githubusercontent.com/kalaabalb/kalaabalb/projects/projects-light.svg" alt="Projects" />
+  </picture>
+</a>
 </div>
 
 <!-- ===== SOCIAL BADGES ===== -->
