@@ -283,7 +283,7 @@ def render_card(stats: RepoStats, theme: dict, x: int, y: int, width: int, heigh
     return "".join(html)
 
 
-def render_svg(projects: List[RepoStats], theme: dict) -> str:
+def render_svg(projects: List[RepoStats], theme: dict, build_id: str) -> str:
     width = 1140
     card_w = 340
     card_h = 176
@@ -302,6 +302,7 @@ def render_svg(projects: List[RepoStats], theme: dict) -> str:
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">',
         f'<title id="title">Featured projects</title>',
         f'<desc id="desc">Clickable project cards generated from live GitHub repository data.</desc>',
+        f'<!-- build:{escape_text(build_id)} -->',
         f'<rect width="{width}" height="{height}" rx="24" fill="{theme["bg"]}"/>',
         f'<rect x="0" y="0" width="{width}" height="{height}" rx="24" fill="none" stroke="{theme["outer_stroke"]}"/>',
         f'<rect x="58" y="58" width="1024" height="{panel_height}" rx="24" fill="{theme["panel"]}" stroke="{theme["stroke"]}"/>',
@@ -382,8 +383,9 @@ def main() -> int:
     for item in raw_projects:
         repo_stats.append(collect_repo_stats(item, args.token))
 
-    dark = render_svg(repo_stats, build_theme("dark"))
-    light = render_svg(repo_stats, build_theme("light"))
+    build_id = os.environ.get("GITHUB_SHA", "local")
+    dark = render_svg(repo_stats, build_theme("dark"), build_id)
+    light = render_svg(repo_stats, build_theme("light"), build_id)
 
     (out_dir / "projects.svg").write_text(dark, encoding="utf-8")
     (out_dir / "projects-light.svg").write_text(light, encoding="utf-8")
