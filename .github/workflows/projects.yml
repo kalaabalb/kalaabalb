@@ -27,6 +27,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install Pillow
+        run: python -m pip install --upgrade pip pillow
+
       - name: Render projects SVGs
         run: python scripts/build_projects.py --input projects.json --out dist-projects
         env:
