@@ -244,8 +244,7 @@ def sample_polygon(points: Sequence[Tuple[float, float]], count: int, jitter: fl
     if len(candidates) < count:
         while len(candidates) < count:
             candidates.append((RNG.uniform(min_x, max_x), RNG.uniform(min_y, max_y)))
-    candidates.sort(key=lambda p: (p[1], p[0]))
-    return candidates[:count]
+    return sort_points(candidates)[:count]
 
 
 def sample_ellipse_ring(
@@ -289,8 +288,7 @@ def sample_hexagon_ring(center: Tuple[float, float], radius: float, count: int) 
         angle = RNG.random() * math.tau
         radius_j = radius * (0.60 + 0.10 * RNG.random())
         pts.append((cx + radius_j * math.cos(angle), cy + radius_j * math.sin(angle)))
-    pts.sort(key=lambda p: (p[1], p[0]))
-    return pts[:count]
+    return sort_points(pts)[:count]
 
 
 def sample_flame_shape(center: Tuple[float, float], width: float, height: float, count: int) -> List[Tuple[float, float]]:
@@ -342,8 +340,7 @@ def sample_react_shape(center: Tuple[float, float], width: float, height: float,
         angle = RNG.random() * math.tau
         radius = min(width, height) * 0.08 * math.sqrt(RNG.random())
         pts.append((cx + math.cos(angle) * radius, cy + math.sin(angle) * radius))
-    pts.sort(key=lambda p: (p[1], p[0]))
-    return pts[:count]
+    return sort_points(pts)[:count]
 
 
 def sample_node_shape(center: Tuple[float, float], radius: float, count: int) -> List[Tuple[float, float]]:
@@ -356,8 +353,7 @@ def sample_node_shape(center: Tuple[float, float], radius: float, count: int) ->
         inner.append((cx + radius * 0.54 * math.cos(angle), cy + radius * 0.54 * math.sin(angle)))
     pts = sample_polygon(outer + [outer[0]], count // 2, jitter=0.52)
     pts += sample_polygon(inner + [inner[0]], count - len(pts), jitter=0.42)
-    pts.sort(key=lambda p: (p[1], p[0]))
-    return pts[:count]
+    return sort_points(pts)[:count]
 
 
 def make_state_points() -> Tuple[List[Tuple[float, float]], ...]:

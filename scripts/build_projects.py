@@ -43,6 +43,70 @@ def escape_text(value: str) -> str:
     )
 
 
+def text_units(text: str) -> float:
+    total = 0.0
+    for ch in text:
+        if ch == " ":
+            total += 0.45
+        elif ch in "-_./":
+            total += 0.6
+        elif ch.isdigit():
+            total += 0.72
+        elif ch.isupper():
+            total += 1.0
+        else:
+            total += 0.82
+    return total
+
+
+def truncate_text(text: str, max_width: float, avg_unit_px: float, suffix: str = "…") -> str:
+    if not text:
+        return text
+    if text_units(text) * avg_unit_px <= max_width:
+        return text
+    limit = max(1, int(max_width / avg_unit_px) - len(suffix))
+    while limit > 1 and text_units(text[:limit] + suffix) * avg_unit_px > max_width:
+        limit -= 1
+    return text[:limit].rstrip() + suffix
+
+
+def wrap_text(text: str, max_width: float, avg_unit_px: float, max_lines: int = 2) -> List[str]:
+    words = [word for word in text.split() if word]
+    if not words:
+        return []
+
+    lines: List[str] = []
+    current = ""
+    for word in words:
+        candidate = word if not current else f"{current} {word}"
+        if text_units(candidate) * avg_unit_px <= max_width:
+            current = candidate
+            continue
+        if current:
+            lines.append(current)
+        elif text_units(word) * avg_unit_px <= max_width:
+            lines.append(word)
+        else:
+            lines.append(truncate_text(word, max_width, avg_unit_px))
+        current = word if text_units(word) * avg_unit_px <= max_width else ""
+        if len(lines) >= max_lines:
+            break
+
+    if len(lines) < max_lines and current:
+        lines.append(current)
+
+    if len(lines) > max_lines:
+        lines = lines[:max_lines]
+
+    if lines and len(lines) == max_lines:
+        last = lines[-1]
+        if text_units(last) * avg_unit_px > max_width:
+            lines[-1] = truncate_text(last, max_width, avg_unit_px)
+        elif len(lines) == max_lines and len(words) > len(" ".join(lines).split()):
+            lines[-1] = truncate_text(lines[-1], max_width, avg_unit_px)
+    return lines
+
+
 def api_get(path: str, token: str | None) -> object:
     url = f"https://api.github.com{path}"
     headers = {
@@ -166,12 +230,14 @@ def legend_rows(stats: RepoStats, theme: dict, x: float, y: float) -> str:
 
 def render_card(stats: RepoStats, theme: dict, x: int, y: int, width: int, height: int) -> str:
     monogram = acronym(stats.name)
-    title = escape_text(stats.name)
-    description = escape_text(stats.description)
+    title_width = 154
+    desc_width = 168
+    display_title = truncate_text(stats.name, title_width, 9.2)
+    title = escape_text(display_title)
+    description_lines = wrap_text(stats.description, desc_width, 6.1, max_lines=2)
     tags = stats.tags[:3]
     stars = stats.stars
     updated = relative_time(stats.updated_at)
-    segments = bytes_to_percentages(stats.languages)
     html = []
     html.append(f'<a href="{escape_text(stats.repo_url)}">')
     html.append(f'<g transform="translate({x} {y})">')
@@ -181,18 +247,21 @@ def render_card(stats: RepoStats, theme: dict, x: int, y: int, width: int, heigh
     html.append(f'<text x="32" y="60" text-anchor="middle" fill="{theme["badge_text"]}" font-size="15" font-weight="800">{escape_text(monogram)}</text>')
     html.append(f'<text x="60" y="50" fill="{theme["text"]}" font-size="22" font-weight="800">{title}</text>')
     html.append(
-        f'<text x="60" y="50" dx="{len(stats.name) * 11 + 8}" fill="{theme["text"]}" font-size="22" font-weight="800" opacity="0.9">_'
+        f'<text x="60" y="50" dx="{len(display_title) * 11 + 8}" fill="{theme["text"]}" font-size="22" font-weight="800" opacity="0.9">_'
         f'<animate attributeName="opacity" values="0;1;1;0" dur="1.1s" repeatCount="indefinite"/>'
         "</text>"
     )
-    html.append(
-        f'<text x="60" y="76" fill="{theme["muted"]}" font-size="14">'
-        f'<tspan x="60" dy="0">{description}</tspan>'
-        "</text>"
-    )
+    desc_y = 76
+    if description_lines:
+        desc_parts = [f'<text x="60" y="{desc_y}" fill="{theme["muted"]}" font-size="14">']
+        for idx, line in enumerate(description_lines):
+            dy = 0 if idx == 0 else 17
+            desc_parts.append(f'<tspan x="60" dy="{dy}">{escape_text(line)}</tspan>')
+        desc_parts.append("</text>")
+        html.append("".join(desc_parts))
 
     tag_x = 18
-    tag_y = 118
+    tag_y = 122 if len(description_lines) > 1 else 118
     for tag in tags:
         label = escape_text(tag)
         box_w = max(54, 10 + len(tag) * 7)
@@ -203,8 +272,6 @@ def render_card(stats: RepoStats, theme: dict, x: int, y: int, width: int, heigh
     html.append(f'<text x="18" y="156" font-size="12" fill="{theme["muted"]}">★ {stars} · {escape_text(updated)}</text>')
     html.append(build_donut(width - 46, 84, stats, theme))
     html.append(legend_rows(stats, theme, width - 110, 42))
-    html.append(f'<text x="{width - 62}" y="62" text-anchor="middle" font-size="22" fill="{theme["text"]}" font-weight="800">{stars}</text>')
-    html.append(f'<text x="{width - 62}" y="82" text-anchor="middle" font-size="10" fill="{theme["muted"]}">stars</text>')
     html.append(
         f'<text x="{width - 62}" y="{height - 16}" text-anchor="middle" font-size="11" fill="{theme["muted"]}">'
         f'← click to open'
