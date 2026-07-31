@@ -1,0 +1,44 @@
+name: Generate profile stats
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/build_stats.py"
+      - ".github/workflows/stats.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Pillow
+        run: python -m pip install --upgrade pip pillow
+
+      - name: Render stats SVGs
+        run: python scripts/build_stats.py --username kalaabalb --out dist-stats
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish stats branch
+        uses: crazy-max/ghaction-github-pages@v5
+        with:
+          target_branch: stats
+          build_dir: dist-stats
+          keep_history: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

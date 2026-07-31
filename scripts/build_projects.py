@@ -48,6 +48,23 @@ def escape_text(value: str) -> str:
     )
 
 
+def legend_label(name: str) -> str:
+    mapping = {
+        "javascript": "JS",
+        "typescript": "TS",
+        "python": "Py",
+        "java": "Java",
+        "dart": "Dart",
+        "html": "HTML",
+        "css": "CSS",
+        "c++": "C++",
+        "c": "C",
+        "cmake": "CM",
+        "node.js": "Node",
+    }
+    return mapping.get(name.lower(), name)
+
+
 @lru_cache(maxsize=None)
 def load_font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
     path = FONT_BOLD if bold else FONT_REGULAR
@@ -217,14 +234,18 @@ def build_donut(cx: float, cy: float, stats: RepoStats, theme: dict) -> str:
     return "".join(parts)
 
 
-def legend_rows(stats: RepoStats, theme: dict, x: float, y: float) -> str:
+def legend_rows(stats: RepoStats, theme: dict, donut_cx: float, donut_r: float, y: float) -> str:
+    text_end_x = donut_cx - donut_r - 8
+    text_start_x = text_end_x - 64
     parts: List[str] = []
     for idx, (lang, pct) in enumerate(bytes_to_percentages(stats.languages)):
         row_y = y + idx * 18
         color = color_for_language(lang, theme, idx)
-        parts.append(f'<circle cx="{x}" cy="{row_y - 4}" r="4" fill="{color}"/>')
+        label = f"{legend_label(lang)} {pct:.0f}%"
+        label = truncate_text(label, text_end_x - text_start_x, 10)
+        parts.append(f'<circle cx="{text_start_x - 10}" cy="{row_y - 4}" r="4" fill="{color}"/>')
         parts.append(
-            f'<text x="{x + 12}" y="{row_y}" font-size="11" fill="{theme["muted"]}">{escape_text(lang)} {pct:.0f}%</text>'
+            f'<text x="{text_end_x}" y="{row_y}" text-anchor="end" font-size="10" fill="{theme["muted"]}">{escape_text(label)}</text>'
         )
     return "".join(parts)
 
@@ -271,8 +292,10 @@ def render_card(stats: RepoStats, theme: dict, x: int, y: int, width: int, heigh
         tag_x += box_w + 8
 
     html.append(f'<text x="18" y="156" font-size="12" fill="{theme["muted"]}">★ {stars} · {escape_text(updated)}</text>')
-    html.append(build_donut(width - 46, 84, stats, theme))
-    html.append(legend_rows(stats, theme, width - 110, 42))
+    donut_cx = width - 46
+    donut_r = 28
+    html.append(build_donut(donut_cx, 84, stats, theme))
+    html.append(legend_rows(stats, theme, donut_cx, donut_r, 42))
     html.append(
         f'<text x="{width - 62}" y="{height - 16}" text-anchor="middle" font-size="11" fill="{theme["muted"]}">'
         f'← click to open'

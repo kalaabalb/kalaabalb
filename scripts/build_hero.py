@@ -35,8 +35,8 @@ RIGHT_W = 661
 RIGHT_H = 440
 POINT_COUNT = 624
 RNG = random.Random(97)
-FONT_REGULAR = "/usr/share/fonts/dejavu-sans-fonts/DejaVuSans.ttf"
-FONT_BOLD = "/usr/share/fonts/dejavu-sans-fonts/DejaVuSans-Bold.ttf"
+FONT_REGULAR = ROOT / "fonts" / "LiberationSans-Regular.ttf"
+FONT_BOLD = ROOT / "fonts" / "LiberationSans-Bold.ttf"
 
 HOLD = 3.0
 MOVE = 2.0

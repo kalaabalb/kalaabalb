@@ -644,7 +644,7 @@
 <rect x="457" y="104" width="661" height="440" rx="10" fill="#ffffff" stroke="#d8d2c8"/>
 <text x="486" y="140" font-size="18" fill="#0f6e56" font-weight="700" letter-spacing="1.1">SYSTEM.INFO</text>
 <text x="1049" y="140" font-size="16" fill="#95611f" font-weight="700">● LIVE</text>
-<rect x="486" y="154" width="275" height="24" rx="6" fill="#ece3d7"/>
+<rect x="486" y="154" width="237" height="24" rx="6" fill="#ece3d7"/>
 <text x="496" y="171" font-size="14" fill="#1a2020" font-weight="700">alebachewkalaab99@gmail.com</text>
 <text x="486" y="200" font-size="13" fill="#0f6e56">Subject</text>
 <text x="1102" y="200" text-anchor="end" font-size="13" font-weight="700" fill="#1a2020">kalaab Alex</text>

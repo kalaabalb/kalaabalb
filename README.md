@@ -21,12 +21,12 @@
 
 <!-- Stats + Top languages — side by side -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats-sigma-rosy-28.vercel.app/api?username=kalaabalb&show_icons=true&hide_rank=true&hide_border=true&title_color=54b7b2&icon_color=d39a52&text_color=c7d0cc&bg_color=0a1817&card_width=500" />
-  <img width="49%" src="https://github-readme-stats-sigma-rosy-28.vercel.app/api?username=kalaabalb&show_icons=true&hide_rank=true&hide_border=true&title_color=0f6e56&icon_color=95611f&text_color=1a2020&bg_color=f7f4ee&card_width=500" alt="kalaab's GitHub stats" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kalaabalb/kalaabalb/stats/stats-dark.svg" />
+  <img width="49%" src="https://raw.githubusercontent.com/kalaabalb/kalaabalb/stats/stats-light.svg" alt="kalaab's GitHub stats" />
 </picture>
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats-sigma-rosy-28.vercel.app/api/top-langs/?username=kalaabalb&layout=compact&langs_count=8&hide_border=true&title_color=54b7b2&text_color=c7d0cc&bg_color=0a1817&card_width=500" />
-  <img width="49%" src="https://github-readme-stats-sigma-rosy-28.vercel.app/api/top-langs/?username=kalaabalb&layout=compact&langs_count=8&hide_border=true&title_color=0f6e56&text_color=1a2020&bg_color=f7f4ee&card_width=500" alt="Top languages" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kalaabalb/kalaabalb/stats/langs-dark.svg" />
+  <img width="49%" src="https://raw.githubusercontent.com/kalaabalb/kalaabalb/stats/langs-light.svg" alt="Top languages" />
 </picture>
 
 </div>
