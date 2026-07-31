@@ -158,6 +158,65 @@ def resize_to_working_canvas(image: Image.Image, mask: Image.Image, target_w: in
     return image.resize((target_w, target_h), Image.LANCZOS), mask.resize((target_w, target_h), Image.NEAREST)
 
 
+def crop_portrait_focus(image: Image.Image) -> Image.Image:
+    w, h = image.size
+    left = int(round(w * 0.12))
+    top = int(round(h * 0.03))
+    right = int(round(w * 0.90))
+    bottom = int(round(h * 0.88))
+    return image.crop((left, top, right, bottom))
+
+
+def sample_portrait_grid(image: Image.Image, count: int) -> List[Tuple[float, float]]:
+    gray = image.convert("L")
+    edges = gray.filter(ImageFilter.FIND_EDGES)
+    w, h = image.size
+    gray_px = list(gray.getdata())
+    edge_px = list(edges.getdata())
+    px = image.load()
+
+    sample = []
+    edge = 8
+    for y in range(edge):
+        for x in range(w):
+            sample.append(px[x, y])
+            sample.append(px[x, h - 1 - y])
+    for x in range(edge):
+        for y in range(h):
+            sample.append(px[x, y])
+            sample.append(px[w - 1 - x, y])
+    bg = average_rgb(sample)
+
+    cols = 32
+    rows = 24
+    step_x = w / float(cols)
+    step_y = h / float(rows)
+    cells: List[Tuple[float, float, float]] = []
+    for row in range(rows):
+        for col in range(cols):
+            cx = (col + 0.5) * step_x
+            cy = (row + 0.5) * step_y
+            ix = min(w - 1, max(0, int(round(cx))))
+            iy = min(h - 1, max(0, int(round(cy))))
+            r, g, b, a = px[ix, iy]
+            if a < 16:
+                continue
+            dist = rgb_distance((r, g, b), bg)
+            edge_value = edge_px[iy * w + ix] / 255.0
+            lum = gray_px[iy * w + ix] / 255.0
+            score = dist * 0.55 + edge_value * 120.0 + (1.0 - lum) * 30.0
+            cells.append((score, cx, cy))
+
+    cells.sort(key=lambda item: item[0], reverse=True)
+    selected = cells[:count]
+    points: List[Tuple[float, float]] = []
+    for _, cx, cy in selected:
+        jx = clamp(cx + (RNG.random() - 0.5) * step_x * 0.22, 0.0, w - 1.0)
+        jy = clamp(cy + (RNG.random() - 0.5) * step_y * 0.22, 0.0, h - 1.0)
+        points.append((jx, jy))
+    return sort_points(points)
+
+
 def build_subject_mask(image: Image.Image) -> Image.Image:
     rgba = image.convert("RGBA")
     ycbcr = image.convert("YCbCr")
@@ -471,11 +530,12 @@ def sample_node_shape(center: Tuple[float, float], radius: float, count: int) ->
 
 def make_state_points() -> Tuple[List[Tuple[float, float]], ...]:
     raw = Image.open(SOURCE)
-    cropped, mask = detect_foreground(raw)
-    resized, resized_mask = resize_to_working_canvas(cropped, mask, target_w=420)
-    subject_mask = build_subject_mask(resized)
-    portrait_raw = weighted_sample_points(resized, subject_mask, POINT_COUNT)
-    portrait_raw = sort_points(portrait_raw)
+    portrait_focus = crop_portrait_focus(raw)
+    portrait_resized = portrait_focus.resize(
+        (420, max(1, int(round(portrait_focus.size[1] * 420.0 / portrait_focus.size[0])))),
+        Image.LANCZOS,
+    )
+    portrait_raw = sample_portrait_grid(portrait_resized, POINT_COUNT)
 
     panel_cx = LEFT_X + LEFT_W / 2
     panel_cy = LEFT_Y + LEFT_H / 2
@@ -483,7 +543,7 @@ def make_state_points() -> Tuple[List[Tuple[float, float]], ...]:
     portrait_h = 360
     portrait_box = (panel_cx - portrait_w / 2, panel_cy - portrait_h / 2, portrait_w, portrait_h)
 
-    portrait = scale_points(portrait_raw, resized.size, portrait_box)
+    portrait = scale_points(portrait_raw, portrait_resized.size, portrait_box)
     flutter = sample_flutter_shape((panel_cx, panel_cy), 220, 250, POINT_COUNT)
     react = sample_react_shape((panel_cx, panel_cy), 240, 200, POINT_COUNT)
     node = sample_node_shape((panel_cx, panel_cy), 120, POINT_COUNT)
