@@ -20,8 +20,8 @@ from PIL import ImageFont
 
 
 ROOT = Path(__file__).resolve().parents[1]
-FONT_BOLD = "/usr/share/fonts/liberation-sans-fonts/LiberationSans-Bold.ttf"
-FONT_REGULAR = "/usr/share/fonts/liberation-sans-fonts/LiberationSans-Regular.ttf"
+FONT_BOLD = ROOT / "fonts" / "LiberationSans-Bold.ttf"
+FONT_REGULAR = ROOT / "fonts" / "LiberationSans-Regular.ttf"
 
 
 @dataclass

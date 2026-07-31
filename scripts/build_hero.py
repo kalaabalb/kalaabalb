@@ -403,11 +403,17 @@ def make_state_points() -> Tuple[List[Tuple[float, float]], ...]:
     portrait_raw = weighted_sample_points(resized, resized_mask, POINT_COUNT)
     portrait_raw = sort_points(portrait_raw)
 
-    portrait = scale_points(portrait_raw, resized.size, (84, 138, 214, 312))
-    flutter = sample_flutter_shape((191, 262), 220, 250, POINT_COUNT)
-    react = sample_react_shape((191, 262), 240, 200, POINT_COUNT)
-    node = sample_node_shape((191, 262), 120, POINT_COUNT)
-    firebase = sample_flame_shape((191, 262), 180, 250, POINT_COUNT)
+    panel_cx = LEFT_X + LEFT_W / 2
+    panel_cy = LEFT_Y + LEFT_H / 2
+    portrait_w = 214
+    portrait_h = 174
+    portrait_box = (panel_cx - portrait_w / 2, panel_cy - portrait_h / 2, portrait_w, portrait_h)
+
+    portrait = scale_points(portrait_raw, resized.size, portrait_box)
+    flutter = sample_flutter_shape((panel_cx, panel_cy), 220, 250, POINT_COUNT)
+    react = sample_react_shape((panel_cx, panel_cy), 240, 200, POINT_COUNT)
+    node = sample_node_shape((panel_cx, panel_cy), 120, POINT_COUNT)
+    firebase = sample_flame_shape((panel_cx, panel_cy), 180, 250, POINT_COUNT)
     return portrait, flutter, react, node, firebase
 
 
@@ -499,7 +505,7 @@ def build_svg(theme: dict, out_path: Path) -> None:
             "</circle>"
         )
 
-    lines.append(f'<text x="64" y="520" font-size="11" fill="{theme["muted"]}">terminal render: identity ↔ stack</text>')
+    lines.append(f'<text x="64" y="520" font-size="11" fill="{theme["muted"]}">terminal render: identity and stack</text>')
 
     lines.append(f'<rect x="{RIGHT_X}" y="{RIGHT_Y}" width="{RIGHT_W}" height="{RIGHT_H}" rx="10" fill="{theme["panel_right"]}" stroke="{theme["panel_stroke"]}"/>')
     lines.append(f'<text x="486" y="140" font-size="18" fill="{theme["teal"]}" font-weight="700" letter-spacing="1.1">SYSTEM.INFO</text>')
@@ -555,7 +561,7 @@ def build_svg(theme: dict, out_path: Path) -> None:
         )
         x += width + 8
 
-    lines.append(f'<text x="486" y="540" font-size="14" fill="{theme["muted"]}">▸ More about me &amp; projects below in README ↓</text>')
+    lines.append(f'<text x="486" y="540" font-size="14" fill="{theme["muted"]}">More about me and projects below in README</text>')
     lines.append(f'<rect x="1104" y="532" width="8" height="16" fill="{theme["teal"]}"/>')
     lines.append("</g>")
     lines.append("</svg>")
