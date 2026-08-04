@@ -271,6 +271,19 @@ def render_logo_badge(stats: RepoStats, theme: dict, accent: str, x: float, y: f
     )
 
 
+def render_star_field(theme: dict, width: int, height: int) -> str:
+    stars = []
+    seed_points = [
+        (61, 73), (84, 121), (136, 92), (211, 66), (277, 148), (344, 94),
+        (398, 176), (463, 123), (518, 72), (581, 167), (643, 98), (701, 154),
+        (764, 110), (823, 74), (889, 145), (951, 103), (1005, 178),
+    ]
+    palette = [theme["star"], theme["star_soft"], theme["star_warm"]]
+    for idx, (x, y) in enumerate(seed_points):
+        stars.append(f'<circle cx="{x}" cy="{y}" r="{0.8 + (idx % 3) * 0.2:.1f}" fill="{palette[idx % len(palette)]}" fill-opacity="0.24"/>')
+    return "".join(stars)
+
+
 def render_card(stats: RepoStats, theme: dict, x: int, y: int, width: int, height: int, index: int) -> str:
     accent = card_accent(stats, theme, index)
     title_width = max(150, width - 220)
@@ -342,17 +355,18 @@ def render_svg(projects: List[RepoStats], theme: dict, build_id: str) -> str:
     parts = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">',
-        f'<title id="title">Featured projects</title>',
+        f'<title id="title">Charted systems</title>',
         f'<desc id="desc">Clickable project cards generated from live GitHub repository data.</desc>',
         f'<!-- build:{escape_text(build_id)} -->',
         f'<rect width="{width}" height="{height}" rx="24" fill="{theme["bg"]}"/>',
         f'<rect x="0" y="0" width="{width}" height="{height}" rx="24" fill="none" stroke="{theme["outer_stroke"]}"/>',
+        render_star_field(theme, width, height),
         f'<rect x="58" y="58" width="1024" height="{panel_height}" rx="24" fill="{theme["panel"]}" stroke="{theme["stroke"]}"/>',
-        f'<text x="116" y="114" fill="{theme["text"]}" font-size="24" font-weight="800">Featured Projects</text>',
-        f'<text x="116" y="134" fill="{theme["muted"]}" font-size="13">Selected public work across web, mobile, backend, and product systems.</text>',
+        f'<text x="116" y="114" fill="{theme["text"]}" font-size="24" font-weight="800">CHARTED SYSTEMS</text>',
+        f'<text x="116" y="134" fill="{theme["muted"]}" font-size="13">Worlds mapped and built from web, mobile, backend, and product systems.</text>',
         f'<rect x="116" y="144" width="872" height="2" fill="url(#accent-line)" />',
         "<defs>",
-        f'<linearGradient id="accent-line" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="{theme["teal"]}"/><stop offset="50%" stop-color="{theme["amber"]}"/><stop offset="100%" stop-color="{theme["sage"]}"/></linearGradient>',
+        f'<linearGradient id="accent-line" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="{theme["violet"]}"/><stop offset="50%" stop-color="{theme["amber"]}"/><stop offset="100%" stop-color="{theme["lilac"]}"/></linearGradient>',
         "</defs>",
     ]
 
@@ -370,42 +384,52 @@ def render_svg(projects: List[RepoStats], theme: dict, build_id: str) -> str:
 def build_theme(name: str) -> dict:
     if name == "dark":
         return {
-            "bg": "#070f0e",
-            "panel": "#0a1817",
-            "stroke": "#173330",
-            "outer_stroke": "#233c39",
-            "card": "#0b1716",
-            "teal": "#54b7b2",
+            "bg": "#070812",
+            "panel": "#0a0b18",
+            "stroke": "#2d2257",
+            "outer_stroke": "#362a68",
+            "card": "#0b0d1d",
+            "teal": "#a78bfa",
+            "violet": "#a78bfa",
             "amber": "#d39a52",
-            "sage": "#8fc97f",
-            "text": "#f4efe7",
-            "muted": "#c7d0cc",
-            "badge_bg": "#122826",
-            "badge_stroke": "#54b7b2",
-            "badge_text": "#54b7b2",
-            "tag_fill": "#132523",
-            "tag_stroke": "#5e8f89",
-            "tag_text": "#c7d0cc",
-            "donut_track": "#203532",
+            "sage": "#c4b5fd",
+            "lilac": "#c4b5fd",
+            "star": "#d8cbff",
+            "star_soft": "#7c6aa9",
+            "star_warm": "#d39a52",
+            "text": "#f6f0ff",
+            "muted": "#c6b9e8",
+            "badge_bg": "#15112a",
+            "badge_stroke": "#a78bfa",
+            "badge_text": "#a78bfa",
+            "tag_fill": "#15132b",
+            "tag_stroke": "#6f5ca5",
+            "tag_text": "#d6c8f5",
+            "donut_track": "#1d1738",
         }
     return {
-        "bg": "#f7f4ee",
-        "panel": "#ffffff",
-        "stroke": "#dad4c9",
-        "outer_stroke": "#d5cec2",
+        "bg": "#f5f0ff",
+        "panel": "#fffdfc",
+        "stroke": "#d8cfef",
+        "outer_stroke": "#d4c8ee",
         "card": "#ffffff",
-        "teal": "#0f6e56",
-        "amber": "#95611f",
-        "sage": "#3b6d11",
-        "text": "#1a2020",
-        "muted": "#514f49",
-        "badge_bg": "#ecf5f0",
-        "badge_stroke": "#0f6e56",
-        "badge_text": "#0f6e56",
-        "tag_fill": "#f4ede2",
-        "tag_stroke": "#c6b9a5",
-        "tag_text": "#1a2020",
-        "donut_track": "#e6ddd1",
+        "teal": "#7c3aed",
+        "violet": "#7c3aed",
+        "amber": "#9a5f1c",
+        "sage": "#b9a3f7",
+        "lilac": "#b9a3f7",
+        "star": "#d9ccff",
+        "star_soft": "#b8a3e4",
+        "star_warm": "#c97c2d",
+        "text": "#1d1730",
+        "muted": "#5d5470",
+        "badge_bg": "#f1ebff",
+        "badge_stroke": "#7c3aed",
+        "badge_text": "#7c3aed",
+        "tag_fill": "#f3edf9",
+        "tag_stroke": "#cabbe9",
+        "tag_text": "#1d1730",
+        "donut_track": "#ede7fb",
     }
 
 

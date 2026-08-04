@@ -168,31 +168,50 @@ def legend_label(name: str) -> str:
     return mapping.get(name.lower(), name)
 
 
+def render_star_field(theme: dict) -> str:
+    stars = []
+    points = [
+        (16, 18), (44, 36), (96, 20), (138, 51), (179, 28), (234, 41), (282, 17),
+        (342, 30), (408, 19), (462, 44), (26, 198), (72, 182), (154, 194),
+        (212, 184), (269, 196), (338, 181), (422, 192), (472, 170),
+    ]
+    palette = [theme["star"], theme["star_soft"], theme["star_warm"]]
+    for idx, (x, y) in enumerate(points):
+        stars.append(f'<circle cx="{x}" cy="{y}" r="{0.7 + (idx % 2) * 0.15:.2f}" fill="{palette[idx % len(palette)]}" fill-opacity="0.16"/>')
+    return "".join(stars)
+
+
 def build_theme(mode: str) -> dict:
     if mode == "light":
         return {
-            "bg": "#f7f4ee",
-            "panel": "#ffffff",
-            "border": "#cfc4b3",
-            "title": "#0f6e56",
-            "text": "#1a2020",
-            "muted": "#665f58",
-            "accent": "#0f6e56",
-            "chip_bg": "#e5f1eb",
-            "chip_text": "#0f6e56",
-            "palette": ["#0f6e56", "#95611f", "#3b82f6", "#d97706", "#7c3aed", "#f97316"],
+            "bg": "#f5f0ff",
+            "panel": "#fffdfc",
+            "border": "#d8cfef",
+            "title": "#7c3aed",
+            "text": "#1d1730",
+            "muted": "#5d5470",
+            "accent": "#7c3aed",
+            "chip_bg": "#f1ebff",
+            "chip_text": "#7c3aed",
+            "star": "#d9ccff",
+            "star_soft": "#b8a3e4",
+            "star_warm": "#c97c2d",
+            "palette": ["#7c3aed", "#d39a52", "#9a5f1c", "#a78bfa", "#c4b5fd", "#8b5cf6"],
         }
     return {
-        "bg": "#0a1817",
-        "panel": "#0d1527",
-        "border": "#1f6f7a",
-        "title": "#54b7b2",
-        "text": "#e8efe8",
-        "muted": "#9aa6a2",
-        "accent": "#54b7b2",
-        "chip_bg": "#1c2b34",
-        "chip_text": "#8cd3cc",
-        "palette": ["#54b7b2", "#d39a52", "#7c8bd6", "#f56565", "#8fc97f", "#c084fc"],
+        "bg": "#070812",
+        "panel": "#0a0b18",
+        "border": "#2d2257",
+        "title": "#a78bfa",
+        "text": "#f6f0ff",
+        "muted": "#c6b9e8",
+        "accent": "#a78bfa",
+        "chip_bg": "#15132b",
+        "chip_text": "#d6c8f5",
+        "star": "#d9ccff",
+        "star_soft": "#7c6aa9",
+        "star_warm": "#d39a52",
+        "palette": ["#a78bfa", "#d39a52", "#c4b5fd", "#8b5cf6", "#d8cbff", "#f59e0b"],
     }
 
 
@@ -210,15 +229,15 @@ def stat_card(user: UserInfo, repos: List[RepoInfo], theme: dict, build_id: str)
     total_issues = sum(repo.open_issues_count for repo in repos)
     name = user.name or user.login
     display_name = truncate_text(f"{name}'s GitHub stats", 240, 22, bold=True)
-    subtitle = "Repo-owned SVG, refreshed by GitHub Actions"
 
     parts = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         f'<!-- build:{escape_text(build_id)} -->',
         '<svg xmlns="http://www.w3.org/2000/svg" width="495" height="230" viewBox="0 0 495 230">',
+        render_star_field(theme),
         f'<rect width="495" height="230" rx="18" fill="{theme["panel"]}" stroke="{theme["border"]}" stroke-opacity="0.35"/>',
         f'<text x="20" y="32" font-family="Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="{theme["title"]}">{escape_text(display_name)}</text>',
-        f'<text x="20" y="52" font-family="Liberation Sans, sans-serif" font-size="11" fill="{theme["muted"]}">{escape_text(subtitle)}</text>',
+        f'<text x="20" y="52" font-family="Liberation Sans, sans-serif" font-size="11" fill="{theme["muted"]}">consecutive transmission days / repo-owned SVG</text>',
     ]
 
     boxes = [
@@ -242,7 +261,6 @@ def stat_card(user: UserInfo, repos: List[RepoInfo], theme: dict, build_id: str)
 
 
 def lang_card(user: UserInfo, language_bytes: Dict[str, int], theme: dict, build_id: str) -> str:
-    title = f"Top languages"
     rows = bytes_to_percentages(language_bytes, limit=6)
     total = sum(language_bytes.values()) or 1
 
@@ -250,9 +268,10 @@ def lang_card(user: UserInfo, language_bytes: Dict[str, int], theme: dict, build
         '<?xml version="1.0" encoding="UTF-8"?>',
         f'<!-- build:{escape_text(build_id)} -->',
         '<svg xmlns="http://www.w3.org/2000/svg" width="495" height="230" viewBox="0 0 495 230">',
+        render_star_field(theme),
         f'<rect width="495" height="230" rx="18" fill="{theme["panel"]}" stroke="{theme["border"]}" stroke-opacity="0.35"/>',
-        f'<text x="20" y="32" font-family="Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="{theme["title"]}">{escape_text(title)}</text>',
-        f'<text x="20" y="52" font-family="Liberation Sans, sans-serif" font-size="11" fill="{theme["muted"]}">Aggregated from your public repositories</text>',
+        f'<text x="20" y="32" font-family="Liberation Sans, sans-serif" font-size="22" font-weight="700" fill="{theme["title"]}">Telemetry</text>',
+        f'<text x="20" y="52" font-family="Liberation Sans, sans-serif" font-size="11" fill="{theme["muted"]}">aggregated from your public repositories</text>',
     ]
 
     bar_x = 20

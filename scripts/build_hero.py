@@ -47,6 +47,7 @@ PORTRAIT_OPACITY_TIMES = "0;0.22;0.30;0.92;1"
 MORPH_OPACITY_TIMES = "0;0.20;0.30;0.94;1"
 MORPH_KEY_TIMES = "0;0.10;0.25;0.35;0.50;0.60;0.75;0.85;1.0"
 MORPH_KEY_SPLINES = ";".join(["0.3 0 0.7 1"] * 8)
+TWINKLE_DUR = 13.0
 
 HOLD = 3.0
 MOVE = 2.0
@@ -630,16 +631,32 @@ def join_values(values: Sequence[float]) -> str:
     return ";".join(f"{value:.2f}" for value in values)
 
 
+def find_nearest_point(points: Sequence[dict], target: Tuple[float, float]) -> dict:
+    tx, ty = target
+    return min(points, key=lambda item: (float(item["x"]) - tx) ** 2 + (float(item["y"]) - ty) ** 2)
+
+
+def twinkle_values(index: int) -> Tuple[str, str, str]:
+    phase = (index * 0.017) % TWINKLE_DUR
+    low = 0.68 + ((index % 5) * 0.03)
+    high = min(0.98, low + 0.18)
+    values = f"{low:.2f};{high:.2f};{low:.2f}"
+    return values, f"{low:.2f}", f"{phase:.3f}s"
+
+
 def render_portrait_layer(points: List[dict], theme: dict, panel_x: float, panel_y: float, panel_w: float, panel_h: float) -> str:
     parts = [
         '<g id="portraitLayer" opacity="1">',
         f'<animate attributeName="opacity" values="1;1;0;0;1" keyTimes="{PORTRAIT_OPACITY_TIMES}" dur="24s" repeatCount="indefinite"/>',
     ]
-    for item in points:
+    for index, item in enumerate(points):
         cx, cy = map_panel_point(float(item["x"]), float(item["y"]), panel_x, panel_y, panel_w, panel_h)
         r = map_panel_radius(float(item["r"]), panel_w, panel_h)
+        twinkle, base, begin = twinkle_values(index)
         parts.append(
-            f'<circle cx="{cx:.2f}" cy="{cy:.2f}" r="{r:.2f}" fill="{escape_text(str(item["color"]))}"/>'
+            f'<circle cx="{cx:.2f}" cy="{cy:.2f}" r="{r:.2f}" fill="{escape_text(str(item["color"]))}" opacity="{base}">'
+            f'<animate attributeName="opacity" values="{twinkle}" dur="{TWINKLE_DUR:.0f}s" begin="{begin}" repeatCount="indefinite"/>'
+            "</circle>"
         )
     parts.append("</g>")
     return "\n".join(parts)
@@ -666,6 +683,37 @@ def render_morph_layer(logo_clouds: dict, theme: dict, panel_x: float, panel_y: 
             f'keyTimes="{MORPH_KEY_TIMES}" keySplines="{MORPH_KEY_SPLINES}" calcMode="spline" dur="24s" repeatCount="indefinite"/>'
             "</circle>"
         )
+    parts.append("</g>")
+    return "\n".join(parts)
+
+
+def render_constellation_lines(points: List[dict], theme: dict, panel_x: float, panel_y: float, panel_w: float, panel_h: float) -> str:
+    skills = [
+        ("Flutter", "#a78bfa", (238.0, 122.0), (304.0, 134.0)),
+        ("React", "#c4b5fd", (248.0, 155.0), (304.0, 166.0)),
+        ("Node.js", "#d39a52", (255.0, 188.0), (304.0, 198.0)),
+        ("Firebase", "#8b5cf6", (246.0, 221.0), (304.0, 230.0)),
+    ]
+    label_w = 82
+    parts = ['<g id="constellationLayer" opacity="0.84" stroke-linecap="round">']
+    for idx, (label, color, target, label_pos) in enumerate(skills):
+        anchor = find_nearest_point(points, target)
+        ax, ay = map_panel_point(float(anchor["x"]), float(anchor["y"]), panel_x, panel_y, panel_w, panel_h)
+        lx = panel_x + label_pos[0] / WORKING_CANVAS * panel_w
+        ly = panel_y + label_pos[1] / WORKING_CANVAS * panel_h
+        line_end_x = lx - 8
+        line_end_y = ly - 6
+        parts.append(
+            f'<line x1="{ax:.2f}" y1="{ay:.2f}" x2="{line_end_x:.2f}" y2="{line_end_y:.2f}" '
+            f'stroke="{color}" stroke-width="0.9" stroke-dasharray="3 7" stroke-opacity="0.55"/>'
+        )
+        parts.append(f'<circle cx="{ax:.2f}" cy="{ay:.2f}" r="2.1" fill="{color}" fill-opacity="0.9"/>')
+        parts.append(f'<rect x="{lx:.2f}" y="{ly:.2f}" width="{label_w}" height="18" rx="9" fill="#0b1221" fill-opacity="0.74" stroke="{color}" stroke-opacity="0.45"/>')
+        parts.append(
+            f'<text x="{lx + label_w / 2:.2f}" y="{ly + 12:.2f}" text-anchor="middle" font-size="10" '
+            f'fill="{color}" font-weight="700">{escape_text(label)}</text>'
+        )
+        parts.append(f'<circle cx="{line_end_x:.2f}" cy="{line_end_y:.2f}" r="1.6" fill="{color}" fill-opacity="0.8"/>')
     parts.append("</g>")
     return "\n".join(parts)
 
@@ -705,19 +753,20 @@ def build_svg(theme: dict, out_path: Path) -> None:
         f'{escape_text(theme["terminal"])}'
         "</text>"
     )
-    lines.append(f'<text x="52" y="94" font-size="10" letter-spacing="3" fill="{theme["muted_dim"]}">VISUAL.MAP</text>')
+    lines.append(f'<text x="52" y="92" font-size="10" letter-spacing="3" fill="{theme["muted_dim"]}">SIGNAL ACQUIRED</text>')
     lines.append(f'<rect x="52" y="104" width="378" height="440" rx="10" fill="{theme["canvas"]}" stroke="{theme["teal"]}" stroke-width="2"/>')
     lines.append(f'<rect x="52" y="104" width="378" height="440" rx="10" fill="none" stroke="url(#frame)" stroke-width="2"/>')
 
     lines.append('<g clip-path="url(#visual-map-clip)">')
+    lines.append(render_constellation_lines(portrait_points, theme, LEFT_X, LEFT_Y, LEFT_W, LEFT_H))
     lines.append(render_portrait_layer(portrait_points, theme, LEFT_X, LEFT_Y, LEFT_W, LEFT_H))
     lines.append(render_morph_layer(logo_clouds, theme, LEFT_X, LEFT_Y, LEFT_W, LEFT_H))
     lines.append("</g>")
 
-    lines.append(f'<text x="64" y="520" font-size="11" fill="{theme["muted"]}">terminal render: identity and stack</text>')
+    lines.append(f'<text x="64" y="520" font-size="11" fill="{theme["muted"]}">SIGNAL SOURCE: kalaab alex -- {len(portrait_points):,} data points resolved</text>')
 
     lines.append(f'<rect x="{RIGHT_X}" y="{RIGHT_Y}" width="{RIGHT_W}" height="{RIGHT_H}" rx="10" fill="{theme["panel_right"]}" stroke="{theme["panel_stroke"]}"/>')
-    lines.append(f'<text x="486" y="140" font-size="18" fill="{theme["teal"]}" font-weight="700" letter-spacing="1.1">SYSTEM.INFO</text>')
+    lines.append(f'<text x="486" y="140" font-size="18" fill="{theme["teal"]}" font-weight="700" letter-spacing="1.1">TRANSMISSION.LOG</text>')
     lines.append(f'<text x="1049" y="140" font-size="16" fill="{theme["accent_live"]}" font-weight="700">● LIVE</text>')
     pill_width = max(180, int(math.ceil(text_width(theme["mail"], 14, bold=True) + 24)))
     lines.append(f'<rect x="486" y="154" width="{pill_width}" height="24" rx="6" fill="{theme["accent_bar"]}"/>')
@@ -770,7 +819,7 @@ def build_svg(theme: dict, out_path: Path) -> None:
         )
         x += width + 8
 
-    lines.append(f'<text x="486" y="540" font-size="14" fill="{theme["muted"]}">More about me and projects below in README</text>')
+    lines.append(f'<text x="486" y="540" font-size="14" fill="{theme["muted"]}">Transmission continues below in README</text>')
     lines.append(f'<rect x="1104" y="532" width="8" height="16" fill="{theme["teal"]}"/>')
     lines.append("</g>")
     lines.append("</svg>")
@@ -779,55 +828,55 @@ def build_svg(theme: dict, out_path: Path) -> None:
 
 def main() -> None:
     dark = {
-        "title": "kalaab Alex profile.sh",
-        "desc": "Dark mode hero banner for the GitHub profile README.",
-        "bg": "#070f0e",
-        "panel": "#0a1817",
-        "panel_right": "#0a1817",
-        "panel_stroke": "#18302d",
-        "topbar": "#0f1d1b",
-        "canvas": "#071313",
-        "teal": "#54b7b2",
+        "title": "kalaab Alex receiving_signal.sh",
+        "desc": "Dark mode deep field hero banner for the GitHub profile README.",
+        "bg": "#070812",
+        "panel": "#0a0b18",
+        "panel_right": "#0a0b18",
+        "panel_stroke": "#2d2257",
+        "topbar": "#101126",
+        "canvas": "#070814",
+        "teal": "#a78bfa",
         "amber": "#d39a52",
-        "sage": "#8fc97f",
-        "text": "#f4efe7",
-        "muted": "#c7d0cc",
-        "muted_dim": "#7f8d89",
+        "sage": "#c4b5fd",
+        "text": "#f6f0ff",
+        "muted": "#c6b9e8",
+        "muted_dim": "#83729f",
         "accent_live": "#d39a52",
-        "accent_bar": "#31242a",
+        "accent_bar": "#1f1631",
         "accent_text": "#f4efe7",
-        "chip_fill_teal": "#112725",
-        "chip_stroke_teal": "#54b7b2",
+        "chip_fill_teal": "#17142c",
+        "chip_stroke_teal": "#a78bfa",
         "chip_fill_amber": "#241a12",
         "chip_stroke_amber": "#d39a52",
         "mail": "alebachewkalaab99@gmail.com",
-        "terminal": "alebachewkalaab99@gmail.com - % ./profile.sh --live",
+        "terminal": "alebachewkalaab99@gmail.com - % ./receiving_signal.sh --deep-field",
         "dot_r": "1.55",
     }
     light = {
-        "title": "kalaab Alex profile.sh",
-        "desc": "Light mode hero banner for the GitHub profile README.",
-        "bg": "#f7f4ee",
-        "panel": "#ffffff",
-        "panel_right": "#ffffff",
-        "panel_stroke": "#d8d2c8",
-        "topbar": "#f1ece3",
-        "canvas": "#ffffff",
-        "teal": "#0f6e56",
-        "amber": "#95611f",
-        "sage": "#3b6d11",
-        "text": "#1a2020",
-        "muted": "#514f49",
-        "muted_dim": "#8d857a",
-        "accent_live": "#95611f",
-        "accent_bar": "#ece3d7",
+        "title": "kalaab Alex receiving_signal.sh",
+        "desc": "Light mode deep field hero banner for the GitHub profile README.",
+        "bg": "#f5f0ff",
+        "panel": "#fffdfc",
+        "panel_right": "#fffdfc",
+        "panel_stroke": "#d3c9ef",
+        "topbar": "#ece7f8",
+        "canvas": "#fffdff",
+        "teal": "#7c3aed",
+        "amber": "#9a5f1c",
+        "sage": "#6d28d9",
+        "text": "#1d1730",
+        "muted": "#5d5470",
+        "muted_dim": "#9d93b6",
+        "accent_live": "#9a5f1c",
+        "accent_bar": "#efe9fb",
         "accent_text": "#1a2020",
-        "chip_fill_teal": "#edf6f3",
-        "chip_stroke_teal": "#0f6e56",
-        "chip_fill_amber": "#f4ecdf",
-        "chip_stroke_amber": "#95611f",
+        "chip_fill_teal": "#f3efff",
+        "chip_stroke_teal": "#7c3aed",
+        "chip_fill_amber": "#f7efe3",
+        "chip_stroke_amber": "#9a5f1c",
         "mail": "alebachewkalaab99@gmail.com",
-        "terminal": "alebachewkalaab99@gmail.com - % ./profile.sh --live",
+        "terminal": "alebachewkalaab99@gmail.com - % ./receiving_signal.sh --deep-field",
         "dot_r": "1.55",
     }
     build_svg(dark, OUT_DARK)
