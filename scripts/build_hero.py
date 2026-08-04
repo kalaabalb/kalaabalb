@@ -7,6 +7,7 @@ The output is a real SMIL-based point-cloud morph. No <style> or <script> tags.
 from __future__ import annotations
 
 import heapq
+import json
 import math
 import os
 import random
@@ -20,6 +21,10 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageStat
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "assets" / "hero-portrait.png"
+ASSET_DIR = ROOT / "assets"
+PORTRAIT_DENSE = ASSET_DIR / "portrait_dense_final.json"
+LOGO_CLOUDS = ASSET_DIR / "logo_clouds.json"
+PORTRAIT_REFERENCE = ASSET_DIR / "portrait_reference_render.svg"
 OUT_DARK = ROOT / "dark.svg"
 OUT_LIGHT = ROOT / "light.svg"
 
@@ -37,6 +42,11 @@ POINT_COUNT = 624
 RNG = random.Random(97)
 FONT_REGULAR = ROOT / "fonts" / "LiberationSans-Regular.ttf"
 FONT_BOLD = ROOT / "fonts" / "LiberationSans-Bold.ttf"
+WORKING_CANVAS = 440.0
+PORTRAIT_OPACITY_TIMES = "0;0.22;0.30;0.92;1"
+MORPH_OPACITY_TIMES = "0;0.20;0.30;0.94;1"
+MORPH_KEY_TIMES = "0;0.10;0.25;0.35;0.50;0.60;0.75;0.85;1.0"
+MORPH_KEY_SPLINES = ";".join(["0.3 0 0.7 1"] * 8)
 
 HOLD = 3.0
 MOVE = 2.0
@@ -601,15 +611,68 @@ def circle_fill(index: int, theme: dict) -> str:
     return palette[index % len(palette)]
 
 
+def load_asset_json(path: Path):
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def map_panel_point(x: float, y: float, panel_x: float, panel_y: float, panel_w: float, panel_h: float) -> Tuple[float, float]:
+    return (
+        panel_x + (x / WORKING_CANVAS) * panel_w,
+        panel_y + (y / WORKING_CANVAS) * panel_h,
+    )
+
+
+def map_panel_radius(r: float, panel_w: float, panel_h: float) -> float:
+    return r * ((panel_w + panel_h) / (2.0 * WORKING_CANVAS))
+
+
+def join_values(values: Sequence[float]) -> str:
+    return ";".join(f"{value:.2f}" for value in values)
+
+
+def render_portrait_layer(points: List[dict], theme: dict, panel_x: float, panel_y: float, panel_w: float, panel_h: float) -> str:
+    parts = [
+        '<g id="portraitLayer" opacity="1">',
+        f'<animate attributeName="opacity" values="1;1;0;0;1" keyTimes="{PORTRAIT_OPACITY_TIMES}" dur="24s" repeatCount="indefinite"/>',
+    ]
+    for item in points:
+        cx, cy = map_panel_point(float(item["x"]), float(item["y"]), panel_x, panel_y, panel_w, panel_h)
+        r = map_panel_radius(float(item["r"]), panel_w, panel_h)
+        parts.append(
+            f'<circle cx="{cx:.2f}" cy="{cy:.2f}" r="{r:.2f}" fill="{escape_text(str(item["color"]))}"/>'
+        )
+    parts.append("</g>")
+    return "\n".join(parts)
+
+
+def render_morph_layer(logo_clouds: dict, theme: dict, panel_x: float, panel_y: float, panel_w: float, panel_h: float) -> str:
+    states = ["flutter", "react", "node", "firebase"]
+    palette = [theme["teal"], theme["amber"], theme["sage"]]
+    parts = [
+        '<g id="morphLayer" opacity="0">',
+        f'<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="{MORPH_OPACITY_TIMES}" dur="24s" repeatCount="indefinite"/>',
+    ]
+    for index in range(len(logo_clouds["flutter"])):
+        points = [logo_clouds[state][index] for state in states]
+        mapped = [map_panel_point(x, y, panel_x, panel_y, panel_w, panel_h) for x, y in points]
+        x_values = [mapped[0][0], mapped[0][0], mapped[1][0], mapped[1][0], mapped[2][0], mapped[2][0], mapped[3][0], mapped[3][0], mapped[0][0]]
+        y_values = [mapped[0][1], mapped[0][1], mapped[1][1], mapped[1][1], mapped[2][1], mapped[2][1], mapped[3][1], mapped[3][1], mapped[0][1]]
+        color = palette[index % len(palette)]
+        parts.append(
+            f'<circle cx="{mapped[0][0]:.2f}" cy="{mapped[0][1]:.2f}" r="1.45" fill="{color}" fill-opacity="0.92">'
+            f'<animate attributeName="cx" values="{join_values(x_values)}" '
+            f'keyTimes="{MORPH_KEY_TIMES}" keySplines="{MORPH_KEY_SPLINES}" calcMode="spline" dur="24s" repeatCount="indefinite"/>'
+            f'<animate attributeName="cy" values="{join_values(y_values)}" '
+            f'keyTimes="{MORPH_KEY_TIMES}" keySplines="{MORPH_KEY_SPLINES}" calcMode="spline" dur="24s" repeatCount="indefinite"/>'
+            "</circle>"
+        )
+    parts.append("</g>")
+    return "\n".join(parts)
+
+
 def build_svg(theme: dict, out_path: Path) -> None:
-    states = make_state_points()
-    xs = []
-    ys = []
-    for i in range(POINT_COUNT):
-        pt_states = [state[i] for state in states]
-        x_values, y_values = animate_values(pt_states)
-        xs.append(x_values)
-        ys.append(y_values)
+    portrait_points = load_asset_json(PORTRAIT_DENSE)
+    logo_clouds = load_asset_json(LOGO_CLOUDS)
 
     lines = []
     lines.append('<?xml version="1.0" encoding="UTF-8"?>')
@@ -628,6 +691,7 @@ def build_svg(theme: dict, out_path: Path) -> None:
         f'<stop offset="1" stop-color="{theme["sage"]}"/>'
         f"</linearGradient>"
     )
+    lines.append('<clipPath id="visual-map-clip"><rect x="52" y="104" width="378" height="440" rx="10"/></clipPath>')
     lines.append("</defs>")
     lines.append(f'<rect x="2" y="2" width="{W-4}" height="{H-4}" rx="18" fill="{theme["bg"]}"/>')
     lines.append("<g>")
@@ -645,16 +709,10 @@ def build_svg(theme: dict, out_path: Path) -> None:
     lines.append(f'<rect x="52" y="104" width="378" height="440" rx="10" fill="{theme["canvas"]}" stroke="{theme["teal"]}" stroke-width="2"/>')
     lines.append(f'<rect x="52" y="104" width="378" height="440" rx="10" fill="none" stroke="url(#frame)" stroke-width="2"/>')
 
-    for i in range(POINT_COUNT):
-        x_anim = xs[i]
-        y_anim = ys[i]
-        fill = circle_fill(i, theme)
-        lines.append(
-            f'<circle cx="{states[0][i][0]:.2f}" cy="{states[0][i][1]:.2f}" r="{theme["dot_r"]}" fill="{fill}" fill-opacity="0.95">'
-            f'<animate attributeName="cx" values="{x_anim}" keyTimes="{KEY_TIMES}" keySplines="{KEY_SPLINES}" calcMode="spline" dur="{CYCLE}s" repeatCount="indefinite"/>'
-            f'<animate attributeName="cy" values="{y_anim}" keyTimes="{KEY_TIMES}" keySplines="{KEY_SPLINES}" calcMode="spline" dur="{CYCLE}s" repeatCount="indefinite"/>'
-            "</circle>"
-        )
+    lines.append('<g clip-path="url(#visual-map-clip)">')
+    lines.append(render_portrait_layer(portrait_points, theme, LEFT_X, LEFT_Y, LEFT_W, LEFT_H))
+    lines.append(render_morph_layer(logo_clouds, theme, LEFT_X, LEFT_Y, LEFT_W, LEFT_H))
+    lines.append("</g>")
 
     lines.append(f'<text x="64" y="520" font-size="11" fill="{theme["muted"]}">terminal render: identity and stack</text>')
 
