@@ -1,5 +1,7 @@
 __pycache__/
-dist-projects/
-README.backup.md
-README.backup.md
-README.backup.md
+*.pyc
+*.pyo
+*.pyd
+build/
+assets/temp/*
+!assets/temp/.gitkeep

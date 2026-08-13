@@ -1,0 +1,88 @@
+{
+  "stage": 9,
+  "name": "INTERFACE",
+  "purpose": "Expose action vectors derived from resolved system evidence.",
+  "role": "Invocation layer between resolution and future handoff.",
+  "question": "What can the visitor actually do with what the system has resolved?",
+  "relationship_to_signals": "Signals resolves capability; INTERFACE invokes that capability as action.",
+  "relationship_to_handoff": "Handoff remains a future boundary and is not executed in Stage 9.",
+  "interaction_philosophy": [
+    "observe",
+    "resolve",
+    "select action",
+    "prepare state"
+  ],
+  "core_vectors": [
+    {
+      "name": "EXPLORE",
+      "initial_state": "RESOLVED",
+      "action": "open deeper internal system surfaces",
+      "resolution_state": "EXPANDING",
+      "visitor_sees": "deeper internal surfaces, sublayers, or resolved structures that continue the Signals line of inquiry",
+      "system_prepares": "a deeper inspection state and a clearer internal path",
+      "unresolved_until_handoff": "any external destination or transfer"
+    },
+    {
+      "name": "TRACE",
+      "initial_state": "RESOLVED",
+      "action": "follow the evidence and provenance behind a resolved capability",
+      "resolution_state": "TRACING",
+      "visitor_sees": "causal links, source anchors, and structural references spanning Systems, Telemetry, Chronology, and local evidence",
+      "system_prepares": "a provenance path that explains why the capability exists",
+      "unresolved_until_handoff": "external transfer and any destination outside KalaOS"
+    },
+    {
+      "name": "CONVERSE",
+      "initial_state": "RESOLVED",
+      "action": "enter a communication boundary and prepare human exchange",
+      "resolution_state": "ORIENTED",
+      "visitor_sees": "a communication state that indicates readiness to open a channel, not a contact request",
+      "system_prepares": "orientation toward communication, including the boundary that Stage 10 may later transfer through",
+      "unresolved_until_handoff": "the actual external transfer, contact endpoint, or outbound message"
+    }
+  ],
+  "state_model": [
+    "RESOLVED",
+    "SELECT ACTION",
+    "PREPARE STATE",
+    "BOUNDARY"
+  ],
+  "constraints": [
+    "No project grid",
+    "No contact section",
+    "No resume",
+    "No dashboard",
+    "No CTA cards",
+    "No social wall",
+    "No generic navigation menu",
+    "No fake terminal",
+    "No cyberpunk interface",
+    "No Stage 10 implementation"
+  ],
+  "readiness_criteria": [
+    "Action vectors remain distinct from portfolio categories.",
+    "The stage stays recognizably KalaOS.",
+    "Signals remains the source of resolution.",
+    "Handoff remains future-only.",
+    "The concept works without animation.",
+    "Integration does not change Stages 1-8."
+  ],
+  "audit_results": {
+    "A_distinct_vectors": true,
+    "B_distinct_consequences": true,
+    "C_not_portfolio": true,
+    "D_not_contact_cta": true,
+    "E_trace_is_action": true,
+    "F_smaller_and_more_restrained_than_previous_stages": true,
+    "G_follows_signals": true,
+    "H_clean_handoff_boundary": true,
+    "I_understandable_without_animation": true,
+    "J_state_transition_not_webpage_section": true,
+    "K_no_reason_for_fourth_vector": true,
+    "final_vector_set": [
+      "EXPLORE",
+      "TRACE",
+      "CONVERSE"
+    ]
+  }
+}

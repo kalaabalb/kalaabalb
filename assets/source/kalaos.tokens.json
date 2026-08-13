@@ -1,0 +1,209 @@
+{
+  "meta": {
+    "name": "KalaOS",
+    "version": "alpha-core",
+    "source": "assets/source/kalaos.tokens.json"
+  },
+  "spacing": {
+    "0": 0,
+    "1": 4,
+    "2": 8,
+    "3": 12,
+    "4": 16,
+    "5": 24,
+    "6": 32,
+    "7": 48,
+    "8": 64,
+    "9": 96,
+    "10": 128
+  },
+  "radii": {
+    "hairline": 8,
+    "panel": 12,
+    "window": 18,
+    "shell": 20,
+    "pill": 999
+  },
+  "stroke_widths": {
+    "hairline": 1,
+    "thin": 1.5,
+    "standard": 2,
+    "emphasis": 3
+  },
+  "typography_scale": {
+    "display_xl": {
+      "size": 48,
+      "weight": 700,
+      "tracking": 1.4,
+      "leading": 1.05
+    },
+    "display": {
+      "size": 34,
+      "weight": 700,
+      "tracking": 1.0,
+      "leading": 1.12
+    },
+    "heading": {
+      "size": 22,
+      "weight": 700,
+      "tracking": 0.4,
+      "leading": 1.18
+    },
+    "section": {
+      "size": 16,
+      "weight": 700,
+      "tracking": 0.25,
+      "leading": 1.2
+    },
+    "body": {
+      "size": 14,
+      "weight": 400,
+      "tracking": 0.0,
+      "leading": 1.45
+    },
+    "small": {
+      "size": 12,
+      "weight": 400,
+      "tracking": 0.1,
+      "leading": 1.35
+    },
+    "caption": {
+      "size": 10,
+      "weight": 400,
+      "tracking": 0.8,
+      "leading": 1.2
+    },
+    "terminal": {
+      "size": 12,
+      "weight": 400,
+      "tracking": 0.15,
+      "leading": 1.3
+    },
+    "code": {
+      "size": 12,
+      "weight": 500,
+      "tracking": 0.05,
+      "leading": 1.25
+    }
+  },
+  "motion": {
+    "fast": 80,
+    "normal": 160,
+    "slow": 240,
+    "reveal": 360,
+    "assemble": 520,
+    "dissolve": 280,
+    "idle": 1200,
+    "easing": {
+      "standard": "cubic-bezier(0.42, 0, 0.58, 1)",
+      "emphasized": "cubic-bezier(0.2, 0.0, 0.0, 1.0)",
+      "calm": "cubic-bezier(0.4, 0.0, 0.2, 1.0)"
+    }
+  },
+  "z_index": {
+    "background": 0,
+    "grid": 5,
+    "surface": 10,
+    "overlay": 20,
+    "dialog": 30,
+    "system": 40
+  },
+  "opacity": {
+    "hidden": 0,
+    "low": 0.12,
+    "muted": 0.28,
+    "medium": 0.55,
+    "strong": 0.82,
+    "full": 1
+  },
+  "grid": {
+    "unit": 8,
+    "rhythm": 24,
+    "columns": 12,
+    "gutter": 24
+  },
+  "themes": {
+    "dark": {
+      "background": "#070812",
+      "panel": "#0a0b18",
+      "surface": "#0b0d1d",
+      "glass": "#15132b",
+      "text_primary": "#f6f0ff",
+      "text_secondary": "#c6b9e8",
+      "text_muted": "#83729f",
+      "accent_violet": "#a78bfa",
+      "accent_lavender": "#c4b5fd",
+      "accent_cyan": "#22d3ee",
+      "warning_amber": "#d39a52",
+      "success_green": "#27c93f",
+      "error_red": "#ff5f56",
+      "border_hairline": "#2d2257",
+      "border_panel": "#362a68",
+      "glow": "rgba(167, 139, 250, 0.18)",
+      "particle": "#d8cbff",
+      "coordinate": "#83729f",
+      "grid": "rgba(131, 114, 159, 0.10)"
+    },
+    "light": {
+      "background": "#f5f0ff",
+      "panel": "#fffdfc",
+      "surface": "#ffffff",
+      "glass": "#f1ebff",
+      "text_primary": "#1d1730",
+      "text_secondary": "#5d5470",
+      "text_muted": "#9d93b6",
+      "accent_violet": "#7c3aed",
+      "accent_lavender": "#b9a3f7",
+      "accent_cyan": "#0891b2",
+      "warning_amber": "#9a5f1c",
+      "success_green": "#15803d",
+      "error_red": "#dc2626",
+      "border_hairline": "#d8cfef",
+      "border_panel": "#d4c8ee",
+      "glow": "rgba(124, 58, 237, 0.14)",
+      "particle": "#7c3aed",
+      "coordinate": "#9d93b6",
+      "grid": "rgba(157, 147, 182, 0.10)"
+    }
+  },
+  "layout": {
+    "hero": {
+      "canvas": {
+        "width": 1180,
+        "height": 610
+      },
+      "frame": {
+        "x": 24,
+        "y": 24,
+        "width": 1132,
+        "height": 562,
+        "radius": 20
+      },
+      "title": {
+        "x": 590,
+        "y": 284
+      },
+      "subtitle": {
+        "x": 590,
+        "y": 322
+      },
+      "cursor": {
+        "x": 590,
+        "y": 360
+      },
+      "boot_log": {
+        "x": 500,
+        "y": 186,
+        "step": 18
+      },
+      "footer_left": {
+        "x": 56,
+        "y": 576
+      },
+      "footer_right": {
+        "x": 1110,
+        "y": 576
+      }
+    }
+  }
+}

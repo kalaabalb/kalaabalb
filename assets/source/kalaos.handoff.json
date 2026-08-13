@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "name": "KalaOS Handoff",
+    "version": "v1",
+    "source": "assets/source/kalaos.handoff.json"
+  },
+  "layout": {
+    "canvas": {
+      "width": 1180,
+      "height": 610
+    },
+    "frame": {
+      "x": 24,
+      "y": 24,
+      "width": 1132,
+      "height": 562,
+      "radius": 20
+    },
+    "header": {
+      "state_x": 76,
+      "state_y": 70,
+      "title_x": 76,
+      "title_y": 122,
+      "subtitle_x": 76,
+      "subtitle_y": 150,
+      "future_x": 930,
+      "future_y": 70
+    },
+    "state_strip": {
+      "x": 72,
+      "y": 134,
+      "width": 1036
+    },
+    "threshold": {
+      "x": 540,
+      "y": 184,
+      "width": 82,
+      "height": 276,
+      "radius": 18
+    },
+    "selected": {
+      "x": 72,
+      "y": 184,
+      "width": 430,
+      "height": 276,
+      "radius": 18
+    },
+    "summary": {
+      "x": 96,
+      "y": 522
+    }
+  },
+  "handoff": {
+    "title": "HANDOFF",
+    "subtitle": "Selected actions cross the KalaOS boundary.",
+    "transition": "INTERFACE selects; HANDOFF transfers.",
+    "selected_vector": "EXPLORE",
+    "state_model": [
+      "PREPARED",
+      "CROSSING",
+      "EXTERNAL"
+    ],
+    "state_labels": [
+      "PREPARED",
+      "CROSSING",
+      "EXTERNAL"
+    ],
+    "vectors": [
+      {
+        "name": "EXPLORE",
+        "consequence_class": "REFERENCE SURFACE",
+        "consequence": "deeper external contextual/reference surface",
+        "preparation": "deeper inspection prepared",
+        "release": "release into a deeper external context"
+      },
+      {
+        "name": "TRACE",
+        "consequence_class": "PROVENANCE PATH",
+        "consequence": "external provenance/evidence path",
+        "preparation": "causal evidence prepared",
+        "release": "release into traceable evidence"
+      },
+      {
+        "name": "CONVERSE",
+        "consequence_class": "COMMUNICATION BOUNDARY",
+        "consequence": "external human communication boundary",
+        "preparation": "orientation prepared",
+        "release": "release into external conversation"
+      }
+    ]
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "name": "KalaOS Systems",
+    "version": "v1",
+    "source": "assets/source/kalaos.systems.json"
+  },
+  "layout": {
+    "canvas": {
+      "width": 1180,
+      "height": 610
+    },
+    "frame": {
+      "x": 24,
+      "y": 24,
+      "width": 1132,
+      "height": 562,
+      "radius": 20
+    },
+    "field": {
+      "x": 58,
+      "y": 116,
+      "width": 1064,
+      "height": 436
+    },
+    "header": {
+      "state_x": 76,
+      "state_y": 70,
+      "title_x": 76,
+      "title_y": 122,
+      "subtitle_x": 76,
+      "subtitle_y": 150
+    }
+  },
+  "systems": [
+    {
+      "id": "familyacademy-site",
+      "name": "familyacademy.et",
+      "domain": "EDUCATION",
+      "description": "Landing hub",
+      "technologies": ["Brand", "SEO"],
+      "state": "BUILDING",
+      "importance": "primary",
+      "position": { "x": 182, "y": 224 },
+      "label": { "dx": 34, "dy": -48, "anchor": "start" }
+    },
+    {
+      "id": "familyacademy-client",
+      "name": "family-academy-client",
+      "domain": "EDUCATION",
+      "description": "Academy client",
+      "technologies": ["Flutter", "User Flow"],
+      "state": "ACTIVE",
+      "importance": "secondary",
+      "position": { "x": 356, "y": 292 },
+      "label": { "dx": 34, "dy": -42, "anchor": "start" }
+    },
+    {
+      "id": "yomoblies",
+      "name": "yomoblies",
+      "domain": "MOBILE",
+      "description": "Mobile Dart work",
+      "technologies": ["Dart", "Mobile", "Active"],
+      "state": "ACTIVE",
+      "importance": "secondary",
+      "position": { "x": 322, "y": 424 },
+      "label": { "dx": 34, "dy": -22, "anchor": "start" }
+    },
+    {
+      "id": "force",
+      "name": "force",
+      "domain": "EDUCATION",
+      "description": "School management",
+      "technologies": ["Java", "Students", "Teachers"],
+      "state": "LEGACY",
+      "importance": "archived",
+      "position": { "x": 542, "y": 464 },
+      "label": { "dx": -30, "dy": 32, "anchor": "end" }
+    },
+    {
+      "id": "ecommerce-app",
+      "name": "e-commerce-app",
+      "domain": "COMMERCE",
+      "description": "Commerce app",
+      "technologies": ["Flutter", "Mobile UI", "Storefront"],
+      "state": "ACTIVE",
+      "importance": "primary",
+      "position": { "x": 846, "y": 228 },
+      "label": { "dx": -24, "dy": -44, "anchor": "end" }
+    },
+    {
+      "id": "ecommerce-backend",
+      "name": "ecommerce-backend-api",
+      "domain": "COMMERCE",
+      "description": "Commerce API",
+      "technologies": ["JavaScript", "APIs", "Node"],
+      "state": "BUILDING",
+      "importance": "secondary",
+      "position": { "x": 972, "y": 354 },
+      "label": { "dx": -24, "dy": -26, "anchor": "end" }
+    }
+  ],
+  "relationships": [
+    {
+      "source": "familyacademy-site",
+      "target": "familyacademy-client",
+      "kind": "continuation",
+      "label": "continuity"
+    },
+    {
+      "source": "familyacademy-client",
+      "target": "yomoblies",
+      "kind": "continuation",
+      "label": "mobile line"
+    },
+    {
+      "source": "familyacademy-site",
+      "target": "force",
+      "kind": "shared_domain",
+      "label": "education"
+    },
+    {
+      "source": "ecommerce-app",
+      "target": "ecommerce-backend",
+      "kind": "dependency",
+      "label": "link"
+    }
+  ]
+}

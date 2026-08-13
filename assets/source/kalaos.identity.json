@@ -1,0 +1,59 @@
+{
+  "meta": {
+    "name": "KalaOS Identity",
+    "version": "v1",
+    "source": "assets/source/kalaos.identity.json"
+  },
+  "subject": {
+    "name": "kalaab",
+    "role": "Full-Stack Developer",
+    "origin": "Ethiopia",
+    "domains": [
+      "Flutter",
+      "Dart",
+      "React",
+      "Node.js"
+    ]
+  },
+  "portrait": {
+    "source": "identity-portrait.png",
+    "sampling_density": 8,
+    "minimum_point_size": 1.15,
+    "maximum_point_size": 3.9,
+    "luminance_response": 1.45,
+    "contrast": 1.18,
+    "threshold": 0.08,
+    "palette": [
+      "text_secondary",
+      "accent_cyan",
+      "accent_lavender",
+      "accent_violet",
+      "text_primary"
+    ],
+    "background": "background"
+  },
+  "layout": {
+    "canvas": {
+      "width": 1180,
+      "height": 610
+    },
+    "frame": {
+      "x": 24,
+      "y": 24,
+      "width": 1132,
+      "height": 562,
+      "radius": 20
+    },
+    "portrait": {
+      "x": 74,
+      "y": 88,
+      "width": 466,
+      "height": 430
+    },
+    "metadata": {
+      "x": 612,
+      "y": 166,
+      "step": 40
+    }
+  }
+}

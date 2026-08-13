@@ -1,0 +1,171 @@
+{
+  "meta": {
+    "name": "KalaOS Telemetry",
+    "version": "v1",
+    "source": "assets/source/kalaos.telemetry.json"
+  },
+  "layout": {
+    "canvas": {
+      "width": 1180,
+      "height": 610
+    },
+    "frame": {
+      "x": 24,
+      "y": 24,
+      "width": 1132,
+      "height": 562,
+      "radius": 20
+    },
+    "header": {
+      "state_x": 76,
+      "state_y": 70,
+      "title_x": 76,
+      "title_y": 122,
+      "subtitle_x": 76,
+      "subtitle_y": 150
+    },
+    "field": {
+      "x": 58,
+      "y": 116,
+      "width": 1064,
+      "height": 436,
+      "radius": 20
+    },
+    "activity": {
+      "x": 84,
+      "y": 188,
+      "width": 686,
+      "height": 286,
+      "radius": 16
+    },
+    "language": {
+      "x": 808,
+      "y": 188,
+      "width": 282,
+      "height": 286,
+      "radius": 16
+    },
+    "summary": {
+      "x": 84,
+      "y": 522,
+      "gap": 176
+    }
+  },
+  "telemetry": {
+    "title": "TELEMETRY",
+    "subtitle": "Transmission statistics and language field, observed from the same deep-space frame.",
+    "state": "OBSERVED",
+    "timeline_labels": ["RECENT", "PAST", "OLDER"],
+    "systems": [
+      {
+        "id": "FAMILYACADEMY",
+        "label": "FAMILYACADEMY",
+        "reference": "family-academy-backend / landingpage / client",
+        "state": "OBSERVED",
+        "files": 172,
+        "bins": [0, 0, 0, 6, 161, 1, 2, 0, 0, 0, 0, 2],
+        "tone": "accent_lavender"
+      },
+      {
+        "id": "COMMERCE",
+        "label": "COMMERCE",
+        "reference": "e-commerce-app",
+        "state": "STABLE",
+        "files": 154,
+        "bins": [0, 0, 154, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "tone": "accent_cyan"
+      },
+      {
+        "id": "MOBILE",
+        "label": "MOBILE",
+        "reference": "yomoblies_client",
+        "state": "ACTIVE",
+        "files": 137,
+        "bins": [0, 17, 120, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "tone": "success_green"
+      },
+      {
+        "id": "BACKEND",
+        "label": "BACKEND",
+        "reference": "server_side / backend",
+        "state": "CALIBRATED",
+        "files": 73,
+        "bins": [1, 0, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "tone": "warning_amber"
+      }
+    ],
+    "languages": [
+      {
+        "name": "DART",
+        "count": 174,
+        "tone": "accent_cyan"
+      },
+      {
+        "name": "TYPESCRIPT",
+        "count": 130,
+        "tone": "accent_violet"
+      },
+      {
+        "name": "JAVASCRIPT",
+        "count": 100,
+        "tone": "accent_lavender"
+      },
+      {
+        "name": "C/C++",
+        "count": 29,
+        "tone": "warning_amber"
+      },
+      {
+        "name": "JSON",
+        "count": 24,
+        "tone": "text_secondary"
+      },
+      {
+        "name": "XML",
+        "count": 13,
+        "tone": "accent_cyan"
+      },
+      {
+        "name": "YAML",
+        "count": 11,
+        "tone": "warning_amber"
+      },
+      {
+        "name": "SHELL",
+        "count": 4,
+        "tone": "success_green"
+      },
+      {
+        "name": "HTML",
+        "count": 4,
+        "tone": "accent_lavender"
+      },
+      {
+        "name": "KOTLIN",
+        "count": 2,
+        "tone": "accent_violet"
+      },
+      {
+        "name": "CSS",
+        "count": 1,
+        "tone": "accent_cyan"
+      },
+      {
+        "name": "JAVA",
+        "count": 1,
+        "tone": "warning_amber"
+      },
+      {
+        "name": "OBJECTIVE-C",
+        "count": 1,
+        "tone": "accent_violet"
+      }
+    ],
+    "summary": {
+      "systems": 4,
+      "languages": 13,
+      "files": 536,
+      "last_observed": "2026-08-10"
+    }
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "name": "KalaOS Signals",
+    "version": "v1",
+    "source": "assets/source/kalaos.signals.json"
+  },
+  "layout": {
+    "canvas": {
+      "width": 1180,
+      "height": 610
+    },
+    "frame": {
+      "x": 24,
+      "y": 24,
+      "width": 1132,
+      "height": 562,
+      "radius": 20
+    },
+    "header": {
+      "state_x": 76,
+      "state_y": 70,
+      "title_x": 76,
+      "title_y": 122,
+      "subtitle_x": 76,
+      "subtitle_y": 150
+    },
+    "field": {
+      "x": 58,
+      "y": 116,
+      "width": 1064,
+      "height": 436,
+      "radius": 20
+    }
+  },
+  "signals": [
+    {
+      "id": "build-core",
+      "label": "BUILD",
+      "category": "BUILD",
+      "state": "RESOLVED",
+      "importance": "current",
+      "evidence": [
+        "engine/pipeline.py",
+        "scripts/build_foundation.py"
+      ],
+      "position": {
+        "x": 180,
+        "y": 214
+      }
+    },
+    {
+      "id": "system-field",
+      "label": "SYSTEM",
+      "category": "SYSTEM",
+      "state": "RESOLVED",
+      "importance": "primary",
+      "evidence": [
+        "SYSTEMS.md",
+        "engine/systems.py"
+      ],
+      "position": {
+        "x": 356,
+        "y": 352
+      }
+    },
+    {
+      "id": "mobile-surface",
+      "label": "MOBILE",
+      "category": "MOBILE",
+      "state": "RESOLVED",
+      "importance": "primary",
+      "evidence": [
+        "family-academy-client",
+        "yomoblies_client"
+      ],
+      "position": {
+        "x": 236,
+        "y": 448
+      }
+    },
+    {
+      "id": "interface-shell",
+      "label": "INTERFACE",
+      "category": "INTERFACE",
+      "state": "DETECTED",
+      "importance": "secondary",
+      "evidence": [
+        "BOOT.md",
+        "IDENTITY.md",
+        "TELEMETRY.md"
+      ],
+      "position": {
+        "x": 596,
+        "y": 224
+      }
+    },
+    {
+      "id": "backend-arc",
+      "label": "BACKEND",
+      "category": "BACKEND",
+      "state": "RESOLVING",
+      "importance": "secondary",
+      "evidence": [
+        "ecommerce-backend-api",
+        "assets/source/kalaos.systems.json"
+      ],
+      "position": {
+        "x": 748,
+        "y": 324
+      }
+    },
+    {
+      "id": "data-memory",
+      "label": "DATA",
+      "category": "DATA",
+      "state": "RESOLVED",
+      "importance": "primary",
+      "evidence": [
+        "CHRONOLOGY.md",
+        "engine/chronology.py"
+      ],
+      "position": {
+        "x": 870,
+        "y": 446
+      }
+    },
+    {
+      "id": "learning-thread",
+      "label": "LEARNING",
+      "category": "LEARNING",
+      "state": "UNRESOLVED",
+      "importance": "archived",
+      "evidence": [
+        "MANIFESTO.md",
+        "ARCHITECTURE.md"
+      ],
+      "position": {
+        "x": 998,
+        "y": 230
+      }
+    }
+  ]
+}

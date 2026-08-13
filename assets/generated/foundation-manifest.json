@@ -1,0 +1,27 @@
+{
+  "tokens": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/source/kalaos.tokens.json",
+  "generated": {
+    "primitives-dark": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/primitives-dark.svg",
+    "primitives-light": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/primitives-light.svg",
+    "origin-dark": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/origin-dark.svg",
+    "origin-light": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/origin-light.svg",
+    "boot-dark": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/boot-dark.svg",
+    "boot-light": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/boot-light.svg",
+    "identity-dark": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/identity-dark.svg",
+    "identity-light": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/identity-light.svg",
+    "systems-dark": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/systems-dark.svg",
+    "systems-light": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/systems-light.svg",
+    "telemetry-dark": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/telemetry-dark.svg",
+    "telemetry-light": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/telemetry-light.svg",
+    "chronology-dark": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/chronology-dark.svg",
+    "chronology-light": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/chronology-light.svg",
+    "signals-dark": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/signals-dark.svg",
+    "signals-light": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/signals-light.svg",
+    "interface-dark": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/interface-dark.svg",
+    "interface-light": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/interface-light.svg",
+    "handoff-dark": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/handoff-dark.svg",
+    "handoff-light": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/generated/handoff-light.svg",
+    "hero-dark": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/build/hero-dark.svg",
+    "hero-light": "/home/kalaab/Career/03_GitHub/kalaabalb/assets/build/hero-light.svg"
+  }
+}
