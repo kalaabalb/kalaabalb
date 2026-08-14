@@ -5,7 +5,7 @@ An authored operating system that unfolds as a profile experience.
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/generated/origin-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./assets/generated/origin-light.svg">
-  <img alt="KalaOS Origin" src="./assets/generated/origin-dark.svg" width="100%">
+  <img alt="KalaOS Origin" src="./assets/generated/origin-dark.svg" width="640">
 </picture>
 
 ## BOOT

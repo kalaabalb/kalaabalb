@@ -353,13 +353,12 @@ def render_systems(mode: str = "dark", tokens: TokenBundle | None = None, config
         f'<desc id="desc">Discovery layer for KalaOS mapping built systems as a structured coordinate field.</desc>',
         "<defs>",
         build_primitive_defs(mode, bundle),
-        f'<clipPath id="kalaos-systems-field"><rect x="{layout.field_x}" y="{layout.field_y}" width="{layout.field_width}" height="{layout.field_height}"/></clipPath>',
         "</defs>",
         f'<rect width="{layout.canvas_width}" height="{layout.canvas_height}" fill="{theme.background}"/>',
         render_background_grid(theme, bundle, opacity=0.11),
         f'<rect x="{layout.frame_x}" y="{layout.frame_y}" width="{layout.frame_width}" height="{layout.frame_height}" rx="{layout.frame_radius}" fill="none" stroke="{theme.border_panel}" stroke-width="{bundle.stroke_widths["standard"]}"/>',
         _reveal_group(header, delay_ms=motion.fast, duration_ms=motion.reveal, dy=4),
-        f'<g clip-path="url(#kalaos-systems-field)">{guide_lines}',
+        f'<g>{guide_lines}',
     ]
 
     for index, node in enumerate(primary_nodes):

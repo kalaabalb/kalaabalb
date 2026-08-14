@@ -83,7 +83,6 @@ def render_portrait_points(
     theme: Theme,
     settings: PortraitSettings,
     box: PortraitBox,
-    clip_id: str = "kalaos-portrait-clip",
 ) -> str:
     image = Image.open(settings.source).convert("RGB")
     cols = max(12, int(box.width / settings.sampling_density))
@@ -116,7 +115,7 @@ def render_portrait_points(
     step_y = box.height / rows
     colors = [getattr(theme, token) for token in settings.palette]
 
-    points: list[str] = [f'<g clip-path="url(#{clip_id})" shape-rendering="geometricPrecision">']
+    points: list[str] = ['<g shape-rendering="geometricPrecision">']
     for y in range(rows):
         for x in range(cols):
             focus = _focus_weight(box, x, y, cols, rows)

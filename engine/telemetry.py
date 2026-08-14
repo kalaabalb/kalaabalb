@@ -398,7 +398,7 @@ def _render_observed_field(
     return (
         _reveal_group(
             (
-                f'<g clip-path="url(#kalaos-telemetry-field)">'
+                f'<g>'
                 f'<line x1="{layout.activity.x}" y1="{layout.activity.y - 2}" x2="{layout.activity.x + layout.activity.width}" y2="{layout.activity.y - 2}" stroke="{theme.border_hairline}" stroke-width="1" stroke-opacity="0.24"/>'
                 f'<line x1="{layout.language.x - 18}" y1="{layout.language.y - 2}" x2="{layout.language.x + layout.language.width}" y2="{layout.language.y - 2}" stroke="{theme.border_hairline}" stroke-width="1" stroke-opacity="0.18"/>'
                 f'<line x1="{layout.language.x - 18}" y1="{layout.activity.y + 30}" x2="{layout.language.x - 18}" y2="{layout.language.y + layout.language.height - 8}" stroke="{theme.border_hairline}" stroke-width="1" stroke-opacity="0.22"/>'
@@ -437,7 +437,6 @@ def render_telemetry(mode: str = "dark", tokens: TokenBundle | None = None, conf
         f'<desc id="desc">Telemetry layer for KalaOS showing observed system activity and the language field.</desc>',
         "<defs>",
         build_primitive_defs(mode, bundle),
-        f'<clipPath id="kalaos-telemetry-field"><rect x="{layout.field.x}" y="{layout.field.y}" width="{layout.field.width}" height="{layout.field.height}" rx="{layout.field.radius}"/></clipPath>',
         "</defs>",
         f'<rect width="{layout.canvas_width}" height="{layout.canvas_height}" fill="{theme.background}"/>',
         render_background_grid(theme, bundle, opacity=0.11),
@@ -452,7 +451,7 @@ def render_telemetry(mode: str = "dark", tokens: TokenBundle | None = None, conf
         parts.append(
             _reveal_group(
                 (
-                    f'<g clip-path="url(#kalaos-telemetry-field)">'
+                    f'<g>'
                     f'<text x="{layout.activity.x}" y="{layout.activity.y + 28}" font-size="{int(typography["heading"]["size"])}" font-weight="{int(typography["heading"]["weight"])}" letter-spacing="0.6" fill="{theme.text_primary}">NO SIGNAL</text>'
                     f'<text x="{layout.activity.x}" y="{layout.activity.y + 52}" font-size="{int(typography["small"]["size"])}" font-weight="{int(typography["small"]["weight"])}" letter-spacing="0.2" fill="{theme.text_muted}">TELEMETRY UNAVAILABLE</text>'
                     "</g>"

@@ -166,8 +166,7 @@ def _identity_portrait(theme: Theme, document: IdentityDocument, motion: MotionT
     layout = document.layout
     settings = document.portrait
     field = layout.portrait
-    clip_id = "kalaos-portrait-clip"
-    point_field = render_portrait_points(theme, settings, field, clip_id=clip_id)
+    point_field = render_portrait_points(theme, settings, field)
     return (
         _reveal_group(point_field, delay_ms=motion.fast, duration_ms=motion.reveal, dy=4)
     )
@@ -188,8 +187,6 @@ def render_identity(mode: str = "dark", tokens: TokenBundle | None = None, confi
         f'<desc id="desc">Identity layer for KalaOS with deterministic point-field portrait reconstruction and sparse metadata.</desc>',
         "<defs>",
         build_primitive_defs(mode, bundle),
-        f'<clipPath id="kalaos-identity-frame"><rect x="{frame.x}" y="{frame.y}" width="{frame.width}" height="{frame.height}" rx="{frame.radius}"/></clipPath>',
-        f'<clipPath id="kalaos-portrait-clip"><rect x="{layout.portrait.x}" y="{layout.portrait.y}" width="{layout.portrait.width}" height="{layout.portrait.height}"/></clipPath>',
         "</defs>",
         f'<rect width="{layout.canvas_width}" height="{layout.canvas_height}" fill="{theme.background}"/>',
         render_background_grid(theme, bundle, opacity=0.12),
