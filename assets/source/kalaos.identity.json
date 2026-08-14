@@ -18,11 +18,11 @@
   "portrait": {
     "source": "identity-portrait.png",
     "sampling_density": 8,
-    "minimum_point_size": 1.15,
-    "maximum_point_size": 3.9,
-    "luminance_response": 1.45,
+    "minimum_point_size": 1.05,
+    "maximum_point_size": 4.15,
+    "luminance_response": 1.4,
     "contrast": 1.18,
-    "threshold": 0.08,
+    "threshold": 0.075,
     "palette": [
       "text_secondary",
       "accent_cyan",
