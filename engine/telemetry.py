@@ -271,7 +271,7 @@ def _system_row(
             "</g>"
         ),
         delay_ms=delay_ms,
-        duration_ms=motion.reveal,
+        duration_ms=motion.assemble,
         dy=4,
     )
 
@@ -314,7 +314,7 @@ def _language_row(
             "</g>"
         ),
         delay_ms=delay_ms,
-        duration_ms=motion.reveal,
+        duration_ms=motion.assemble,
         dy=3,
     )
 
@@ -365,7 +365,7 @@ def _render_observed_field(
                 layout,
                 typography,
                 motion,
-                delay_ms=motion.reveal + index * 110,
+                delay_ms=motion.assemble * 2 + index * 420,
                 max_count=max_system,
                 slot_count=slot_count,
             )
@@ -379,7 +379,7 @@ def _render_observed_field(
                 layout,
                 typography,
                 motion,
-                delay_ms=motion.reveal + motion.normal + index * 55,
+                delay_ms=motion.assemble * 2 + motion.reveal + index * 120,
                 max_count=max_language,
             )
         )
@@ -412,8 +412,8 @@ def _render_observed_field(
                 f'{_summary_row(theme, document, typography)}'
                 "</g>"
             ),
-            delay_ms=motion.fast,
-            duration_ms=motion.reveal,
+            delay_ms=motion.assemble,
+            duration_ms=motion.assemble,
             dy=4,
         )
     )
@@ -456,8 +456,8 @@ def render_telemetry(mode: str = "dark", tokens: TokenBundle | None = None, conf
                     f'<text x="{layout.activity.x}" y="{layout.activity.y + 52}" font-size="{int(typography["small"]["size"])}" font-weight="{int(typography["small"]["weight"])}" letter-spacing="0.2" fill="{theme.text_muted}">TELEMETRY UNAVAILABLE</text>'
                     "</g>"
                 ),
-                delay_ms=motion.reveal,
-                duration_ms=motion.reveal,
+                delay_ms=motion.assemble,
+                duration_ms=motion.assemble,
                 dy=4,
             )
         )

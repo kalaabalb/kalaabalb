@@ -240,8 +240,8 @@ def _node_group(theme: Theme, node: SystemNode, typography: dict[str, dict[str, 
     name_weight = int(display["weight"] if rank >= 4 else section["weight"])
     pieces = [
         f'<g opacity="1">',
-        f'<animate attributeName="opacity" from="0" to="1" dur="{_seconds(motion.reveal)}" begin="{_seconds(delay_ms)}" fill="freeze" calcMode="spline" keySplines="0.42 0 0.58 1"/>',
-        f'<animateTransform attributeName="transform" type="translate" from="0 5" to="0 0" dur="{_seconds(motion.reveal)}" begin="{_seconds(delay_ms)}" fill="freeze" calcMode="spline" keySplines="0.42 0 0.58 1"/>',
+        f'<animate attributeName="opacity" from="0" to="1" dur="{_seconds(motion.assemble)}" begin="{_seconds(delay_ms)}" fill="freeze" calcMode="spline" keySplines="0.42 0 0.58 1"/>',
+        f'<animateTransform attributeName="transform" type="translate" from="0 5" to="0 0" dur="{_seconds(motion.assemble)}" begin="{_seconds(delay_ms)}" fill="freeze" calcMode="spline" keySplines="0.42 0 0.58 1"/>',
         f'<line x1="{x}" y1="{y}" x2="{leader_x}" y2="{leader_y}" stroke="{theme.border_hairline}" stroke-width="1" stroke-opacity="{lead_brightness:.2f}"/>',
         _node_mark(theme, node),
         _text(theme, lx, ly, name_size, theme.text_primary, node.name, name_weight, anchor=label_anchor, tracking=0.25),
@@ -304,7 +304,7 @@ def _relation_group(theme: Theme, source: SystemNode, target: SystemNode, relati
     dash_attr = f' stroke-dasharray="{dash}"' if dash != "none" else ""
     return (
         '<g opacity="1">'
-        f'<animate attributeName="opacity" from="0" to="1" dur="{_seconds(motion.normal)}" begin="{_seconds(delay_ms)}" fill="freeze" calcMode="spline" keySplines="0.42 0 0.58 1"/>'
+        f'<animate attributeName="opacity" from="0" to="1" dur="{_seconds(motion.assemble)}" begin="{_seconds(delay_ms)}" fill="freeze" calcMode="spline" keySplines="0.42 0 0.58 1"/>'
         f'<path d="{path_d}" fill="none" stroke="{color}" stroke-width="{width}" stroke-linecap="round" stroke-opacity="0.42"{dash_attr}/>'
         f'<text x="{label_x:.1f}" y="{label_y:.1f}" text-anchor="{label_anchor}" font-size="{max(9, int(caption["size"]) - 2)}" font-weight="{caption["weight"]}" letter-spacing="0.55" fill="{theme.text_muted}" opacity="0.62">{relation.label.upper()}</text>'
         "</g>"
@@ -337,7 +337,7 @@ def render_systems(mode: str = "dark", tokens: TokenBundle | None = None, config
         f'<line x1="{layout.field_x}" y1="{layout.field_y + layout.field_height * 0.52:.0f}" x2="{layout.field_x + layout.field_width}" y2="{layout.field_y + layout.field_height * 0.52:.0f}" stroke="{theme.border_hairline}" stroke-width="1" stroke-opacity="0.10"/>'
     )
 
-    relation_delay = motion.reveal + motion.normal
+    relation_delay = motion.assemble * 2 + motion.normal
     relation_groups: list[str] = []
     for index, relation in enumerate(document.relations):
         source = nodes_by_id.get(relation.source)
@@ -362,11 +362,11 @@ def render_systems(mode: str = "dark", tokens: TokenBundle | None = None, config
     ]
 
     for index, node in enumerate(primary_nodes):
-        parts.append(_node_group(theme, node, typography, motion, delay_ms=motion.reveal + index * 120))
+        parts.append(_node_group(theme, node, typography, motion, delay_ms=motion.assemble * 2 + index * 360))
     for index, node in enumerate(secondary_nodes):
-        parts.append(_node_group(theme, node, typography, motion, delay_ms=motion.reveal + motion.normal + index * 110))
+        parts.append(_node_group(theme, node, typography, motion, delay_ms=motion.assemble * 2 + motion.reveal + index * 340))
     for index, node in enumerate(minor_nodes):
-        parts.append(_node_group(theme, node, typography, motion, delay_ms=motion.reveal + motion.slow + index * 90))
+        parts.append(_node_group(theme, node, typography, motion, delay_ms=motion.assemble * 2 + motion.reveal + motion.normal + index * 320))
     for group in relation_groups:
         parts.append(group)
 

@@ -286,7 +286,7 @@ def _era_group(
             "</g>"
         ),
         delay_ms=delay_ms,
-        duration_ms=motion.reveal,
+        duration_ms=motion.assemble,
         dy=4,
     )
 
@@ -337,7 +337,7 @@ def _transition_group(
             "</g>"
         ),
         delay_ms=delay_ms,
-        duration_ms=motion.normal,
+        duration_ms=motion.assemble,
         dy=2,
     )
 
@@ -395,6 +395,7 @@ def render_chronology(mode: str = "dark", tokens: TokenBundle | None = None, con
         f'<text x="{layout.strata.x + 170}" y="{layout.strata.y - 16}" font-size="{int(typography["caption"]["size"])}" font-weight="{int(typography["caption"]["weight"])}" letter-spacing="1.3" fill="{theme.text_secondary}">TIME LEAVES STRUCTURE</text>',
         f'<text x="{layout.strata.x + layout.strata.width - 134}" y="{layout.strata.y - 16}" font-size="{int(typography["caption"]["size"])}" font-weight="{int(typography["caption"]["weight"])}" letter-spacing="1.3" fill="{theme.text_secondary}">CURRENT</text>',
     ]
+    sorted_eras = list(document.eras)
     if fallback:
         parts.append(
             _reveal_group(
@@ -405,13 +406,12 @@ def render_chronology(mode: str = "dark", tokens: TokenBundle | None = None, con
                     "</g>"
                 ),
                 delay_ms=motion.reveal,
-                duration_ms=motion.reveal,
+                duration_ms=motion.assemble,
                 dy=4,
             )
         )
     else:
         # Draw oldest layers first so newer traces can settle on top.
-        sorted_eras = list(document.eras)
         for index, era in enumerate(sorted_eras):
             parts.append(
                 _era_group(
@@ -420,10 +420,10 @@ def render_chronology(mode: str = "dark", tokens: TokenBundle | None = None, con
                     layout,
                     typography,
                     motion,
-                    delay_ms=motion.fast + index * 95,
+                    delay_ms=motion.assemble + index * 260,
                 )
             )
-        transition_delay = motion.reveal + motion.normal
+        transition_delay = motion.assemble * 2 + motion.normal
         for index, transition in enumerate(document.transitions):
             source = era_by_id.get(transition.source)
             target = era_by_id.get(transition.target)
@@ -437,7 +437,7 @@ def render_chronology(mode: str = "dark", tokens: TokenBundle | None = None, con
                     layout,
                     typography,
                     motion,
-                    delay_ms=transition_delay + index * 70,
+                    delay_ms=transition_delay + index * 180,
                     label=transition.label.upper(),
                     kind=transition.kind,
                 )

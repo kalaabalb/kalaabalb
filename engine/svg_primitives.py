@@ -131,23 +131,23 @@ def _origin_geometry(tokens: TokenBundle) -> OriginMarkGeometry:
 
 
 def _origin_mark(theme: Theme, geometry: OriginMarkGeometry) -> str:
-    duration = "0.28s"
+    duration = "0.20s"
     return (
         '<symbol id="kalaos-origin-mark" viewBox="0 0 64 64">'
         f'<line x1="{geometry.center}" y1="{geometry.top_start}" x2="{geometry.center}" y2="{geometry.top_end}" stroke="{theme.accent_violet}" stroke-width="{geometry.stroke}" stroke-linecap="round" opacity="0">'
         f'<animate attributeName="opacity" values="0;1" dur="{duration}" begin="0s" fill="freeze"/>'
         "</line>"
         f'<line x1="{geometry.center}" y1="{geometry.bottom_start}" x2="{geometry.center}" y2="{geometry.bottom_end}" stroke="{theme.accent_violet}" stroke-width="{geometry.stroke}" stroke-linecap="round" opacity="0">'
-        f'<animate attributeName="opacity" values="0;1" dur="{duration}" begin="0.24s" fill="freeze"/>'
+        f'<animate attributeName="opacity" values="0;1" dur="{duration}" begin="0.16s" fill="freeze"/>'
         "</line>"
         f'<line x1="{geometry.left_start}" y1="{geometry.center}" x2="{geometry.left_end}" y2="{geometry.center}" stroke="{theme.accent_violet}" stroke-width="{geometry.stroke}" stroke-linecap="round" opacity="0">'
-        f'<animate attributeName="opacity" values="0;1" dur="{duration}" begin="0.48s" fill="freeze"/>'
+        f'<animate attributeName="opacity" values="0;1" dur="{duration}" begin="0.32s" fill="freeze"/>'
         "</line>"
         f'<line x1="{geometry.right_start}" y1="{geometry.center}" x2="{geometry.right_end}" y2="{geometry.center}" stroke="{theme.accent_violet}" stroke-width="{geometry.stroke}" stroke-linecap="round" opacity="0">'
-        f'<animate attributeName="opacity" values="0;1" dur="{duration}" begin="0.72s" fill="freeze"/>'
+        f'<animate attributeName="opacity" values="0;1" dur="{duration}" begin="0.48s" fill="freeze"/>'
         "</line>"
         f'<circle cx="{geometry.center}" cy="{geometry.center}" r="{geometry.radius}" fill="{theme.accent_violet}" opacity="0">'
-        f'<animate attributeName="opacity" values="0;1" dur="{duration}" begin="0.96s" fill="freeze"/>'
+        f'<animate attributeName="opacity" values="0;1" dur="{duration}" begin="0.64s" fill="freeze"/>'
         "</circle>"
         "</symbol>"
     )
@@ -223,19 +223,19 @@ def render_origin_mark(theme: Theme, tokens: TokenBundle | None = None) -> str:
         '<title id="title">KalaOS Origin Mark</title>'
         '<desc id="desc">Construction symbol with a central point and four separated segments.</desc>'
         f'<circle cx="{geometry.center}" cy="{geometry.center}" r="{geometry.radius}" fill="{theme.accent_violet}" opacity="0">'
-        f'<animate attributeName="opacity" values="0;1" dur="0.18s" begin="0s" fill="freeze"/>'
+        f'<animate attributeName="opacity" values="0;1" dur="0.20s" begin="0s" fill="freeze"/>'
         "</circle>"
         f'<line x1="{geometry.center}" y1="{geometry.top_start}" x2="{geometry.center}" y2="{geometry.top_end}" stroke="{theme.accent_violet}" stroke-width="{geometry.stroke}" stroke-linecap="round" opacity="0">'
-        f'<animate attributeName="opacity" values="0;1" dur="0.18s" begin="0.14s" fill="freeze"/>'
+        f'<animate attributeName="opacity" values="0;1" dur="0.20s" begin="0.16s" fill="freeze"/>'
         "</line>"
         f'<line x1="{geometry.center}" y1="{geometry.bottom_start}" x2="{geometry.center}" y2="{geometry.bottom_end}" stroke="{theme.accent_violet}" stroke-width="{geometry.stroke}" stroke-linecap="round" opacity="0">'
-        f'<animate attributeName="opacity" values="0;1" dur="0.18s" begin="0.28s" fill="freeze"/>'
+        f'<animate attributeName="opacity" values="0;1" dur="0.20s" begin="0.32s" fill="freeze"/>'
         "</line>"
         f'<line x1="{geometry.left_start}" y1="{geometry.center}" x2="{geometry.left_end}" y2="{geometry.center}" stroke="{theme.accent_violet}" stroke-width="{geometry.stroke}" stroke-linecap="round" opacity="0">'
-        f'<animate attributeName="opacity" values="0;1" dur="0.18s" begin="0.42s" fill="freeze"/>'
+        f'<animate attributeName="opacity" values="0;1" dur="0.20s" begin="0.48s" fill="freeze"/>'
         "</line>"
         f'<line x1="{geometry.right_start}" y1="{geometry.center}" x2="{geometry.right_end}" y2="{geometry.center}" stroke="{theme.accent_violet}" stroke-width="{geometry.stroke}" stroke-linecap="round" opacity="0">'
-        f'<animate attributeName="opacity" values="0;1" dur="0.18s" begin="0.56s" fill="freeze"/>'
+        f'<animate attributeName="opacity" values="0;1" dur="0.20s" begin="0.64s" fill="freeze"/>'
         "</line>"
         "</svg>"
     )

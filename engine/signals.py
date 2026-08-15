@@ -280,8 +280,8 @@ def _signal_group(
     state_y = y + 14
     pieces = [
         f'<g opacity="1">',
-        f'<animate attributeName="opacity" from="0" to="1" dur="{_seconds(motion.reveal)}" begin="{_seconds(delay_ms)}" fill="freeze" calcMode="spline" keySplines="0.42 0 0.58 1"/>',
-        f'<animateTransform attributeName="transform" type="translate" from="0 4" to="0 0" dur="{_seconds(motion.reveal)}" begin="{_seconds(delay_ms)}" fill="freeze" calcMode="spline" keySplines="0.42 0 0.58 1"/>',
+        f'<animate attributeName="opacity" from="0" to="1" dur="{_seconds(motion.assemble)}" begin="{_seconds(delay_ms)}" fill="freeze" calcMode="spline" keySplines="0.42 0 0.58 1"/>',
+        f'<animateTransform attributeName="transform" type="translate" from="0 4" to="0 0" dur="{_seconds(motion.assemble)}" begin="{_seconds(delay_ms)}" fill="freeze" calcMode="spline" keySplines="0.42 0 0.58 1"/>',
         f'<line x1="{x}" y1="{y}" x2="{label_x}" y2="{y - 12 if state_rank >= 3 else y - 8}" stroke="{theme.border_hairline}" stroke-width="1" stroke-opacity="{0.10 + rank * 0.04:.2f}"/>',
         *path_parts,
         f'<circle cx="{x}" cy="{y}" r="{marker_radius:.2f}" fill="{color}" opacity="{marker_opacity:.2f}"/>',
@@ -297,7 +297,7 @@ def _signal_group(
     if signal.state == "RESOLVED":
         pieces.append(f'<circle cx="{x}" cy="{y}" r="{marker_radius + 4.0:.2f}" fill="none" stroke="{color}" stroke-width="1" stroke-opacity="0.16"/>')
     pieces.append("</g>")
-    return _reveal_group("".join(pieces), delay_ms=delay_ms, duration_ms=motion.reveal, dy=4)
+    return _reveal_group("".join(pieces), delay_ms=delay_ms, duration_ms=motion.assemble, dy=4)
 
 
 def render_signals(mode: str = "dark", tokens: TokenBundle | None = None, config_path: Path | str = DEFAULT_SIGNALS_PATH) -> SignalsRender:
@@ -327,9 +327,9 @@ def render_signals(mode: str = "dark", tokens: TokenBundle | None = None, config
         f'<rect x="{layout.field.x}" y="{layout.field.y}" width="{layout.field.width}" height="{layout.field.height}" rx="{layout.field.radius}" fill="none" stroke="{theme.border_hairline}" stroke-width="1" stroke-opacity="0.44"/>',
     ]
     for index, signal in enumerate(signal_order):
-        delay = motion.fast + _state_rank(signal) * 78 + index * 84
+        delay = motion.assemble + _state_rank(signal) * 120 + index * 220
         if signal.state == "UNRESOLVED":
-            delay += motion.normal
+            delay += motion.normal + motion.fast
         parts.append(
             _signal_group(
                 theme,
@@ -345,8 +345,8 @@ def render_signals(mode: str = "dark", tokens: TokenBundle | None = None, config
             (
                 f'<text x="{layout.field.x}" y="{layout.field.y + layout.field.height + 30}" font-size="{int(typography["caption"]["size"])}" font-weight="{int(typography["caption"]["weight"])}" letter-spacing="0.14" fill="{theme.text_muted}">Evidence comes from locked stage documents, source snapshots, and the shared engine pipeline.</text>'
             ),
-            delay_ms=motion.reveal + motion.normal,
-            duration_ms=motion.reveal,
+            delay_ms=motion.assemble * 4 + motion.slow,
+            duration_ms=motion.assemble,
             dy=4,
         )
     )

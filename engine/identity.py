@@ -159,7 +159,12 @@ def _identity_metadata(theme: Theme, document: IdentityDocument, typography: dic
         _text(theme, meta_x, meta_y + step * 4, int(small["size"]), theme.text_secondary, "DOMAINS", int(small["weight"]), tracking=0.2),
         _text(theme, meta_x + 110, meta_y + step * 4, int(small["size"]), theme.text_muted, domains, int(small["weight"]), tracking=0.1),
     ]
-    return _reveal_group("".join(rows), delay_ms=motion.reveal + motion.normal, duration_ms=motion.reveal, dy=4)
+    return _reveal_group(
+        "".join(rows),
+        delay_ms=motion.assemble * 2 + motion.slow + motion.fast,
+        duration_ms=motion.assemble,
+        dy=4,
+    )
 
 
 def _identity_portrait(theme: Theme, document: IdentityDocument, motion: MotionTokens) -> str:
@@ -168,7 +173,7 @@ def _identity_portrait(theme: Theme, document: IdentityDocument, motion: MotionT
     field = layout.portrait
     point_field = render_portrait_points(theme, settings, field)
     return (
-        _reveal_group(point_field, delay_ms=motion.fast, duration_ms=motion.reveal, dy=4)
+        _reveal_group(point_field, delay_ms=motion.normal * 2, duration_ms=motion.assemble, dy=4)
     )
 
 

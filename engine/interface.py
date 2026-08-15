@@ -247,8 +247,8 @@ def _vector_lanes(theme: Theme, document: InterfaceDocument, layout: Rect, typog
         lanes.append(
             _reveal_group(
                 content,
-                delay_ms=motion.reveal + index * motion.normal,
-                duration_ms=motion.reveal,
+                delay_ms=motion.assemble * 2 + index * (motion.normal * 5),
+                duration_ms=motion.assemble,
                 dy=6,
             )
         )
