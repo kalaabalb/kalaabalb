@@ -172,6 +172,16 @@ def _reveal_group(content: str, delay_ms: int, duration_ms: int, dy: int = 6) ->
     )
 
 
+def _reduced_motion_style() -> str:
+    return (
+        '<style><![CDATA['
+        '@media (prefers-reduced-motion: reduce) {'
+        '.kalaos-ambient { display: none; }'
+        '}'
+        ']]></style>'
+    )
+
+
 def _importance_rank(node: SystemNode) -> int:
     mapping = {
         "primary": 4,
@@ -233,6 +243,7 @@ def _node_group(theme: Theme, node: SystemNode, typography: dict[str, dict[str, 
     lx = x + node.label.dx
     ly = y + node.label.dy
     label_anchor = node.label.anchor
+    radius = _node_radius(node)
     leader_x = lx - 10 if label_anchor == "start" else lx + 10
     leader_y = ly - 10
     lead_brightness = 0.10 + rank * 0.06
@@ -254,6 +265,15 @@ def _node_group(theme: Theme, node: SystemNode, typography: dict[str, dict[str, 
         pieces.append(_text(theme, lx, ly + 30, int(caption["size"]), theme.text_muted, " / ".join(node.technologies), int(caption["weight"]), anchor=label_anchor, tracking=0.08))
     elif node.description:
         pieces.append(_text(theme, lx, ly + 30, int(caption["size"]), theme.text_muted, node.description, int(caption["weight"]), anchor=label_anchor, tracking=0.12))
+    if rank >= 4 and node.state == "ACTIVE":
+        ambient_delay = delay_ms + motion.assemble
+        ambient_radius = max(14.0, radius * 1.42)
+        pieces.append(
+            f'<circle class="kalaos-ambient" cx="{x}" cy="{y}" r="{ambient_radius:.2f}" fill="none" stroke="{theme.accent_cyan}" stroke-width="1" opacity="0.16">'
+            f'<animate attributeName="opacity" values="0.16;0.26;0.16" dur="5.80s" begin="{_seconds(ambient_delay)}" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"/>'
+            f'<animate attributeName="r" values="{ambient_radius:.2f};{ambient_radius + 0.8:.2f};{ambient_radius:.2f}" dur="5.80s" begin="{_seconds(ambient_delay)}" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"/>'
+            "</circle>"
+        )
     pieces.append("</g>")
     return "".join(pieces)
 
@@ -352,21 +372,22 @@ def render_systems(mode: str = "dark", tokens: TokenBundle | None = None, config
         f'<title id="title">KalaOS charted systems</title>',
         f'<desc id="desc">Discovery layer for KalaOS mapping built systems as a structured coordinate field.</desc>',
         "<defs>",
+        _reduced_motion_style(),
         build_primitive_defs(mode, bundle),
         "</defs>",
         f'<rect width="{layout.canvas_width}" height="{layout.canvas_height}" fill="{theme.background}"/>',
         render_background_grid(theme, bundle, opacity=0.11),
         f'<rect x="{layout.frame_x}" y="{layout.frame_y}" width="{layout.frame_width}" height="{layout.frame_height}" rx="{layout.frame_radius}" fill="none" stroke="{theme.border_panel}" stroke-width="{bundle.stroke_widths["standard"]}"/>',
-        _reveal_group(header, delay_ms=motion.fast, duration_ms=motion.reveal, dy=4),
+        _reveal_group(header, delay_ms=motion.normal, duration_ms=motion.reveal, dy=4),
         f'<g>{guide_lines}',
     ]
 
     for index, node in enumerate(primary_nodes):
-        parts.append(_node_group(theme, node, typography, motion, delay_ms=motion.assemble * 2 + index * 360))
+        parts.append(_node_group(theme, node, typography, motion, delay_ms=motion.assemble * 2 + index * 420))
     for index, node in enumerate(secondary_nodes):
-        parts.append(_node_group(theme, node, typography, motion, delay_ms=motion.assemble * 2 + motion.reveal + index * 340))
+        parts.append(_node_group(theme, node, typography, motion, delay_ms=motion.assemble * 2 + index * 520))
     for index, node in enumerate(minor_nodes):
-        parts.append(_node_group(theme, node, typography, motion, delay_ms=motion.assemble * 2 + motion.reveal + motion.normal + index * 320))
+        parts.append(_node_group(theme, node, typography, motion, delay_ms=motion.assemble * 2 + motion.reveal + motion.normal + index * 400))
     for group in relation_groups:
         parts.append(group)
 

@@ -112,6 +112,16 @@ def _reveal_group(content: str, delay_ms: int, duration_ms: int, dy: int = 6) ->
     )
 
 
+def _reduced_motion_style() -> str:
+    return (
+        '<style><![CDATA['
+        '@media (prefers-reduced-motion: reduce) {'
+        '.kalaos-ambient { display: none; }'
+        '}'
+        ']]></style>'
+    )
+
+
 def _parse_layout(raw: dict[str, object]) -> ChronologyLayout:
     canvas = raw["canvas"]
     frame = raw["frame"]
@@ -272,6 +282,15 @@ def _era_group(
         fragments.append(
             f'<circle cx="{frag_x:.1f}" cy="{frag_y:.1f}" r="{frag_radius:.2f}" fill="{tone}" opacity="{frag_opacity:.2f}"/>'
         )
+    ambient = ""
+    if era.importance == "current":
+        ambient_radius = (2.6 + rank * 0.7) + 3.8
+        ambient = (
+            f'<circle class="kalaos-ambient" cx="{marker_x:.1f}" cy="{marker_y:.1f}" r="{ambient_radius:.2f}" fill="none" stroke="{tone}" stroke-width="1" opacity="0.16">'
+            f'<animate attributeName="opacity" values="0.16;0.26;0.16" dur="5.80s" begin="{_seconds(delay_ms + motion.assemble)}" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"/>'
+            f'<animate attributeName="r" values="{ambient_radius:.2f};{ambient_radius + 0.7:.2f};{ambient_radius:.2f}" dur="5.80s" begin="{_seconds(delay_ms + motion.assemble)}" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"/>'
+            "</circle>"
+        )
     return _reveal_group(
         (
             f'<g opacity="1">'
@@ -283,10 +302,11 @@ def _era_group(
             f'{"".join(fragments)}'
             f'<circle cx="{marker_x:.1f}" cy="{marker_y:.1f}" r="{2.6 + rank * 0.7:.2f}" fill="{tone}" opacity="{0.58 + rank * 0.08:.2f}"/>'
             f'<circle cx="{marker_x:.1f}" cy="{marker_y:.1f}" r="{1.2 + rank * 0.22:.2f}" fill="{theme.background}" opacity="0.88"/>'
+            f"{ambient}"
             "</g>"
         ),
         delay_ms=delay_ms,
-        duration_ms=motion.assemble,
+        duration_ms=motion.reveal,
         dy=4,
     )
 
@@ -337,7 +357,7 @@ def _transition_group(
             "</g>"
         ),
         delay_ms=delay_ms,
-        duration_ms=motion.assemble,
+        duration_ms=motion.reveal,
         dy=2,
     )
 
@@ -380,6 +400,7 @@ def render_chronology(mode: str = "dark", tokens: TokenBundle | None = None, con
         '<title id="title">KalaOS chronology</title>',
         '<desc id="desc">Chronology layer for KalaOS showing preserved temporal strata and observed transitions.</desc>',
         "<defs>",
+        _reduced_motion_style(),
         build_primitive_defs(mode, bundle),
         f'<clipPath id="kalaos-chronology-field"><rect x="{layout.strata.x}" y="{layout.strata.y}" width="{layout.strata.width}" height="{layout.strata.height}" rx="{layout.strata.radius}"/></clipPath>',
         "</defs>",
@@ -420,10 +441,10 @@ def render_chronology(mode: str = "dark", tokens: TokenBundle | None = None, con
                     layout,
                     typography,
                     motion,
-                    delay_ms=motion.assemble + index * 260,
+                    delay_ms=motion.assemble + index * 180,
                 )
             )
-        transition_delay = motion.assemble * 2 + motion.normal
+        transition_delay = motion.assemble * 2 + motion.reveal
         for index, transition in enumerate(document.transitions):
             source = era_by_id.get(transition.source)
             target = era_by_id.get(transition.target)
@@ -437,7 +458,7 @@ def render_chronology(mode: str = "dark", tokens: TokenBundle | None = None, con
                     layout,
                     typography,
                     motion,
-                    delay_ms=transition_delay + index * 180,
+                    delay_ms=transition_delay + index * 172,
                     label=transition.label.upper(),
                     kind=transition.kind,
                 )

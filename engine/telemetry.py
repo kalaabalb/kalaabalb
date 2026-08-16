@@ -108,6 +108,16 @@ def _reveal_group(content: str, delay_ms: int, duration_ms: int, dy: int = 6) ->
     )
 
 
+def _reduced_motion_style() -> str:
+    return (
+        '<style><![CDATA['
+        '@media (prefers-reduced-motion: reduce) {'
+        '.kalaos-ambient { display: none; }'
+        '}'
+        ']]></style>'
+    )
+
+
 def _tone(theme: Theme, name: str) -> str:
     return getattr(theme, name)
 
@@ -336,6 +346,13 @@ def _summary_row(theme: Theme, document: TelemetryDocument, typography: dict[str
             parts.append(f'<line x1="{item_x - 20}" y1="{y - 11}" x2="{item_x - 20}" y2="{y + 10}" stroke="{theme.border_hairline}" stroke-width="1" stroke-opacity="0.30"/>')
         parts.append(_text(theme, item_x, y, int(small["size"]), theme.text_primary, value, int(small["weight"]), tracking=0.18))
         parts.append(_text(theme, item_x, y + 14, int(caption["size"]), theme.text_muted, label, int(caption["weight"]), tracking=0.14))
+    ambient_x = x + 760
+    parts.append(
+        f'<g class="kalaos-ambient" opacity="0.28">'
+        f'<text x="{ambient_x}" y="{y}" font-size="{int(small["size"])}" font-weight="{int(small["weight"])}" letter-spacing="0.18" fill="{theme.text_primary}">{document.summary.last_observed}</text>'
+        f'<animate attributeName="opacity" values="0.28;0.42;0.28" dur="5.20s" begin="3.48s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"/>'
+        "</g>"
+    )
     parts.append("</g>")
     return "".join(parts)
 
@@ -436,6 +453,7 @@ def render_telemetry(mode: str = "dark", tokens: TokenBundle | None = None, conf
         f'<title id="title">KalaOS telemetry</title>',
         f'<desc id="desc">Telemetry layer for KalaOS showing observed system activity and the language field.</desc>',
         "<defs>",
+        _reduced_motion_style(),
         build_primitive_defs(mode, bundle),
         "</defs>",
         f'<rect width="{layout.canvas_width}" height="{layout.canvas_height}" fill="{theme.background}"/>',

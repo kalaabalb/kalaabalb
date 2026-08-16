@@ -93,6 +93,16 @@ def _reveal_group(content: str, delay_ms: int, duration_ms: int, dy: int = 6) ->
     )
 
 
+def _reduced_motion_style() -> str:
+    return (
+        '<style><![CDATA['
+        '@media (prefers-reduced-motion: reduce) {'
+        '.kalaos-ambient { display: none; }'
+        '}'
+        ']]></style>'
+    )
+
+
 def _parse_layout(raw: dict[str, object]) -> SignalsLayout:
     canvas = raw["canvas"]
     frame = raw["frame"]
@@ -296,6 +306,15 @@ def _signal_group(
         pieces.append(_text(theme, label_x, evidence_y, int(caption["size"]), theme.text_muted, evidence, int(caption["weight"]), anchor=label_anchor, tracking=0.08))
     if signal.state == "RESOLVED":
         pieces.append(f'<circle cx="{x}" cy="{y}" r="{marker_radius + 4.0:.2f}" fill="none" stroke="{color}" stroke-width="1" stroke-opacity="0.16"/>')
+    if signal.id == "build-core" and signal.state == "RESOLVED":
+        ambient_delay = delay_ms + motion.assemble
+        ambient_radius = marker_radius + 6.0
+        pieces.append(
+            f'<circle class="kalaos-ambient" cx="{x}" cy="{y}" r="{ambient_radius:.2f}" fill="none" stroke="{color}" stroke-width="1" opacity="0.18">'
+            f'<animate attributeName="opacity" values="0.18;0.28;0.18" dur="5.40s" begin="{_seconds(ambient_delay)}" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"/>'
+            f'<animate attributeName="r" values="{ambient_radius:.2f};{ambient_radius + 0.7:.2f};{ambient_radius:.2f}" dur="5.40s" begin="{_seconds(ambient_delay)}" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"/>'
+            "</circle>"
+        )
     pieces.append("</g>")
     return _reveal_group("".join(pieces), delay_ms=delay_ms, duration_ms=motion.assemble, dy=4)
 
@@ -314,6 +333,7 @@ def render_signals(mode: str = "dark", tokens: TokenBundle | None = None, config
         '<title id="title">KalaOS signals</title>',
         '<desc id="desc">Signal acquisition field for KalaOS showing unresolved traces, detected capability, resolving structure, and resolved evidence-backed signals.</desc>',
         "<defs>",
+        _reduced_motion_style(),
         build_primitive_defs(mode, bundle),
         f'<clipPath id="kalaos-signals-field"><rect x="{layout.field.x}" y="{layout.field.y}" width="{layout.field.width}" height="{layout.field.height}" rx="{layout.field.radius}"/></clipPath>',
         "</defs>",

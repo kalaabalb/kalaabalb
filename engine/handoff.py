@@ -94,6 +94,16 @@ def _reveal_group(content: str, delay_ms: int, duration_ms: int, dy: int = 6) ->
     )
 
 
+def _reduced_motion_style() -> str:
+    return (
+        '<style><![CDATA['
+        '@media (prefers-reduced-motion: reduce) {'
+        '.kalaos-ambient { display: none; }'
+        '}'
+        ']]></style>'
+    )
+
+
 def _parse_vector(raw: dict[str, object]) -> HandoffVector:
     return HandoffVector(
         name=str(raw["name"]),
@@ -195,6 +205,10 @@ def _threshold_shell(theme: Theme, layout: HandoffLayout, selected: HandoffVecto
         f'<rect x="{t.x}" y="{t.y}" width="{t.width}" height="{t.height}" rx="{t.radius}" fill="none" stroke="{theme.border_panel}" stroke-width="1.2"/>'
         f'<line x1="{cx:.1f}" y1="{t.y + 12}" x2="{cx:.1f}" y2="{t.y + t.height - 12}" stroke="{theme.border_hairline}" stroke-width="1" stroke-opacity="0.42"/>'
         f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="6.4" fill="{theme.accent_lavender}" opacity="0.92"/>'
+        f'<circle class="kalaos-ambient" cx="{cx:.1f}" cy="{cy:.1f}" r="6.4" fill="{theme.accent_lavender}" opacity="0.18">'
+        f'<animate attributeName="opacity" values="0.18;0.32;0.18" dur="5.20s" begin="2.96s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"/>'
+        f'<animate attributeName="r" values="6.4;6.9;6.4" dur="5.20s" begin="2.96s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"/>'
+        "</circle>"
         f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="16" fill="none" stroke="{fill}" stroke-width="1" stroke-opacity="0.18"/>'
         f'<path d="M {cx - 10:.1f} {cy - 58} V {cy - 18} M {cx + 10:.1f} {cy + 18} V {cy + 58}" fill="none" stroke="{fill}" stroke-width="1.4" stroke-linecap="round" stroke-opacity="0.68"/>'
         f'{_text(t.x + 10, t.y + 24, 10, theme.text_muted, "THRESHOLD", tracking=1.2)}'
@@ -268,6 +282,7 @@ def render_handoff(mode: str = "dark", tokens: TokenBundle | None = None, config
             '<title id="title">KalaOS handoff</title>',
             '<desc id="desc">Single selected action crossing the KalaOS boundary into external consequence.</desc>',
             "<defs>",
+            _reduced_motion_style(),
             build_primitive_defs(mode, bundle),
             "</defs>",
             f'<rect width="{document.layout.canvas_width}" height="{document.layout.canvas_height}" fill="{theme.background}"/>',

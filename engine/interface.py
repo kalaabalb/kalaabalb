@@ -78,6 +78,16 @@ def _reveal_group(content: str, delay_ms: int, duration_ms: int, dy: int = 6) ->
     )
 
 
+def _reduced_motion_style() -> str:
+    return (
+        '<style><![CDATA['
+        '@media (prefers-reduced-motion: reduce) {'
+        '.kalaos-ambient { display: none; }'
+        '}'
+        ']]></style>'
+    )
+
+
 def _parse_vector(raw: dict[str, object]) -> InterfaceVector:
     return InterfaceVector(
         name=str(raw["name"]),
@@ -139,6 +149,11 @@ def _state_strip(theme: Theme, width: int) -> str:
     for label, x, fill in labels:
         parts.append(_text(theme, x, 128, 12, fill, label, 400, tracking=1.1))
     parts.append(f'<rect x="322" y="134" width="112" height="2" fill="{theme.accent_cyan}"/>')
+    parts.append(
+        f'<rect class="kalaos-ambient" x="322" y="134" width="112" height="2" fill="{theme.accent_cyan}" opacity="0.22">'
+        f'<animate attributeName="opacity" values="0.22;0.38;0.22" dur="5.20s" begin="3.48s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"/>'
+        "</rect>"
+    )
     return "".join(parts)
 
 
@@ -269,6 +284,7 @@ def render_interface(mode: str = "dark", tokens: TokenBundle | None = None, conf
         '<title id="title">KalaOS interface</title>',
         f'<desc id="desc">Invocation layer for KalaOS with three resolved action vectors: EXPLORE, TRACE, and CONVERSE.</desc>',
         "<defs>",
+        _reduced_motion_style(),
         build_primitive_defs(mode, bundle),
         "</defs>",
         f'<rect width="{layout.canvas_width}" height="{layout.canvas_height}" fill="{theme.background}"/>',

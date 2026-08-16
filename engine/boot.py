@@ -35,6 +35,16 @@ def _reveal_group(content: str, delay_ms: int, duration_ms: int, dy: int = 8) ->
     )
 
 
+def _reduced_motion_style() -> str:
+    return (
+        '<style><![CDATA['
+        '@media (prefers-reduced-motion: reduce) {'
+        '.kalaos-ambient { display: none; }'
+        '}'
+        ']]></style>'
+    )
+
+
 def _boot_origin(
     theme: Theme,
     layout: HeroLayout,
@@ -73,7 +83,7 @@ def _boot_title(
         (
             f'<text x="{x}" y="{y}" text-anchor="middle" font-size="{display_xl_size}" font-weight="{display_xl_weight}" letter-spacing="7" fill="{theme.text_primary}">KALAOS</text>'
         ),
-        delay_ms=motion.assemble + motion.fast,
+        delay_ms=motion.assemble + motion.normal,
         duration_ms=motion.reveal,
         dy=10,
     )
@@ -86,10 +96,20 @@ def _boot_row(
     small_weight: int,
     body_size: int,
     body_weight: int,
+    ambient: bool = False,
+    ambient_delay_ms: int | None = None,
 ) -> str:
+    particle = f'<use href="#kalaos-particle" x="{row.x - 18}" y="{row.y - 11}" width="8" height="8" opacity="0.9"/>'
+    if ambient and ambient_delay_ms is not None:
+        particle += (
+            f'<use class="kalaos-ambient" href="#kalaos-particle" x="{row.x - 18}" y="{row.y - 11}" width="8" height="8" opacity="0.22">'
+            f'<animate attributeName="opacity" values="0.22;0.32;0.22" dur="5.60s" begin="{_seconds(ambient_delay_ms)}" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"/>'
+            "</use>"
+        )
     return _reveal_group(
         (
-            f'<use href="#kalaos-particle" x="{row.x - 18}" y="{row.y - 11}" width="8" height="8" opacity="0.9"/>'
+            particle
+            + 
             f'<text x="{row.x}" y="{row.y}" font-size="{small_size}" font-weight="{small_weight}" letter-spacing="1.2" fill="{row.label_fill}">{row.label}</text>'
             f'<text x="{row.x + 220}" y="{row.y}" font-size="{body_size}" font-weight="{body_weight}" fill="{row.value_fill}">{row.value}</text>'
         ),
@@ -114,6 +134,9 @@ def _boot_handoff(
         (
             f'<text x="{x}" y="{y}" font-size="{caption_size}" font-weight="{caption_weight}" letter-spacing="1.2" fill="{theme.text_muted}">HANDOFF</text>'
             f'<text x="{x + 82}" y="{y}" font-size="{caption_size}" font-weight="{caption_weight}" letter-spacing="1.2" fill="{theme.text_secondary}">IDENTITY.APP</text>'
+            f'<line class="kalaos-ambient" x1="{x}" y1="{y + 10}" x2="{x + 126}" y2="{y + 10}" stroke="{theme.accent_cyan}" stroke-width="1" stroke-opacity="0.18">'
+            f'<animate attributeName="stroke-opacity" values="0.18;0.30;0.18" dur="5.60s" begin="{_seconds(delay_ms + motion.reveal)}" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"/>'
+            "</line>"
         ),
         delay_ms=delay_ms,
         duration_ms=motion.reveal,
@@ -136,7 +159,8 @@ def render_boot(mode: str = "dark", tokens: TokenBundle | None = None) -> str:
     caption_size = typography["caption"]["size"]
     caption_weight = typography["caption"]["weight"]
     frame = layout.frame
-    calibration_start = motion.assemble + motion.reveal + motion.fast
+    calibration_start = motion.assemble + motion.reveal + motion.normal
+    row_step_ms = motion.normal + motion.fast // 4
     rows = [
         BootRow(
             label="ORIGIN",
@@ -153,7 +177,7 @@ def render_boot(mode: str = "dark", tokens: TokenBundle | None = None) -> str:
             value="CALIBRATED",
             x=frame.x + 472,
             y=frame.y + 282,
-            delay_ms=calibration_start + motion.normal,
+            delay_ms=calibration_start + row_step_ms,
             duration_ms=motion.reveal,
             label_fill=theme.text_secondary,
             value_fill=theme.accent_cyan,
@@ -163,7 +187,7 @@ def render_boot(mode: str = "dark", tokens: TokenBundle | None = None) -> str:
             value="STABLE",
             x=frame.x + 472,
             y=frame.y + 316,
-            delay_ms=calibration_start + motion.normal * 2,
+            delay_ms=calibration_start + row_step_ms * 2,
             duration_ms=motion.reveal,
             label_fill=theme.text_secondary,
             value_fill=theme.text_primary,
@@ -173,7 +197,7 @@ def render_boot(mode: str = "dark", tokens: TokenBundle | None = None) -> str:
             value="DEFERRED",
             x=frame.x + 472,
             y=frame.y + 358,
-            delay_ms=calibration_start + motion.normal * 3,
+            delay_ms=calibration_start + row_step_ms * 3,
             duration_ms=motion.reveal,
             label_fill=theme.text_secondary,
             value_fill=theme.accent_lavender,
@@ -183,7 +207,7 @@ def render_boot(mode: str = "dark", tokens: TokenBundle | None = None) -> str:
             value="READY",
             x=frame.x + 472,
             y=frame.y + 400,
-            delay_ms=calibration_start + motion.normal * 4,
+            delay_ms=calibration_start + row_step_ms * 4,
             duration_ms=motion.reveal,
             label_fill=theme.text_secondary,
             value_fill=theme.success_green,
@@ -195,6 +219,7 @@ def render_boot(mode: str = "dark", tokens: TokenBundle | None = None) -> str:
         '<title id="title">KalaOS boot</title>',
         f'<desc id="desc">Boot environment for KalaOS with staged origin, calibration, deferred identity, system ready, and future handoff states.</desc>',
         "<defs>",
+        _reduced_motion_style(),
         build_primitive_defs(mode, bundle),
         "</defs>",
         f'<rect width="{layout.canvas_width}" height="{layout.canvas_height}" fill="{theme.background}"/>',
@@ -203,13 +228,26 @@ def render_boot(mode: str = "dark", tokens: TokenBundle | None = None) -> str:
         _boot_origin(theme, layout, motion, caption_size, caption_weight),
         _boot_title(theme, layout, motion, display_xl_size, display_xl_weight),
     ]
-    for row in rows:
-        parts.append(_boot_row(theme, row, small_size, small_weight, body_size, body_weight))
+    for index, row in enumerate(rows):
+        ambient = index == len(rows) - 1
+        ambient_delay_ms = row.delay_ms + row.duration_ms if ambient else None
+        parts.append(
+            _boot_row(
+                theme,
+                row,
+                small_size,
+                small_weight,
+                body_size,
+                body_weight,
+                ambient=ambient,
+                ambient_delay_ms=ambient_delay_ms,
+            )
+        )
     parts.append(
         _boot_handoff(
             theme,
             layout,
-            calibration_start + motion.normal * 5,
+            calibration_start + row_step_ms * 4,
             motion,
             caption_size,
             caption_weight,

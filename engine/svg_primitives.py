@@ -218,24 +218,35 @@ def render_background_grid(theme: Theme, tokens: TokenBundle | None = None, opac
 def render_origin_mark(theme: Theme, tokens: TokenBundle | None = None) -> str:
     bundle = tokens or load_tokens()
     geometry = _origin_geometry(bundle)
+    ambient_begin = "0.96s"
+    ambient_radius = geometry.radius + 0.8
     return (
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">'
         '<title id="title">KalaOS Origin Mark</title>'
         '<desc id="desc">Construction symbol with a central point and four separated segments.</desc>'
+        '<style><![CDATA['
+        '@media (prefers-reduced-motion: reduce) {'
+        '.kalaos-ambient { display: none; }'
+        '}'
+        ']]></style>'
         f'<circle cx="{geometry.center}" cy="{geometry.center}" r="{geometry.radius}" fill="{theme.accent_violet}" opacity="0">'
-        f'<animate attributeName="opacity" values="0;1" dur="0.20s" begin="0s" fill="freeze"/>'
+        f'<animate attributeName="opacity" values="0;1" dur="0.24s" begin="0s" fill="freeze"/>'
         "</circle>"
         f'<line x1="{geometry.center}" y1="{geometry.top_start}" x2="{geometry.center}" y2="{geometry.top_end}" stroke="{theme.accent_violet}" stroke-width="{geometry.stroke}" stroke-linecap="round" opacity="0">'
-        f'<animate attributeName="opacity" values="0;1" dur="0.20s" begin="0.16s" fill="freeze"/>'
+        f'<animate attributeName="opacity" values="0;1" dur="0.24s" begin="0.15s" fill="freeze"/>'
         "</line>"
         f'<line x1="{geometry.center}" y1="{geometry.bottom_start}" x2="{geometry.center}" y2="{geometry.bottom_end}" stroke="{theme.accent_violet}" stroke-width="{geometry.stroke}" stroke-linecap="round" opacity="0">'
-        f'<animate attributeName="opacity" values="0;1" dur="0.20s" begin="0.32s" fill="freeze"/>'
+        f'<animate attributeName="opacity" values="0;1" dur="0.24s" begin="0.30s" fill="freeze"/>'
         "</line>"
         f'<line x1="{geometry.left_start}" y1="{geometry.center}" x2="{geometry.left_end}" y2="{geometry.center}" stroke="{theme.accent_violet}" stroke-width="{geometry.stroke}" stroke-linecap="round" opacity="0">'
-        f'<animate attributeName="opacity" values="0;1" dur="0.20s" begin="0.48s" fill="freeze"/>'
+        f'<animate attributeName="opacity" values="0;1" dur="0.24s" begin="0.45s" fill="freeze"/>'
         "</line>"
         f'<line x1="{geometry.right_start}" y1="{geometry.center}" x2="{geometry.right_end}" y2="{geometry.center}" stroke="{theme.accent_violet}" stroke-width="{geometry.stroke}" stroke-linecap="round" opacity="0">'
-        f'<animate attributeName="opacity" values="0;1" dur="0.20s" begin="0.64s" fill="freeze"/>'
+        f'<animate attributeName="opacity" values="0;1" dur="0.24s" begin="0.60s" fill="freeze"/>'
         "</line>"
+        f'<circle class="kalaos-ambient" cx="{geometry.center}" cy="{geometry.center}" r="{ambient_radius:.1f}" fill="none" stroke="{theme.accent_violet}" stroke-width="1" opacity="0.18">'
+        f'<animate attributeName="opacity" values="0.18;0.28;0.18" dur="4.80s" begin="{ambient_begin}" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"/>'
+        f'<animate attributeName="r" values="{ambient_radius:.1f};{ambient_radius + 0.5:.1f};{ambient_radius:.1f}" dur="4.80s" begin="{ambient_begin}" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"/>'
+        "</circle>"
         "</svg>"
     )
