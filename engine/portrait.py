@@ -101,30 +101,30 @@ def _focus_weight(box: PortraitBox, x: int, y: int, cols: int, rows: int) -> flo
 
 def _feature_weight(nx: float, ny: float) -> float:
     weight = 0.0
-    weight += _gaussian(nx, ny, 0.50, 0.18, 0.18, 0.07, 0.30)  # hair / hairline
-    weight += _gaussian(nx, ny, 0.50, 0.24, 0.14, 0.05, 0.18)  # upper forehead texture
-    weight += _gaussian(nx, ny, 0.50, 0.35, 0.17, 0.025, 0.42)  # glasses upper rim
-    weight += _gaussian(nx, ny, 0.50, 0.48, 0.17, 0.025, 0.34)  # glasses lower rim
-    weight += _gaussian(nx, ny, 0.31, 0.41, 0.02, 0.06, 0.32)  # left frame
-    weight += _gaussian(nx, ny, 0.69, 0.41, 0.02, 0.06, 0.32)  # right frame
-    weight += _gaussian(nx, ny, 0.50, 0.41, 0.03, 0.05, 0.36)  # bridge
-    weight += _gaussian(nx, ny, 0.39, 0.39, 0.06, 0.04, 0.38)  # left eye / brow
-    weight += _gaussian(nx, ny, 0.61, 0.39, 0.06, 0.04, 0.38)  # right eye / brow
-    weight += _gaussian(nx, ny, 0.40, 0.40, 0.025, 0.020, 0.22)  # left eye center
-    weight += _gaussian(nx, ny, 0.60, 0.40, 0.025, 0.020, 0.22)  # right eye center
-    weight += _gaussian(nx, ny, 0.39, 0.36, 0.08, 0.03, 0.24)  # left eyebrow arc
-    weight += _gaussian(nx, ny, 0.61, 0.36, 0.08, 0.03, 0.24)  # right eyebrow arc
-    weight += _gaussian(nx, ny, 0.50, 0.50, 0.05, 0.10, 0.42)  # nose bridge / contour
-    weight += _gaussian(nx, ny, 0.50, 0.56, 0.04, 0.05, 0.18)  # nose tip / lower contour
-    weight += _gaussian(nx, ny, 0.50, 0.61, 0.10, 0.03, 0.36)  # mouth / lips
-    weight += _gaussian(nx, ny, 0.50, 0.63, 0.08, 0.02, 0.20)  # mouth separation
-    weight += _gaussian(nx, ny, 0.43, 0.72, 0.06, 0.06, 0.24)  # left jaw
-    weight += _gaussian(nx, ny, 0.57, 0.72, 0.06, 0.06, 0.24)  # right jaw
-    weight += _gaussian(nx, ny, 0.50, 0.77, 0.12, 0.05, 0.24)  # chin
-    weight += _gaussian(nx, ny, 0.22, 0.45, 0.04, 0.07, 0.20)  # left ear
-    weight += _gaussian(nx, ny, 0.78, 0.45, 0.04, 0.07, 0.20)  # right ear
-    weight += _gaussian(nx, ny, 0.38, 0.84, 0.11, 0.05, 0.18)  # left shoulder
-    weight += _gaussian(nx, ny, 0.62, 0.84, 0.11, 0.05, 0.18)  # right shoulder
+    weight += _gaussian(nx, ny, 0.50, 0.18, 0.18, 0.07, 0.32)  # hair / hairline
+    weight += _gaussian(nx, ny, 0.50, 0.24, 0.16, 0.06, 0.22)  # upper forehead texture
+    weight += _gaussian(nx, ny, 0.50, 0.35, 0.17, 0.025, 0.46)  # glasses upper rim
+    weight += _gaussian(nx, ny, 0.50, 0.48, 0.17, 0.025, 0.38)  # glasses lower rim
+    weight += _gaussian(nx, ny, 0.31, 0.41, 0.025, 0.06, 0.35)  # left frame
+    weight += _gaussian(nx, ny, 0.69, 0.41, 0.025, 0.06, 0.35)  # right frame
+    weight += _gaussian(nx, ny, 0.50, 0.41, 0.03, 0.05, 0.40)  # bridge
+    weight += _gaussian(nx, ny, 0.39, 0.39, 0.065, 0.045, 0.42)  # left eye / brow
+    weight += _gaussian(nx, ny, 0.61, 0.39, 0.065, 0.045, 0.42)  # right eye / brow
+    weight += _gaussian(nx, ny, 0.40, 0.40, 0.028, 0.022, 0.25)  # left eye center
+    weight += _gaussian(nx, ny, 0.60, 0.40, 0.028, 0.022, 0.25)  # right eye center
+    weight += _gaussian(nx, ny, 0.39, 0.36, 0.09, 0.03, 0.28)  # left eyebrow arc
+    weight += _gaussian(nx, ny, 0.61, 0.36, 0.09, 0.03, 0.28)  # right eyebrow arc
+    weight += _gaussian(nx, ny, 0.50, 0.50, 0.05, 0.10, 0.45)  # nose bridge / contour
+    weight += _gaussian(nx, ny, 0.50, 0.56, 0.045, 0.055, 0.22)  # nose tip / lower contour
+    weight += _gaussian(nx, ny, 0.50, 0.61, 0.11, 0.035, 0.40)  # mouth / lips
+    weight += _gaussian(nx, ny, 0.50, 0.63, 0.085, 0.025, 0.24)  # mouth separation
+    weight += _gaussian(nx, ny, 0.43, 0.72, 0.07, 0.07, 0.28)  # left jaw
+    weight += _gaussian(nx, ny, 0.57, 0.72, 0.07, 0.07, 0.28)  # right jaw
+    weight += _gaussian(nx, ny, 0.50, 0.77, 0.13, 0.055, 0.28)  # chin
+    weight += _gaussian(nx, ny, 0.22, 0.45, 0.045, 0.075, 0.22)  # left ear
+    weight += _gaussian(nx, ny, 0.78, 0.45, 0.045, 0.075, 0.22)  # right ear
+    weight += _gaussian(nx, ny, 0.38, 0.84, 0.12, 0.055, 0.22)  # left shoulder
+    weight += _gaussian(nx, ny, 0.62, 0.84, 0.12, 0.055, 0.22)  # right shoulder
     weight += _gaussian(nx, ny, 0.50, 0.81, 0.028, 0.030, 0.22)  # necklace chain
     weight += _gaussian(nx, ny, 0.50, 0.84, 0.038, 0.036, 0.56)  # necklace / pendant
     weight += _gaussian(nx, ny, 0.50, 0.88, 0.020, 0.032, 0.48)  # cross stem
@@ -132,10 +132,25 @@ def _feature_weight(nx: float, ny: float) -> float:
     return _clamp(weight)
 
 
+def _face_continuity_weight(nx: float, ny: float) -> float:
+    weight = 0.0
+    weight += _gaussian(nx, ny, 0.50, 0.30, 0.27, 0.17, 0.24)  # forehead / brow continuity
+    weight += _gaussian(nx, ny, 0.50, 0.44, 0.23, 0.20, 0.32)  # upper face continuity
+    weight += _gaussian(nx, ny, 0.50, 0.58, 0.21, 0.19, 0.30)  # nose / mouth continuity
+    weight += _gaussian(nx, ny, 0.50, 0.70, 0.19, 0.15, 0.24)  # jaw / chin continuity
+    weight += _gaussian(nx, ny, 0.39, 0.47, 0.12, 0.13, 0.20)  # left cheek continuity
+    weight += _gaussian(nx, ny, 0.61, 0.47, 0.12, 0.13, 0.20)  # right cheek continuity
+    weight += _gaussian(nx, ny, 0.38, 0.82, 0.14, 0.08, 0.16)  # left shoulder continuity
+    weight += _gaussian(nx, ny, 0.62, 0.82, 0.14, 0.08, 0.16)  # right shoulder continuity
+    weight += _gaussian(nx, ny, 0.50, 0.52, 0.28, 0.22, 0.24)  # broad facial mass
+    weight += _gaussian(nx, ny, 0.50, 0.39, 0.14, 0.09, 0.14)  # eye bridge continuity
+    return _clamp(weight)
+
+
 def _lens_void_weight(nx: float, ny: float) -> float:
     return _clamp(
-        _gaussian(nx, ny, 0.40, 0.41, 0.10, 0.07, 0.74)
-        + _gaussian(nx, ny, 0.60, 0.41, 0.10, 0.07, 0.74)
+        _gaussian(nx, ny, 0.40, 0.41, 0.10, 0.07, 0.60)
+        + _gaussian(nx, ny, 0.60, 0.41, 0.10, 0.07, 0.60)
     )
 
 
@@ -171,9 +186,10 @@ def render_portrait_points(
             nx = (x + 0.5) / cols
             ny = (y + 0.5) / rows
             feature = _feature_weight(nx, ny)
+            continuity = _face_continuity_weight(nx, ny)
             lens_void = _lens_void_weight(nx, ny)
             highlight = max(0.0, lum - 0.64)
-            row.append(_clamp(structural * (0.34 + 0.66 * focus) + feature * 0.36 - highlight * 0.18 - lens_void * 0.36))
+            row.append(_clamp(structural * (0.34 + 0.66 * focus) + feature * 0.36 + continuity * 0.26 - highlight * 0.18 - lens_void * 0.36))
         signal_grid.append(row)
 
     step_x = box.width / cols
@@ -187,24 +203,25 @@ def render_portrait_points(
             nx = (x + 0.5) / cols
             ny = (y + 0.5) / rows
             feature = _feature_weight(nx, ny)
+            continuity = _face_continuity_weight(nx, ny)
             lens_void = _lens_void_weight(nx, ny)
             signal = signal_grid[y][x]
             support = _grid_average(signal_grid, x, y, radius=1)
-            field = _clamp(signal * 0.58 + support * 0.30 + feature * 0.34 - lens_void * 0.26)
+            field = _clamp(signal * 0.54 + support * 0.30 + feature * 0.30 + continuity * 0.30 - lens_void * 0.20)
             if ny > 0.66:
-                field *= 0.84
+                field *= 0.92
             if ny > 0.76:
-                field *= 0.76
-            if field <= settings.threshold + (1.0 - focus) * 0.16 - feature * 0.05:
+                field *= 0.86
+            if field <= settings.threshold + (1.0 - focus) * 0.16 - feature * 0.05 - continuity * 0.14:
                 continue
             edge = _local_contrast(signal_grid, x, y)
             size = settings.minimum_point_size + (settings.maximum_point_size - settings.minimum_point_size) * (field ** settings.luminance_response)
-            size *= 0.72 + min(0.34, (edge + support) * 0.30 + feature * 0.16)
-            alpha = 0.10 + 0.90 * field * (0.40 + 0.60 * focus) + feature * 0.08
+            size *= 0.72 + min(0.38, (edge + support) * 0.30 + feature * 0.16 + continuity * 0.12)
+            alpha = 0.10 + 0.90 * field * (0.40 + 0.60 * focus) + feature * 0.08 + continuity * 0.06
             gx = (luma_grid[y][x + 1] - luma_grid[y][x - 1]) if 0 < x < cols - 1 else 0.0
             gy = (luma_grid[y + 1][x] - luma_grid[y - 1][x]) if 0 < y < rows - 1 else 0.0
-            shift_x = gx * step_x * (0.14 + feature * 0.12)
-            shift_y = gy * step_y * (0.14 + feature * 0.12)
+            shift_x = gx * step_x * (0.14 + feature * 0.10 + continuity * 0.07)
+            shift_y = gy * step_y * (0.14 + feature * 0.10 + continuity * 0.07)
             base_x = box.x + (x + 0.5) * step_x + shift_x
             base_y = box.y + (y + 0.5) * step_y + shift_y
             tone = _clamp(lum * 0.93 + feature * 0.07)
@@ -220,40 +237,40 @@ def render_portrait_points(
                 fill_rgb = _mix_rgb(source_rgb, neutral_rgb, 0.20)
             fill = _rgb_to_hex(fill_rgb)
             structural = field * (0.58 + 0.42 * focus) + feature * 0.10
-            recognition = field * (0.86 + 0.74 * focus) + edge * 0.18 + feature * 0.22
-            atmosphere = field * (0.14 + 0.18 * (1.0 - focus)) - feature * 0.04
+            recognition = field * (0.84 + 0.74 * focus) + edge * 0.18 + feature * 0.22 + continuity * 0.14
+            atmosphere = field * (0.14 + 0.18 * (1.0 - focus)) - feature * 0.04 + continuity * 0.05
             shirt_suppression = 1.0
             if ny > 0.68:
-                shirt_suppression *= 0.84
+                shirt_suppression *= 0.92
             if ny > 0.76:
-                shirt_suppression *= 0.76
+                shirt_suppression *= 0.86
             if ny > 0.82:
-                shirt_suppression *= 0.68
+                shirt_suppression *= 0.78
             structural *= shirt_suppression
-            recognition *= 0.92 + feature * 0.12
+            recognition *= 0.92 + feature * 0.12 + continuity * 0.08
             atmosphere *= shirt_suppression
 
             if structural > 0.20 + (1.0 - focus) * 0.04 - feature * 0.03:
                 points.append(f'<circle cx="{base_x:.2f}" cy="{base_y:.2f}" r="{size:.2f}" fill="{fill}" opacity="{alpha:.3f}"/>')
 
             if (focus > 0.28 or feature > 0.18) and recognition > 0.34:
-                secondary_shift = 0.18 + edge * 0.09 + feature * 0.06
+                secondary_shift = 0.18 + edge * 0.09 + feature * 0.06 + continuity * 0.06
                 secondary_x = base_x - shift_x * secondary_shift
                 secondary_y = base_y - shift_y * secondary_shift
-                secondary_size = size * (0.60 + edge * 0.08 + feature * 0.04)
-                secondary_alpha = min(0.95, alpha * (0.70 + focus * 0.10 + feature * 0.08))
+                secondary_size = size * (0.60 + edge * 0.08 + feature * 0.04 + continuity * 0.06)
+                secondary_alpha = min(0.95, alpha * (0.70 + focus * 0.10 + feature * 0.08 + continuity * 0.06))
                 secondary_fill = _rgb_to_hex(_scale_rgb(fill_rgb, 0.82))
                 points.append(
                     f'<circle cx="{secondary_x:.2f}" cy="{secondary_y:.2f}" r="{secondary_size:.2f}" fill="{secondary_fill}" opacity="{secondary_alpha:.3f}"/>'
                 )
 
             if (focus > 0.40 or feature > 0.20) and recognition > 0.48 and edge > 0.05:
-                perp_x = -shift_y * (0.24 + focus * 0.08 + feature * 0.08)
-                perp_y = shift_x * (0.24 + focus * 0.08 + feature * 0.08)
+                perp_x = -shift_y * (0.24 + focus * 0.08 + feature * 0.08 + continuity * 0.06)
+                perp_y = shift_x * (0.24 + focus * 0.08 + feature * 0.08 + continuity * 0.06)
                 tertiary_x = base_x + perp_x
                 tertiary_y = base_y + perp_y
-                tertiary_size = size * (0.38 + feature * 0.05)
-                tertiary_alpha = min(0.90, alpha * (0.44 + feature * 0.12))
+                tertiary_size = size * (0.38 + feature * 0.05 + continuity * 0.05)
+                tertiary_alpha = min(0.90, alpha * (0.44 + feature * 0.12 + continuity * 0.08))
                 tertiary_fill = _rgb_to_hex(_scale_rgb(fill_rgb, 1.06))
                 points.append(
                     f'<circle cx="{tertiary_x:.2f}" cy="{tertiary_y:.2f}" r="{tertiary_size:.2f}" fill="{tertiary_fill}" opacity="{tertiary_alpha:.3f}"/>'
